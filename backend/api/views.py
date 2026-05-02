@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import User, Student, Attendance, Transaction, BusRoute, Message, Assignment, Note, LeaveRequest, Substitution, TimetableEntry, Subject, StaffProfile, StaffAssignment
+from .models import User, Student, Attendance, Transaction, BusRoute, Message, Assignment, LeaveRequest, Substitution, TimetableEntry, Subject, FacultyProfile, Department
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,13 +7,17 @@ from .timetable_logic import run_allocation, ResourcePlanner
 from .serializers import (
     UserSerializer, StudentSerializer, AttendanceSerializer, 
     TransactionSerializer, BusRouteSerializer, MessageSerializer,
-    AssignmentSerializer, NoteSerializer, LeaveRequestSerializer, SubstitutionSerializer,
-    TimetableEntrySerializer, SubjectSerializer, StaffProfileSerializer, StaffAssignmentSerializer
+    AssignmentSerializer, LeaveRequestSerializer, SubstitutionSerializer,
+    TimetableEntrySerializer, SubjectSerializer, FacultyProfileSerializer, DepartmentSerializer
 )
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
@@ -39,10 +43,6 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
 
-class NoteViewSet(viewsets.ModelViewSet):
-    queryset = Note.objects.all()
-    serializer_class = NoteSerializer
-
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     queryset = LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
@@ -59,48 +59,44 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
-class StaffProfileViewSet(viewsets.ModelViewSet):
-    queryset = StaffProfile.objects.all()
-    serializer_class = StaffProfileSerializer
-
-class StaffAssignmentViewSet(viewsets.ModelViewSet):
-    queryset = StaffAssignment.objects.all()
-    serializer_class = StaffAssignmentSerializer
+class FacultyProfileViewSet(viewsets.ModelViewSet):
+    queryset = FacultyProfile.objects.all()
+    serializer_class = FacultyProfileSerializer
 
 class ResourcePlanningAPIView(APIView):
     def get(self, request):
         subjects = Subject.objects.all()
-        # Get all unique sections from students
-        sections = list(Student.objects.values_list('section', flat=True).distinct())
-        if not sections:
-            sections = ["10th-A", "10th-B"] # Fallback for demo
+        # Get all unique batches from students
+        batches = list(Student.objects.values_list('batch', flat=True).distinct())
+        if not batches:
+            batches = ["2024-A", "2024-B"]
             
         planner = ResourcePlanner()
-        needs = planner.calculate_staff_needs(subjects, sections)
+        needs = planner.calculate_staff_needs(subjects, batches)
         return Response(needs)
 
 class GenerateTimetableAPIView(APIView):
     def post(self, request):
         try:
-            # Clear existing timetable entries if requested or as a standard procedure
-            # TimetableEntry.objects.all().delete()
-            
             entries = run_allocation()
             
-            # Save entries to database
             db_entries = []
             for entry in entries:
+                # Resolve subject and faculty from name/username for database storage
+                subject = Subject.objects.get(name=entry['subject'])
+                faculty = User.objects.get(username=entry['teacher_name'])
+                
                 db_entries.append(TimetableEntry(
                     day=entry['day'],
                     slot=entry['slot'],
-                    subject=entry['subject'],
-                    teacher_name=entry['teacher_name'],
-                    class_section=entry['class_section'],
+                    subject=subject,
+                    faculty=faculty,
+                    batch=entry['batch'],
                     room_number=entry['room_number']
                 ))
             
             TimetableEntry.objects.bulk_create(db_entries)
-            
             return Response({"status": "success", "message": f"Generated {len(entries)} entries"}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"status": "error", "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
