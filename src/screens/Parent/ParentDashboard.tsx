@@ -158,6 +158,10 @@ export const ParentDashboard = () => {
                 </TouchableOpacity>
               </View>
             </View>
+            {/* Institutional Reports */}
+            <View className="mb-10">
+              <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold', marginBottom: 24 }}>Academic Reports</Text>
+              <View className="space-y-4">
                 {[
                   { title: 'Semester 5 Grade Card', date: 'Published Aug 12, 2024', status: 'Final' },
                   { title: 'Mid-term Performance Report', date: 'Published Oct 01, 2024', status: 'Draft' },
