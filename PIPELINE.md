@@ -80,3 +80,50 @@ sequenceDiagram
     Store->>Store: Append to auditLogs Array
     Store-->>UI: Broadcast State Update (Reactive UI rerender)
 ```
+
+---
+
+## 🛢️ 4. Dynamic Relational Database Model
+
+The database is built on a modular, domain-driven relational model. Each dashboard directory houses its own custom database blueprint (`DB.sql`) defining the tables it owns, but all directories are mapped and linked dynamically through relational integrity constraints:
+
+```mermaid
+graph TD
+    subgraph Admin Domain
+        AdminDB["AdminDB.sql"]
+        UsersTable["users (Primary Registry)"]
+        RulesTable["business_rules"]
+    end
+
+    subgraph Student Domain
+        StudentDB["StudentDB.sql"]
+        StudentProfiles["student_profiles"]
+        Attendance["attendance_logs"]
+    end
+
+    subgraph Faculty Domain
+        FacultyDB["FacultyDB.sql"]
+        FacultyProfiles["faculty_profiles"]
+        Assignments["coursework_assignments"]
+    end
+
+    subgraph Finance Domain
+        FinanceDB["FinanceDB.sql"]
+        Fees["student_fees"]
+        Payroll["staff_payroll"]
+    end
+
+    %% Mappings
+    StudentProfiles -- "References Auth" --> UsersTable
+    FacultyProfiles -- "References Auth" --> UsersTable
+    Attendance -- "References Student" --> StudentProfiles
+    Fees -- "References Student" --> StudentProfiles
+    Assignments -- "References Instructor" --> FacultyProfiles
+    Payroll -- "References Staff" --> UsersTable
+```
+
+### Key Relationships & Mappings:
+1. **Core Identity Mapping**: `StudentDB.student_profiles` and `FacultyDB.faculty_profiles` map dynamically to `AdminDB.users` using foreign key references.
+2. **Operations Mapping**: `FinanceDB.staff_payroll` references `AdminDB.users` to process monthly payroll.
+3. **Academic Mapping**: `PlacementDB.drive_registrations` references `StudentDB.student_profiles` to screen CGPA and eligibility thresholds dynamically.
+4. **Governance Mapping**: `VCDB.vc_approvals_ledger` and `ProVCDB.provc_budget_clearance` dynamically map to request streams from lower departments (such as HOD leaves or Dean budget allocations) to resolve workflows.
