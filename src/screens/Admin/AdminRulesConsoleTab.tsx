@@ -15,6 +15,7 @@ import {
 } from 'lucide-react-native';
 
 export const AdminRulesConsoleTab = () => {
+  const { businessRules, updateBusinessRule, simulateHours } = useStore();
     return (
       <View className="space-y-8">
         <View className="flex-row justify-between items-center">

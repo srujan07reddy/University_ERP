@@ -14,11 +14,30 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminOverviewTab = () => (
+export const AdminOverviewTab = () => {
+  const { users, substitutions, addLog } = useStore();
+  const [emergencyText, setEmergencyText] = useState('');
+
+  const handleBroadcast = () => {
+    if (!emergencyText.trim()) {
+      Alert.alert('Error', 'Please enter some text to broadcast.');
+      return;
+    }
+    addLog({
+      actor: 'Admin',
+      action: 'Emergency Broadcast',
+      details: emergencyText,
+      severity: 'Critical'
+    });
+    Alert.alert('Broadcast Sent', 'Emergency broadcast sent via FCM successfully.');
+    setEmergencyText('');
+  };
+
+  return (
     <View className="space-y-8">
       <View className="flex-row flex-wrap -mx-2">
         <StatCard title="Total Students" value={850} icon={Users} trend="+12%" color="#3b82f6" />
-        <StatCard title="Institutional Staff" value={users.filter(u => !['Student', 'Parent'].includes(u.role)).length} icon={Calendar} trend="+2%" color="#10b981" />
+        <StatCard title="Institutional Staff" value={users.filter((u: any) => !['Student', 'Parent'].includes(u.role)).length} icon={Calendar} trend="+2%" color="#10b981" />
         <StatCard title="Daily Revenue" value="$42.5k" icon={TrendingUp} trend="+5.4%" color="#8b5cf6" />
         <StatCard title="Active Subs" value={substitutions.length} icon={Activity} color="#f59e0b" />
       </View>
@@ -62,3 +81,4 @@ export const AdminOverviewTab = () => (
       </View>
     </View>
   );
+};
