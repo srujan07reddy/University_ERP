@@ -12,7 +12,8 @@ export type UserRole =
   | 'CoE'
   | 'HoD'
   | 'Admissions'
-  | 'Admin';
+  | 'Admin'
+  | 'BusIncharge';
 
 export interface UniversityData {
   studentData?: {

@@ -23,6 +23,7 @@ import { PlacementDashboard } from '../screens/Placement/PlacementDashboard';
 import { CoEDashboard } from '../screens/CoE/CoEDashboard';
 import { HoDDashboard } from '../screens/HoD/HoDDashboard';
 import { AdmissionsDashboard } from '../screens/Admissions/AdmissionsDashboard';
+import { BusInchargeDashboard } from '../screens/BusIncharge/BusInchargeDashboard';
 
 // Floating Chatbot
 import { FloatingChatbot } from '../components/Navigation/FloatingChatbot';
@@ -81,6 +82,9 @@ export const RootNavigator = () => {
               )}
               {user.role === 'Admissions' && (
                 <Stack.Screen name="AdmissionsStack" component={AdmissionsDashboard} />
+              )}
+              {user.role === 'BusIncharge' && (
+                <Stack.Screen name="BusInchargeStack" component={BusInchargeDashboard} />
               )}
               <Stack.Screen name="SafeChat" component={SafeChat} />
             </>

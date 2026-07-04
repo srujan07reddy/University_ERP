@@ -173,5 +173,11 @@ export const MOCK_USERS: User[] = [
     name: 'Dr. Minerva McGonagall',
     email: 'provc@university.com',
     role: 'ProVC',
+  },
+  {
+    id: '15',
+    name: 'Otto Mann',
+    email: 'busincharge@university.com',
+    role: 'BusIncharge',
   }
 ];

@@ -28,9 +28,8 @@ import { AdminPayrollTab } from './AdminPayrollTab';
 import { AdminStudentMasterTab } from './AdminStudentMasterTab';
 import { AdminStaffMasterTab } from './AdminStaffMasterTab';
 import { AdminLogsTab } from './AdminLogsTab';
-import { AdminTimetableTab } from './AdminTimetableTab';
-import { AdminBusTrackingTab } from './AdminBusTrackingTab';
 import { AdminAnalyticsTab } from './AdminAnalyticsTab';
+import { AdminTimetableTab } from './AdminTimetableTab';
 import { AdminSurveysTab } from './AdminSurveysTab';
 import { AdminUsersTab } from './AdminUsersTab';
 import { AdminRulesConsoleTab } from './AdminRulesConsoleTab';
@@ -43,7 +42,7 @@ export const AdminDashboard = () => {
     businessRules, updateBusinessRule, simulateHours
   } = useStore();
 
-  const [activeTab, setActiveTab] = useState<'Overview' | 'Users' | 'Staff' | 'StudentsMaster' | 'StaffMaster' | 'Logs' | 'Analytics' | 'Profile' | 'Finance' | 'Inventory' | 'Payroll' | 'Calendar' | 'Surveys' | 'Timetable' | 'BusTracking' | 'Approvals' | 'RulesConsole'>('Overview');
+  const [activeTab, setActiveTab] = useState<'Overview' | 'Users' | 'Staff' | 'StudentsMaster' | 'StaffMaster' | 'Logs' | 'Analytics' | 'Profile' | 'Finance' | 'Inventory' | 'Payroll' | 'Calendar' | 'Surveys' | 'Timetable' | 'Approvals' | 'RulesConsole'>('Overview');
   
   // Modals
   const [reassignModalVisible, setReassignModalVisible] = useState(false);
@@ -386,7 +385,6 @@ export const AdminDashboard = () => {
                 { id: 'StaffMaster', icon: Users, label: 'Staff Master' },
                 { id: 'StudentsMaster', icon: GraduationCap, label: 'Student Master' },
                 { id: 'Timetable', icon: Calendar, label: 'Timetable' },
-                { id: 'BusTracking', icon: MapPin, label: 'Bus Route' },
                 { id: 'RulesConsole', icon: ShieldCheck, label: 'Rules Console' },
                 { id: 'Logs', icon: ShieldCheck, label: 'Audit Logs' }
               ].map((tab) => (
@@ -441,7 +439,6 @@ export const AdminDashboard = () => {
             {activeTab === 'RulesConsole' && <AdminRulesConsoleTab />}
             {activeTab === 'Logs' && <AdminLogsTab />}
             {activeTab === 'Timetable' && <AdminTimetableTab />}
-            {activeTab === 'BusTracking' && <AdminBusTrackingTab />}
           </View>
         </View>
       </View>
@@ -632,7 +629,6 @@ export const AdminDashboard = () => {
                   { id: 'StaffMaster', icon: Users, label: 'Staff Master' },
                   { id: 'StudentsMaster', icon: GraduationCap, label: 'Student Master' },
                   { id: 'Timetable', icon: Calendar, label: 'Timetable' },
-                  { id: 'BusTracking', icon: MapPin, label: 'Bus Route' },
                   { id: 'Logs', icon: ShieldCheck, label: 'Audit Logs' }
                 ].map((tab) => (
                   <TouchableOpacity key={tab.id} onPress={() => { setActiveTab(tab.id as any); setMobileMenuVisible(false); }} className={`p-4 rounded-2xl flex-row items-center ${activeTab === tab.id ? 'bg-blue-600' : ''}`}>

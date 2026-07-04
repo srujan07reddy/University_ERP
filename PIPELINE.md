@@ -20,6 +20,7 @@ graph TD
     RootNav --> Faculty["Faculty Stack (FacultyDashboard.tsx)"]
     RootNav --> HOD["HoD Stack (HoDDashboard.tsx)"]
     RootNav --> Dean["Dean Stack (DeanDashboard.tsx)"]
+    RootNav --> BusIncharge["Bus Incharge Stack (BusInchargeDashboard.tsx)"]
     RootNav --> Others["Other Role Stacks (Chancellor, VC, Pro VC, etc.)"]
     
     RootNav --> Chatbot["FloatingChatbot.tsx (Global Component)"]
@@ -113,6 +114,12 @@ graph TD
         Payroll["staff_payroll"]
     end
 
+    subgraph Bus Incharge Domain
+        BusInchargeDB["BusInchargeDB.sql"]
+        BusFleet["bus_fleet"]
+        Subscriptions["student_bus_subscriptions"]
+    end
+
     %% Mappings
     StudentProfiles -- "References Auth" --> UsersTable
     FacultyProfiles -- "References Auth" --> UsersTable
@@ -120,6 +127,7 @@ graph TD
     Fees -- "References Student" --> StudentProfiles
     Assignments -- "References Instructor" --> FacultyProfiles
     Payroll -- "References Staff" --> UsersTable
+    Subscriptions -- "References Student" --> StudentProfiles
 ```
 
 ### Key Relationships & Mappings:
@@ -127,3 +135,4 @@ graph TD
 2. **Operations Mapping**: `FinanceDB.staff_payroll` references `AdminDB.users` to process monthly payroll.
 3. **Academic Mapping**: `PlacementDB.drive_registrations` references `StudentDB.student_profiles` to screen CGPA and eligibility thresholds dynamically.
 4. **Governance Mapping**: `VCDB.vc_approvals_ledger` and `ProVCDB.provc_budget_clearance` dynamically map to request streams from lower departments (such as HOD leaves or Dean budget allocations) to resolve workflows.
+5. **Logistics Mapping**: `BusInchargeDB.student_bus_subscriptions` links to `StudentDB.student_profiles` to align active boarding stops with student enrollment files dynamically.
