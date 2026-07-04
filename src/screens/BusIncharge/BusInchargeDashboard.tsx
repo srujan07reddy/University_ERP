@@ -11,6 +11,7 @@ import { BusInchargeAnalyticsTab } from './BusInchargeAnalyticsTab';
 import { BusInchargeSurveysTab } from './BusInchargeSurveysTab';
 import { BusInchargeCalendarTab } from './BusInchargeCalendarTab';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
+import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 
 export const BusInchargeDashboard = () => {
   const { user, setUser } = useStore();
