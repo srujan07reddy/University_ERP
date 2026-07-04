@@ -12,6 +12,12 @@ import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
+import { FacultyProfileTab } from './FacultyProfileTab';
+import { FacultyAttendanceTab } from './FacultyAttendanceTab';
+import { FacultyGradesTab } from './FacultyGradesTab';
+import { FacultyAssignmentsTab } from './FacultyAssignmentsTab';
+import { FacultyLessonPlannerTab } from './FacultyLessonPlannerTab';
+import { FacultyResearchTab } from './FacultyResearchTab';
 export const FacultyDashboard = () => {
   const { user, setUser, users, updateUser, assignments, addAssignment, notes, addNote, leaveRequests, addLeaveRequest } = useStore();
   const facultyData = user?.universityData?.facultyData;
@@ -181,43 +187,7 @@ export const FacultyDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'My Profile':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center">
-              <View className="w-24 h-24 bg-blue-600 rounded-full items-center justify-center mb-4 shadow-lg shadow-blue-500/20">
-                <User color="white" size={48} />
-              </View>
-              <Text className="text-white text-2xl font-bold">{user?.name}</Text>
-              <Text className="text-slate-400 text-sm">{facultyData?.designation} • {facultyData?.department}</Text>
-              
-              <TouchableOpacity className="bg-blue-600 px-6 py-3 rounded-2xl flex-row items-center mt-6 gap-2">
-                <Download color="white" size={16} />
-                <Text className="text-white font-bold text-xs">Download Digital ID Card</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg mb-2">Qualifications & Details</Text>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Faculty ID</Text>
-                <Text className="text-white font-bold text-xs">{facultyData?.facultyId}</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Workload Target</Text>
-                <Text className="text-white font-bold text-xs">{facultyData?.teachingHoursPerWeek} hrs / week</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Research Publications</Text>
-                <Text className="text-white font-bold text-xs">{facultyData?.publications} papers</Text>
-              </View>
-              <View className="flex-row justify-between py-3">
-                <Text className="text-slate-400 text-xs">Emergency Contact</Text>
-                <Text className="text-slate-300 text-xs font-bold">+91 98765 43210</Text>
-              </View>
-            </View>
-          </View>
-        );
-
+        return <FacultyProfileTab />;
       case 'Timetable':
         return (
           <View className="space-y-6">
@@ -241,218 +211,18 @@ export const FacultyDashboard = () => {
             ))}
           </View>
         );
-
       case 'Attendance':
-        return (
-          <View className="space-y-6">
-            <View className="flex-row justify-between items-center mb-2">
-              <View>
-                <Text className="text-white text-2xl font-bold">Student Attendance</Text>
-                <Text className="text-slate-400 text-xs">Verify classes, notify absentees</Text>
-              </View>
-              <TouchableOpacity className="bg-blue-600 px-4 py-2 rounded-xl">
-                <Text className="text-white font-bold text-xs">Bulk Mark All Present</Text>
-              </TouchableOpacity>
-            </View>
-
-            {renderFilterSelectors()}
-
-            {filteredStudents.length === 0 ? (
-              <View className="bg-white/5 p-8 rounded-[32px] border border-white/10 items-center justify-center">
-                <Text className="text-slate-400 text-xs">No students registered in this filter configuration.</Text>
-              </View>
-            ) : null}
-
-            {filteredStudents.map((st) => (
-              <View key={st.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-white font-bold text-lg">{st.name}</Text>
-                  <Text className="text-slate-400 text-xs mt-1">ID: {st.id} • Parent: {st.parent.split(' (')[0]}</Text>
-                  <Text className={`text-xs font-bold mt-2 ${st.attendance < 75 ? 'text-red-400' : 'text-green-400'}`}>
-                    Attendance: {st.attendance}% {st.attendance < 75 ? '(Shortage Alert)' : ''}
-                  </Text>
-                </View>
-                <View className="flex-row gap-2">
-                  {st.attendance < 75 && (
-                    <TouchableOpacity onPress={() => notifyAbsentee(st.name)} className="bg-red-500/10 p-2.5 rounded-xl border border-red-500/20">
-                      <Bell color="#ef4444" size={16} />
-                    </TouchableOpacity>
-                  )}
-                  <TouchableOpacity onPress={() => {
-                    setSelectedStudent(st);
-                    setEditMarksForm({ studentId: st.id, marks: st.marks.toString() });
-                    setStudentDetailModal(true);
-                  }} className="bg-white/5 p-2.5 rounded-xl border border-white/10">
-                    <Edit color="#94a3b8" size={16} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <FacultyAttendanceTab />;
       case 'Marks':
-        return (
-          <View className="space-y-6">
-            <View className="flex-row justify-between items-center mb-2">
-              <View>
-                <Text className="text-white text-2xl font-bold">Internal Gradebook</Text>
-                <Text className="text-slate-400 text-xs">Class Avg: 83.7% • Slow Learners: {localStudents.filter(s => s.slowLearner).length}</Text>
-              </View>
-              <View className="flex-row gap-2">
-                <TouchableOpacity onPress={importExcel} className="bg-white/5 p-3 rounded-xl border border-white/10">
-                  <Upload color="white" size={16} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={exportExcel} className="bg-blue-600 p-3 rounded-xl">
-                  <Download color="white" size={16} />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {renderFilterSelectors()}
-
-            {/* Toppers & Slow Learners cards */}
-            <View className="flex-row gap-4 mb-2">
-              <View className="flex-1 bg-green-500/10 p-5 rounded-3xl border border-green-500/20">
-                <Text className="text-green-400 font-bold text-xs uppercase">Class Topper</Text>
-                <Text className="text-white font-bold text-lg mt-1">{filterSubject === 'Advanced Algorithms' ? 'Alice Becker' : 'Gwen Stacy'}</Text>
-                <Text className="text-slate-400 text-xs mt-1">Score: {filterSubject === 'Advanced Algorithms' ? '95%' : '98%'}</Text>
-              </View>
-              <View className="flex-1 bg-orange-500/10 p-5 rounded-3xl border border-orange-500/20">
-                <Text className="text-orange-400 font-bold text-xs uppercase">Slow Learner Alert</Text>
-                <Text className="text-white font-bold text-lg mt-1">{filterSubject === 'Advanced Algorithms' ? 'Alice Becker' : 'Mark Ruffalo'}</Text>
-                <Text className="text-slate-400 text-xs mt-1">Needs counseling</Text>
-              </View>
-            </View>
-
-            {filteredStudents.length === 0 ? (
-              <View className="bg-white/5 p-8 rounded-[32px] border border-white/10 items-center justify-center">
-                <Text className="text-slate-400 text-xs">No students registered in this filter configuration.</Text>
-              </View>
-            ) : null}
-
-            {filteredStudents.map((st) => (
-              <View key={st.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-white font-bold">{st.name}</Text>
-                  <Text className="text-slate-400 text-xs mt-1">Grade: {st.marks}% • status: {st.marks >= 50 ? 'Pass' : 'Fail'}</Text>
-                </View>
-                <TouchableOpacity onPress={() => {
-                  setSelectedStudent(st);
-                  setEditMarksForm({ studentId: st.id, marks: st.marks.toString() });
-                  setStudentDetailModal(true);
-                }} className="bg-blue-600/10 px-4 py-2 rounded-xl border border-blue-500/20">
-                  <Text className="text-blue-400 font-bold text-xs">EDIT MARKS</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <FacultyGradesTab />;
       case 'Assignments':
-        return (
-          <View className="space-y-6">
-            <View className="flex-row justify-between items-center mb-2">
-              <View>
-                <Text className="text-white text-2xl font-bold">Coursework & Assignments</Text>
-                <Text className="text-slate-400 text-xs">Evaluate submissions, define prompts</Text>
-              </View>
-              <TouchableOpacity onPress={() => setAssignmentModal(true)} className="bg-blue-600 p-3 rounded-xl">
-                <Plus color="white" size={16} />
-              </TouchableOpacity>
-            </View>
-
-            {assignments.map((asm) => (
-              <View key={asm.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10">
-                <View className="flex-row justify-between items-start">
-                  <View>
-                    <Text className="text-white font-bold text-lg">{asm.title}</Text>
-                    <Text className="text-slate-400 text-xs mt-1">{asm.course} • Deadline: {asm.deadline}</Text>
-                  </View>
-                  <View className="bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                    <Text className="text-blue-400 text-[10px] font-bold">Max Marks: {asm.totalMarks}</Text>
-                  </View>
-                </View>
-                <View className="w-full h-px bg-white/5 my-4" />
-                <View className="flex-row justify-between items-center">
-                  <Text className="text-slate-400 text-xs">Submissions: {asm.submissions || 3} students</Text>
-                  <TouchableOpacity onPress={() => Alert.alert('Grading Console', 'Opening submission viewer...')} className="bg-white/5 px-4 py-2 rounded-xl border border-white/10">
-                    <Text className="text-slate-300 font-bold text-xs">Evaluate Submissions</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <FacultyAssignmentsTab />;
       case 'LessonPlans':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg">AI Syllabus & Lesson Planner</Text>
-              <TextInput 
-                placeholder="Topic / Chapter details..." 
-                placeholderTextColor="#64748b" 
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-xs h-12"
-                value={aiPrompt}
-                onChangeText={setAiPrompt}
-              />
-              <TouchableOpacity onPress={handleAISuggest} className="bg-blue-600 p-4 rounded-xl flex-row justify-center items-center gap-2">
-                <Sparkles color="white" size={16} />
-                <Text className="text-white font-bold text-xs">{isGenerating ? 'Analyzing...' : 'Generate AI Lesson Plan'}</Text>
-              </TouchableOpacity>
-              {aiOutput ? (
-                <View className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4">
-                  <Text className="text-slate-300 text-xs leading-relaxed">{aiOutput}</Text>
-                </View>
-              ) : null}
-            </View>
-
-            <Text className="text-white font-bold text-lg mt-2">Syllabus Completion Tracker</Text>
-            {[
-              { course: 'Advanced Algorithms', progress: 65, status: 'On Track' },
-              { course: 'Distributed Systems', progress: 40, status: 'Behind Schedule' }
-            ].map((plan, idx) => (
-              <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10 space-y-4">
-                <View className="flex-row justify-between items-center">
-                  <Text className="text-white font-bold">{plan.course}</Text>
-                  <Text className={`text-[10px] font-bold uppercase ${plan.status === 'On Track' ? 'text-green-400' : 'text-orange-400'}`}>{plan.status}</Text>
-                </View>
-                <View className="h-2 bg-white/5 rounded-full overflow-hidden">
-                  <View style={{ width: `${plan.progress}%` as any }} className="h-full bg-blue-600 rounded-full" />
-                </View>
-                <View className="flex-row justify-between items-center mt-2">
-                  <Text className="text-slate-400 text-xs">Mapped Outcomes: CO-1, CO-2, CO-3</Text>
-                  <TouchableOpacity onPress={() => Alert.alert('Outcomes Mapping', 'Mapped to accreditation criteria.')} className="bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
-                    <Text className="text-slate-300 text-[10px] font-bold">MAP COs/POs</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <FacultyLessonPlannerTab />;
       case 'Leave':
         return <ApprovalsPortal />;
-
       case 'Research':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">My Research Portfolio</Text>
-            {[
-              { type: 'Journal Publication', title: 'Federated Learning Frameworks in Private Cloud ERPs', date: 'Published May 2026', source: 'IEEE Transactions' },
-              { type: 'Conference Proceeding', title: 'Heuristic Resource Mapping for Multi-Tenant Architectures', date: 'Presented April 2026', source: 'ICAC-26' },
-              { type: 'Patent Logged', title: 'System and Method for Encrypted Distributed Database Sharding', date: 'Filed March 2026', source: 'IPO Reg Office' }
-            ].map((res, i) => (
-              <View key={i} className="bg-white/5 p-6 rounded-[32px] border border-white/10">
-                <Text className="text-purple-400 text-[10px] font-bold uppercase">{res.type}</Text>
-                <Text className="text-white font-bold text-lg mt-1">{res.title}</Text>
-                <Text className="text-slate-400 text-xs mt-1">{res.source} • {res.date}</Text>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <FacultyResearchTab />;
       case 'SafeChat':
         return <MessageCenter />;
 

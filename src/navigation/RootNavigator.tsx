@@ -14,15 +14,15 @@ import { FinanceDashboard } from '../screens/Finance/FinanceDashboard';
 import { SafeChat } from '../screens/SafeChat';
 
 // University Screens
-import { ChancellorDashboard } from '../screens/University/ChancellorDashboard';
-import { VCDashboard } from '../screens/University/VCDashboard';
-import { ProVCDashboard } from '../screens/University/ProVCDashboard';
-import { DeanDashboard } from '../screens/University/DeanDashboard';
-import { RegistrarDashboard } from '../screens/University/RegistrarDashboard';
-import { PlacementDashboard } from '../screens/University/PlacementDashboard';
-import { CoEDashboard } from '../screens/University/CoEDashboard';
-import { HoDDashboard } from '../screens/University/HoDDashboard';
-import { AdmissionsDashboard } from '../screens/University/AdmissionsDashboard';
+import { ChancellorDashboard } from '../screens/Chancellor/ChancellorDashboard';
+import { VCDashboard } from '../screens/VC/VCDashboard';
+import { ProVCDashboard } from '../screens/ProVC/ProVCDashboard';
+import { DeanDashboard } from '../screens/Dean/DeanDashboard';
+import { RegistrarDashboard } from '../screens/Registrar/RegistrarDashboard';
+import { PlacementDashboard } from '../screens/Placement/PlacementDashboard';
+import { CoEDashboard } from '../screens/CoE/CoEDashboard';
+import { HoDDashboard } from '../screens/HoD/HoDDashboard';
+import { AdmissionsDashboard } from '../screens/Admissions/AdmissionsDashboard';
 
 // Floating Chatbot
 import { FloatingChatbot } from '../components/Navigation/FloatingChatbot';

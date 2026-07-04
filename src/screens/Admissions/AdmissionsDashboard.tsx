@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Platform } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { 
-  DollarSign, 
-  CreditCard, 
+  Users, 
+  UserPlus, 
   FileText, 
   TrendingUp, 
   Bell, 
-  ChevronRight, 
-  Wallet, 
-  PieChart, 
-  AlertCircle, 
-  LogOut, 
-  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar, Clock, Users, CheckCircle
+  ChevronRight,
+  ClipboardCheck,
+  Search,
+  CheckCircle2,
+  LogOut,
+  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
@@ -20,39 +20,32 @@ import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
 import { SurveyView } from '../../components/Dashboard/SurveyView';
 import { CalendarView } from '../../components/Dashboard/CalendarView';
-import { Modal, Alert } from 'react-native';
-import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { Modal } from 'react-native';
 
-const { width } = Dimensions.get('window');
+import { AdmissionsHomeTab } from './AdmissionsHomeTab';
 
-import { FinanceHomeTab } from './FinanceHomeTab';
-
-import { FinanceAnalyticsTab } from './FinanceAnalyticsTab';
-import { FinanceSurveysTab } from './FinanceSurveysTab';
-import { FinanceCalendarTab } from './FinanceCalendarTab';
-import { FinanceApprovalsTab } from './FinanceApprovalsTab';
-export const FinanceDashboard = () => {
+import { AdmissionsAnalyticsTab } from './AdmissionsAnalyticsTab';
+import { AdmissionsSurveysTab } from './AdmissionsSurveysTab';
+import { AdmissionsCalendarTab } from './AdmissionsCalendarTab';
+export const AdmissionsDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState('Home');
-  
+  const [activeTab, setActiveTab] = React.useState('Home');  
   // Scroll event tracking
   const { handleScroll: handleMainScroll } = useScrollEvents();
-
   const renderContent = () => {
     switch (activeTab) {
-      case 'Approvals':
-        return <FinanceApprovalsTab />;
       case 'Analytics':
-        return <FinanceAnalyticsTab />;
+        return <AnalyticsView role="Admissions Officer" />;
       case 'Surveys':
-        return <FinanceSurveysTab />;
+        return <SurveyView role="Admissions Officer" />;
       case 'Calendar':
-        return <FinanceCalendarTab />;
+        return <CalendarView role="Admissions Officer" />;
             default:
-        return <FinanceHomeTab />;
+        return <AdmissionsHomeTab />;
     }
   };
+  const admissionsData = user?.universityData?.admissionsData;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
@@ -67,7 +60,7 @@ export const FinanceDashboard = () => {
           <View className="flex-1 bg-black/80 flex-row">
             <View className="w-72 bg-[#0F172A] p-8 border-r border-white/10">
               <View className="flex-row justify-between items-center mb-10">
-                <Text className="text-2xl font-bold text-white">Finance Menu</Text>
+                <Text className="text-2xl font-bold text-white">Admissions Menu</Text>
                 <TouchableOpacity onPress={() => setMenuVisible(false)}>
                   <X color="white" size={24} />
                 </TouchableOpacity>
@@ -76,13 +69,11 @@ export const FinanceDashboard = () => {
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
-                    { id: 'Approvals', icon: CheckCircle, label: 'Approvals Desk' },
                     { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
                     { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
                     { id: 'Calendar', icon: Calendar, label: 'Calendar' },
-                    { id: 'Revenue', icon: DollarSign, label: 'Revenue Streams' },
-                    { id: 'Payroll', icon: CreditCard, label: 'Payroll Center' },
-                    { id: 'Audit', icon: FileText, label: 'Financial Audit' },
+                    { id: 'Applications', icon: FileText, label: 'Applications Hub' },
+                    { id: 'Shortlist', icon: UserPlus, label: 'Shortlisted Candidates' },
                     { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' },
                     { id: 'Profile', icon: User, label: 'Profile' },
                     { id: 'Settings', icon: Settings, label: 'Settings' },

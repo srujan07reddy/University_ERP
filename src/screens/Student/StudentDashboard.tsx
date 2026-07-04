@@ -12,6 +12,19 @@ import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
+import { StudentProfileTab } from './StudentProfileTab';
+import { StudentAcademicsTab } from './StudentAcademicsTab';
+import { StudentTimetableTab } from './StudentTimetableTab';
+import { StudentAttendanceTab } from './StudentAttendanceTab';
+import { StudentMarksTab } from './StudentMarksTab';
+import { StudentAssignmentsTab } from './StudentAssignmentsTab';
+import { StudentLeaveTab } from './StudentLeaveTab';
+import { StudentFeesTab } from './StudentFeesTab';
+import { StudentHostelTab } from './StudentHostelTab';
+import { StudentTransportTab } from './StudentTransportTab';
+import { StudentPlacementTab } from './StudentPlacementTab';
+import { StudentProjectsTab } from './StudentProjectsTab';
+import { StudentGrievanceTab } from './StudentGrievanceTab';
 export const StudentDashboard = () => {
   const { user, setUser, businessRules } = useStore();
   const [activeTab, setActiveTab] = useState('Home');
@@ -108,372 +121,33 @@ export const StudentDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'My Profile':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center">
-              <View className="w-24 h-24 bg-blue-600 rounded-full items-center justify-center mb-4 shadow-lg shadow-blue-500/20">
-                <User color="white" size={48} />
-              </View>
-              <Text className="text-white text-2xl font-bold">{user?.name}</Text>
-              <Text className="text-slate-400 text-sm">Major: {studentData?.major} • Sem: {studentData?.currentSemester}</Text>
-              
-              <View className="flex-row gap-2 mt-6">
-                <TouchableOpacity onPress={() => setEditProfileModal(true)} className="bg-white/5 border border-white/10 px-5 py-3 rounded-2xl">
-                  <Text className="text-slate-300 font-bold text-xs">Edit Details</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => Alert.alert('Downloaded', 'Student_ID_JohnDoe.pdf saved.')} className="bg-blue-600 px-5 py-3 rounded-2xl flex-row items-center gap-2">
-                  <Download color="white" size={14} />
-                  <Text className="text-white font-bold text-xs">ID Card</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg mb-2">Student Demographics</Text>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Phone</Text>
-                <Text className="text-white font-bold text-xs">{personalDetails.phone}</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Email</Text>
-                <Text className="text-white font-bold text-xs">{personalDetails.email}</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 py-3">
-                <Text className="text-slate-400 text-xs">Address</Text>
-                <Text className="text-white font-bold text-xs">{personalDetails.address}</Text>
-              </View>
-              <View className="flex-row justify-between py-3">
-                <Text className="text-slate-400 text-xs">Emergency Contact</Text>
-                <Text className="text-slate-300 text-xs font-bold">Robert Wilson (Parent)</Text>
-              </View>
-            </View>
-          </View>
-        );
-
+        return <StudentProfileTab />;
       case 'Academics':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">Registered Courses</Text>
-            {[
-              { code: 'CS301', name: 'Software Architecture', credits: 4, faculty: 'Dr. Gregory House' },
-              { code: 'CS302', name: 'Database Management Systems', credits: 4, faculty: 'Dr. Sarah Wilson' },
-              { code: 'CS305', name: 'Advanced Algorithms', credits: 3, faculty: 'Dr. Sarah Smith' }
-            ].map((subject, idx) => (
-              <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10">
-                <View className="flex-row justify-between items-center mb-3">
-                  <View>
-                    <Text className="text-white font-bold text-lg">{subject.name}</Text>
-                    <Text className="text-slate-400 text-xs">{subject.code} • Credits: {subject.credits}</Text>
-                  </View>
-                </View>
-                <View className="flex-row justify-between items-center border-t border-white/5 pt-3">
-                  <Text className="text-slate-350 text-xs">
-                    Faculty: {subject.faculty}
-                  </Text>
-                  <TouchableOpacity 
-                    onPress={() => setSelectedFaculty({ name: subject.faculty, ...facultyProfiles[subject.faculty] })} 
-                    className="bg-blue-600/10 px-3 py-1 rounded-lg border border-blue-500/20"
-                  >
-                    <Text className="text-blue-400 font-bold text-[10px]">View Profile & Research</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <StudentAcademicsTab />;
       case 'Timetable':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">My Timetable</Text>
-            {[
-              { day: 'Monday', time: '10:00 AM', subject: 'Advanced Algorithms', room: 'Lab 3 (Ground Floor)' },
-              { day: 'Tuesday', time: '02:00 PM', subject: 'Distributed Systems', room: 'LH 402' },
-              { day: 'Wednesday', time: '11:30 AM', subject: 'Advanced Algorithms', room: 'LH 403' },
-              { day: 'Thursday', time: '09:00 AM', subject: 'Distributed Systems', room: 'Lab 5 (2nd Floor)' },
-            ].map((slot, i) => (
-              <View key={i} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-slate-400 text-[10px] font-bold uppercase">{slot.day} • {slot.time}</Text>
-                  <Text className="text-white font-bold text-lg mt-1">{slot.subject}</Text>
-                  <Text className="text-blue-400 text-xs mt-1">Room {slot.room}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
-      case 'Attendance': {
-        const attendanceRule = businessRules?.find(r => r.id === 'rule_1');
-        const minAttendance = attendanceRule?.isEnabled && typeof attendanceRule.value === 'number' ? attendanceRule.value : 75;
-        const isEligible = (studentData?.attendancePercentage || 0) >= minAttendance;
-
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
-              <Text className="text-slate-400 text-sm font-medium">Overall Attendance</Text>
-              <Text className="text-white text-5xl font-bold mt-2">{studentData?.attendancePercentage}%</Text>
-              
-              <View className={`px-4 py-1.5 rounded-full border mt-4 ${isEligible ? 'bg-green-600/10 border-green-500/20' : 'bg-red-600/10 border-red-500/20'}`}>
-                <Text className={`text-xs font-bold ${isEligible ? 'text-green-400' : 'text-red-400'}`}>
-                  {isEligible ? 'ELIGIBLE FOR EXAMS' : `BLOCKED: ATTENDANCE < ${minAttendance}%`}
-                </Text>
-              </View>
-
-              {isEligible ? (
-                <TouchableOpacity 
-                  onPress={() => Alert.alert('Hall Ticket', 'Your Hall Ticket (HT-2026-CSE) has been generated and downloaded.')}
-                  className="bg-blue-600 px-6 py-3 rounded-2xl mt-6 flex-row items-center gap-2"
-                >
-                  <Award color="white" size={16} />
-                  <Text className="text-white font-bold text-xs">Download Hall Ticket</Text>
-                </TouchableOpacity>
-              ) : (
-                <View className="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl mt-6 flex-row items-center gap-3">
-                  <AlertCircle color="#f87171" size={18} />
-                  <Text className="text-slate-450 text-xs flex-1">Hall Ticket blocked automatically by system policy since attendance is below the configured {minAttendance}% requirement.</Text>
-                </View>
-              )}
-            </View>
-
-            <Text className="text-white font-bold text-lg mt-2">Subject-wise History</Text>
-            {[
-              { subject: 'Software Architecture', attendance: 85 },
-              { subject: 'Database Management Systems', attendance: 78 },
-              { subject: 'Advanced Algorithms', attendance: 83 }
-            ].map((item, idx) => (
-              <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <Text className="text-white font-bold">{item.subject}</Text>
-                <Text className="text-blue-400 font-bold">{item.attendance}%</Text>
-              </View>
-            ))}
-          </View>
-        );
-      }
-
+        return <StudentTimetableTab />;
+      case 'Attendance':
+        return <StudentAttendanceTab />;
       case 'Marks':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
-              <Text className="text-slate-400 text-sm font-medium">Current CGPA</Text>
-              <Text className="text-white text-5xl font-bold mt-2">{studentData?.cgpa}</Text>
-            </View>
-
-            <Text className="text-white font-bold text-lg mt-2">Internal Assessment Transcripts</Text>
-            {[
-              { exam: 'Mid-term Assessment 1', score: '92/100', status: 'A+' },
-              { exam: 'Internal Lab Evaluation', score: '48/50', status: 'O' },
-              { exam: 'Model Theory Examination', score: '88/100', status: 'A' }
-            ].map((row, idx) => (
-              <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-white font-bold">{row.exam}</Text>
-                  <Text className="text-slate-450 text-xs mt-1">Score: {row.score}</Text>
-                </View>
-                <Text className="text-green-400 font-bold text-lg">{row.status}</Text>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <StudentMarksTab />;
       case 'Assignments':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
-              <Text className="text-white font-bold text-lg mb-2">Upload Assignment PDF</Text>
-              <Text className="text-slate-400 text-xs mb-6">Drag and drop or select your assignment file to submit.</Text>
-              
-              <TouchableOpacity onPress={() => {
-                setPdfSubmitted(true);
-                Alert.alert('PDF Submitted', 'Assignment_CS301_JohnDoe.pdf uploaded successfully!');
-              }} className="bg-white/5 border border-dashed border-white/20 p-8 rounded-2xl items-center mb-6">
-                <Upload color="#94a3b8" size={32} />
-                <Text className="text-slate-400 text-xs mt-2">{pdfSubmitted ? 'Assignment_CS301_JohnDoe.pdf (1.2MB)' : 'Click to Upload PDF File'}</Text>
-              </TouchableOpacity>
-
-              {pdfSubmitted && (
-                <View className="bg-green-500/10 p-4 rounded-xl border border-green-500/20">
-                  <Text className="text-green-400 text-xs font-bold text-center">Submission Status: Logged On-Time</Text>
-                </View>
-              )}
-            </View>
-          </View>
-        );
-
+        return <StudentAssignmentsTab />;
       case 'Leave':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg">Apply for Leave / OD</Text>
-              <TextInput 
-                placeholder="Reason for leave/OD request..." 
-                placeholderTextColor="#64748b" 
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-xs h-12"
-              />
-              <TouchableOpacity onPress={() => Alert.alert('Success', 'Medical Leave logged. Pending HOD review.')} className="bg-blue-600 p-4 rounded-xl items-center">
-                <Text className="text-white font-bold text-xs">Submit Application</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
-
+        return <StudentLeaveTab />;
       case 'Fees':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 flex-row justify-between items-center">
-              <View>
-                <Text className="text-slate-400 text-sm font-medium">Pending Dues</Text>
-                <Text className="text-white text-3xl font-bold mt-1">${studentData?.feesDue}</Text>
-              </View>
-              <TouchableOpacity onPress={handlePayFees} className="bg-blue-600 px-6 py-3 rounded-2xl">
-                <Text className="text-white font-bold text-xs">Pay Online</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
-
+        return <StudentFeesTab />;
       case 'Hostel':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">Hostel Details</Text>
-            <View className="bg-white/5 p-6 rounded-[32px] border border-white/10 space-y-4">
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Room Assigned</Text>
-                <Text className="text-white font-bold text-xs">Room 408 (Block B)</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Warden</Text>
-                <Text className="text-white font-bold text-xs">Prof. Argus Filch</Text>
-              </View>
-              <View className="flex-row justify-between">
-                <Text className="text-slate-400 text-xs">Hostel Dues</Text>
-                <Text className="text-green-400 font-bold text-xs">Fully Paid</Text>
-              </View>
-            </View>
-          </View>
-        );
-
+        return <StudentHostelTab />;
       case 'Transport':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">Transport route</Text>
-            <View className="bg-white/5 p-6 rounded-[32px] border border-white/10 space-y-4">
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Bus Route</Text>
-                <Text className="text-white font-bold text-xs">Route 12 (Central Square)</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Driver Contact</Text>
-                <Text className="text-white font-bold text-xs">+91 99887 76655</Text>
-              </View>
-              <View className="flex-row justify-between">
-                <Text className="text-slate-400 text-xs">Boarding Point</Text>
-                <Text className="text-blue-400 font-bold text-xs">Sector 4 Crossing</Text>
-              </View>
-            </View>
-          </View>
-        );
-
+        return <StudentTransportTab />;
       case 'Placement':
-        return (
-          <View className="space-y-6">
-            {/* Student CV Ingestion & ATS Analyzer Widget */}
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg">AI Resume Optimizer & ATS Matcher</Text>
-              <Text className="text-slate-400 text-xs">
-                Upload your CV to run the **STUDENT SKILL SCORER** parser. Measures ATS compatibility and flags missing technical competencies.
-              </Text>
-              
-              <TouchableOpacity 
-                onPress={() => {
-                  setAtsAnalyzing(true);
-                  setTimeout(() => {
-                    setCvUploaded(true);
-                    setAtsAnalyzing(false);
-                    setAtsResult(`[STUDENT SKILL SCORER - ATS ANALYSIS]\n\n• Score: 84 / 100\n• Identified Skills: React Native, JavaScript, Zustand, TailwindCSS\n• Skill Gaps: Docker, AWS Cloud, DSA (Red-Black Trees)\n• Fitment: Strong fit for Frontend Eng & Cross-Platform Mobile roles.`);
-                  }, 1200);
-                }} 
-                className="bg-white/5 border border-dashed border-white/20 p-8 rounded-2xl items-center"
-              >
-                <Upload color="#94a3b8" size={32} />
-                <Text className="text-slate-400 text-xs mt-2">
-                  {atsAnalyzing ? 'Running AI Parser...' : cvUploaded ? 'Resume_John_Doe.pdf (Ingested)' : 'Drop Resume PDF to check ATS score'}
-                </Text>
-              </TouchableOpacity>
-
-              {atsResult ? (
-                <View className="bg-green-500/10 p-5 rounded-2xl border border-green-500/20">
-                  <Text className="text-green-400 text-xs font-bold leading-relaxed">{atsResult}</Text>
-                </View>
-              ) : null}
-            </View>
-
-            <Text className="text-white text-2xl font-bold mt-4">Placement Drives</Text>
-            {[
-              { company: 'Google Inc.', date: 'Oct 30', role: 'Software Engineer Intern', status: 'Registered' },
-              { company: 'Microsoft corp.', date: 'Nov 04', role: 'Full Stack Associate', status: 'Resume Screen' }
-            ].map((drive, idx) => (
-              <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-white font-bold text-lg">{drive.company}</Text>
-                  <Text className="text-slate-450 text-xs mt-1">{drive.role} • Date: {drive.date}</Text>
-                </View>
-                <View className="bg-blue-600/10 px-3 py-1.5 rounded-full border border-blue-500/20">
-                  <Text className="text-blue-400 text-[10px] font-bold">{drive.status}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
-
+        return <StudentPlacementTab />;
       case 'Projects':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">Final Year Project</Text>
-            <View className="bg-white/5 p-6 rounded-[32px] border border-white/10 space-y-4">
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Project Title</Text>
-                <Text className="text-white font-bold text-xs">Private Cloud ERP for Universities</Text>
-              </View>
-              <View className="flex-row justify-between border-b border-white/5 pb-3">
-                <Text className="text-slate-400 text-xs">Assigned Guide</Text>
-                <Text className="text-white font-bold text-xs">Dr. Sarah Smith</Text>
-              </View>
-              <View className="flex-row justify-between">
-                <Text className="text-slate-400 text-xs">Current Milestone</Text>
-                <Text className="text-orange-400 font-bold text-xs">UI/UX evaluation pending</Text>
-              </View>
-            </View>
-          </View>
-        );
-
-      case 'Leave':
-        return <ApprovalsPortal />;
-
+        return <StudentProjectsTab />;
       case 'Grievance':
-        return (
-          <View className="space-y-6">
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg">Raise Complaint / Grievance</Text>
-              <TextInput 
-                placeholder="Describe your issue..." 
-                placeholderTextColor="#64748b" 
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-xs h-24"
-                multiline
-                numberOfLines={4}
-                value={grievanceText}
-                onChangeText={setGrievanceText}
-              />
-              <TouchableOpacity onPress={handleGrievance} className="bg-blue-600 p-4 rounded-xl items-center">
-                <Text className="text-white font-bold text-xs">File Grievance</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
-
+        return <StudentGrievanceTab />;
       case 'SafeChat':
         return <MessageCenter />;
-
       default:
         return (
           <>

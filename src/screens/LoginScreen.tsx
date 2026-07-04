@@ -101,7 +101,7 @@ export const LoginScreen = () => {
               style={{ width: '100%' }}
               contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
             >
-              {(['Admin', 'Faculty', 'Chancellor', 'ViceChancellor', 'ProVC', 'CoE', 'Admissions', 'Registrar', 'Dean', 'HoD', 'PlacementOfficer', 'Finance', 'Student', 'Parent'] as const).map((r) => (
+              {(['Chancellor', 'ViceChancellor', 'ProVC', 'Registrar', 'Dean', 'HoD', 'CoE', 'Admissions', 'PlacementOfficer', 'Finance', 'Admin', 'Faculty', 'Student', 'Parent'] as const).map((r) => (
                 <TouchableOpacity
                   key={r}
                   onPress={() => handleRoleChange(r)}
