@@ -29,6 +29,8 @@ export const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeTab, setActive
       case 'CoE': return 'CoEStack';
       case 'HoD': return 'HoDStack';
       case 'Admissions': return 'AdmissionsStack';
+      case 'BusIncharge': return 'BusInchargeStack';
+      case 'MessIncharge': return 'MessInchargeStack';
       default: return 'Login';
     }
   };

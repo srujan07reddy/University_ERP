@@ -40,6 +40,12 @@ export const StudentGrievanceTab = () => {
     ]);
   };
 
+  const handleGrievance = () => {
+    if (!grievanceText) return;
+    Alert.alert('Grievance Submitted', 'Your grievance has been successfully registered with the Dean\'s office.');
+    setGrievanceText('');
+  };
+
   return (
     (
           <View className="space-y-6">

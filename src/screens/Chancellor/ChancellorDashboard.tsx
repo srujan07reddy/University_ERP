@@ -42,7 +42,7 @@ export const ChancellorDashboard = () => {
       case 'Calendar':
         return <ChancellorCalendarTab />;
             default:
-        return <ChancellorHomeTab />;
+        return <ChancellorHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

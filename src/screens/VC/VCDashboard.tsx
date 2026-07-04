@@ -29,7 +29,7 @@ export const VCDashboard = () => {
       case 'SafeChat':
         return <MessageCenter />;
             default:
-        return <VCHomeTab />;
+        return <VCHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

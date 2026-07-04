@@ -14,7 +14,22 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminFinanceTab = () => (
+export const AdminFinanceTab = ({
+  screenWidth,
+  sortedStudents,
+  setMessagingTargetIds,
+  setMessageForm,
+  messageForm,
+  setGroupMessageModalVisible
+}: {
+  screenWidth: number;
+  sortedStudents: any[];
+  setMessagingTargetIds: (ids: string[]) => void;
+  setMessageForm: (form: any) => void;
+  messageForm: any;
+  setGroupMessageModalVisible: (visible: boolean) => void;
+}) => {
+  return (
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-3xl border border-white/10">
         <Text className="text-white text-xl font-bold mb-6">Live Revenue vs. Expenses</Text>
@@ -97,3 +112,4 @@ export const AdminFinanceTab = () => (
       </View>
     </View>
   );
+};

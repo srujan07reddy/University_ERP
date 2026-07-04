@@ -3,6 +3,6 @@ from .common import (
     TimetableEntryViewSet, SubjectViewSet
 )
 from .admin import ResourcePlanningAPIView, GenerateTimetableAPIView
-from .student import StudentViewSet, AttendanceViewSet
+from .student import StudentViewSet, AttendanceViewSet, StudentFeeLedgerViewSet
 from .faculty import AssignmentViewSet, LeaveRequestViewSet, SubstitutionViewSet, FacultyProfileViewSet
 from .finance import TransactionViewSet

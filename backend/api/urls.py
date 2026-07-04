@@ -5,7 +5,7 @@ from .views import (
     BusRouteViewSet, MessageViewSet, AssignmentViewSet, 
     LeaveRequestViewSet, SubstitutionViewSet, TimetableEntryViewSet,
     SubjectViewSet, FacultyProfileViewSet, RoleTabMappingViewSet,
-    GenerateTimetableAPIView, ResourcePlanningAPIView
+    GenerateTimetableAPIView, ResourcePlanningAPIView, StudentFeeLedgerViewSet
 )
 
 router = DefaultRouter()
@@ -14,6 +14,7 @@ router.register(r'departments', DepartmentViewSet)
 router.register(r'students', StudentViewSet)
 router.register(r'attendance', AttendanceViewSet)
 router.register(r'transactions', TransactionViewSet)
+router.register(r'fee-ledgers', StudentFeeLedgerViewSet)
 router.register(r'bus-routes', BusRouteViewSet)
 router.register(r'messages', MessageViewSet)
 router.register(r'assignments', AssignmentViewSet)

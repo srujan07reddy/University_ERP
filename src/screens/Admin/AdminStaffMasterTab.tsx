@@ -14,7 +14,22 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminStaffMasterTab = () => {
+export const AdminStaffMasterTab = ({
+  searchQuery,
+  setSearchQuery,
+  setSelectedUser,
+  setDetailModalVisible,
+  setIsEditing,
+  setFormData
+}: {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  setSelectedUser: (user: any) => void;
+  setDetailModalVisible: (visible: boolean) => void;
+  setIsEditing: (editing: boolean) => void;
+  setFormData: (data: any) => void;
+}) => {
+    const { users, deleteUser } = useStore();
     const filtered = users.filter((u: any) => u.role === 'Faculty' && (u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.id.includes(searchQuery)));
     return (
       <View className="space-y-6">

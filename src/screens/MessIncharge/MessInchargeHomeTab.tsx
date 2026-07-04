@@ -128,3 +128,5 @@ export const MessInchargeHomeTab = () => {
     </View>
   );
 };
+
+export default MessInchargeHomeTab;

@@ -180,3 +180,5 @@ export const MessInchargeLogsTab = () => {
     </View>
   );
 };
+
+export default MessInchargeLogsTab;

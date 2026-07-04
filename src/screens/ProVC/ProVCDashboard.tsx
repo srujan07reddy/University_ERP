@@ -29,7 +29,7 @@ export const ProVCDashboard = () => {
       case 'SafeChat':
         return <MessageCenter />;
             default:
-        return <ProVCHomeTab />;
+        return <ProVCHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

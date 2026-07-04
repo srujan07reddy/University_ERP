@@ -40,7 +40,7 @@ export const MessInchargeFeedbackTab = () => {
             >
               {typeof filter === 'number' && <Star color={selectedRatingFilter === filter ? 'white' : '#eab308'} size={12} fill={selectedRatingFilter === filter ? 'white' : '#eab308'} />}
               <Text className={`text-xs font-bold ${selectedRatingFilter === filter ? 'text-white' : 'text-slate-400'}`}>
-                {filter === 'All' ? 'Show All' : `${filter} Star${filter > 1 ? 's' : ''}`}
+                {filter === 'All' ? 'Show All' : `${filter} Star${typeof filter === 'number' && filter > 1 ? 's' : ''}`}
               </Text>
             </TouchableOpacity>
           ))}
@@ -93,3 +93,5 @@ export const MessInchargeFeedbackTab = () => {
     </View>
   );
 };
+
+export default MessInchargeFeedbackTab;

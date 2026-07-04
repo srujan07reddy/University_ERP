@@ -14,7 +14,13 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminSurveysTab = () => (
+export const AdminSurveysTab = ({
+  setSurveyModalVisible
+}: {
+  setSurveyModalVisible: (visible: boolean) => void;
+}) => {
+  const { surveys } = useStore();
+  return (
     <View className="space-y-8">
       <View className="flex-row justify-between items-center">
         <View><Text className="text-white text-3xl font-bold">Surveys</Text></View>
@@ -28,7 +34,7 @@ export const AdminSurveysTab = () => (
               <Text className="text-slate-400 text-xs mb-4">Target: {s.role}</Text>
               <View className="space-y-3">
                 {s.options.map((opt, i) => {
-                  const total = Object.values(s.results).reduce((a,b) => a+b, 0) || 1;
+                  const total = (Object.values(s.results) as number[]).reduce((a,b) => a+b, 0) || 1;
                   const pct = Math.round(((s.results[opt] || 0) / total) * 100);
                   return (
                     <View key={i} className="bg-white/5 rounded-2xl overflow-hidden h-12 justify-center px-4 relative">
@@ -44,3 +50,4 @@ export const AdminSurveysTab = () => (
       </View>
     </View>
   );
+};

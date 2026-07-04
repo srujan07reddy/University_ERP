@@ -15,7 +15,8 @@ import {
 } from 'lucide-react-native';
 
 export const AdminLogsTab = () => {
-    return (
+  const { auditLogs } = useStore();
+  return (
       <View className="bg-white/5 rounded-3xl p-8 border border-white/10" style={{ flex: 1 }}>
         <Text className="text-white text-xl font-bold mb-6">Audit Logs</Text>
         <ScrollView className="space-y-3" scrollEventThrottle={16} scrollEnabled={true} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>

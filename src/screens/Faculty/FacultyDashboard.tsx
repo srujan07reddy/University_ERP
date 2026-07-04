@@ -216,7 +216,7 @@ export const FacultyDashboard = () => {
       case 'Marks':
         return <FacultyGradesTab />;
       case 'Assignments':
-        return <FacultyAssignmentsTab />;
+        return <FacultyAssignmentsTab setAssignmentModal={setAssignmentModal} />;
       case 'LessonPlans':
         return <FacultyLessonPlannerTab />;
       case 'Leave':

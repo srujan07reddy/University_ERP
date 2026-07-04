@@ -28,7 +28,7 @@ export const RegistrarDashboard = () => {
       case 'SafeChat':
         return <MessageCenter />;
             default:
-        return <RegistrarHomeTab />;
+        return <RegistrarHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

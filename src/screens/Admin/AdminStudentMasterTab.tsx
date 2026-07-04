@@ -14,7 +14,24 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminStudentMasterTab = () => {
+export const AdminStudentMasterTab = ({
+  sortedStudents,
+  searchQuery,
+  setSearchQuery,
+  setSelectedUser,
+  setDetailModalVisible,
+  setIsEditing,
+  setFormData
+}: {
+  sortedStudents: any[];
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  setSelectedUser: (user: any) => void;
+  setDetailModalVisible: (visible: boolean) => void;
+  setIsEditing: (editing: boolean) => void;
+  setFormData: (data: any) => void;
+}) => {
+    const { deleteUser } = useStore();
     const filtered = sortedStudents.filter((s: any) => s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.id.includes(searchQuery));
     return (
       <View className="space-y-6">

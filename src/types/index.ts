@@ -20,6 +20,8 @@ export interface UniversityData {
   studentData?: {
     studentId: string;
     major: string;
+    course?: string;
+    specialization?: string;
     currentSemester: number;
     creditsEarned: number;
     creditsTotal: number;

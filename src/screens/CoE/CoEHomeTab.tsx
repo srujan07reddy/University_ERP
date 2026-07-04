@@ -6,10 +6,26 @@ import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
-  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin
+  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin,
+  Lock, FileCheck, AlertTriangle, ShieldAlert, Printer
 } from 'lucide-react-native';
 
-export const CoEHomeTab = () => {
+const coeData = {
+  totalExams: 124,
+  marksUploaded: 98,
+  integrityAlerts: [
+    { id: '1', msg: 'Anomalous grading in CS301 Section B', severity: 'High' },
+    { id: '2', msg: 'Delayed result upload for PH101', severity: 'Low' }
+  ],
+  marksPending: 26,
+  evaluationProgress: 72
+};
+
+export const CoEHomeTab = ({
+  setMenuVisible
+}: {
+  setMenuVisible?: (visible: boolean) => void;
+}) => {
   const { user, setUser, users, substitutions } = useStore();
   const studentData = user?.universityData?.studentData;
   const facultyData = user?.universityData?.facultyData;
@@ -22,7 +38,7 @@ export const CoEHomeTab = () => {
               <View className="flex-row items-center">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
-                    onPress={() => setMenuVisible(true)}
+                    onPress={() => setMenuVisible?.(true)}
                     className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
                   >
                     <Menu color="white" size={20} />

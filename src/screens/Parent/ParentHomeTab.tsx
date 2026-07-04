@@ -6,10 +6,15 @@ import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
-  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin
+  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin,
+  GraduationCap, CreditCard
 } from 'lucide-react-native';
 
-export const ParentHomeTab = () => {
+export const ParentHomeTab = ({
+  setMenuVisible
+}: {
+  setMenuVisible?: (visible: boolean) => void;
+}) => {
   const { user, setUser, users, substitutions } = useStore();
   const studentData = user?.universityData?.studentData;
   const facultyData = user?.universityData?.facultyData;
@@ -21,7 +26,7 @@ export const ParentHomeTab = () => {
             <View className="flex-row justify-between items-center mb-8">
               <View className="flex-row items-center">
                 <TouchableOpacity 
-                  onPress={() => setMenuVisible(true)}
+                  onPress={() => setMenuVisible?.(true)}
                   className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
                 >
                   <Menu color="white" size={20} />

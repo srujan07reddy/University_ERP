@@ -14,7 +14,65 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminAnalyticsTab = () => {
+const SEMESTERS = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8'];
+const screenWidth = Dimensions.get('window').width;
+
+export const AdminAnalyticsTab = ({
+  messageForm,
+  setMessageForm,
+  setGroupMessageModalVisible,
+  performanceSettings,
+  messagingTargetIds,
+  setMessagingTargetIds,
+  setPerfSettingsModalVisible
+}: {
+  messageForm: any;
+  setMessageForm: (form: any) => void;
+  setGroupMessageModalVisible: (visible: boolean) => void;
+  performanceSettings: { high: string; medium: string; low: string };
+  messagingTargetIds: string[];
+  setMessagingTargetIds: (ids: string[]) => void;
+  setPerfSettingsModalVisible: (visible: boolean) => void;
+}) => {
+    const { users } = useStore();
+    const [analyticsMetric, setAnalyticsMetric] = useState<'Attendance' | 'Assignments' | 'Assessments' | 'ExamComparison'>('Attendance');
+    const [selectedSem, setSelectedSem] = useState('Sem 1');
+    const [analyticsSortOrder, setAnalyticsSortOrder] = useState<'high' | 'low' | 'none' | 'improvement'>('none');
+    const [segmentFilter, setSegmentFilter] = useState<'high' | 'medium' | 'low' | 'none'>('none');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Performance Segmentation Logic computed locally
+    const sortedStudents = React.useMemo(() => {
+      let base = users.filter(u => u.role === 'Student').map((s: any) => {
+        const score = (parseInt(s.id) * 7) % 100 || 75;
+        let segment: 'high' | 'medium' | 'low' = 'medium';
+        if (score >= 85) segment = 'high';
+        else if (score < 60) segment = 'low';
+        
+        const feeDue = (parseInt(s.id) * 100) % 5000;
+        const isDefaulter = feeDue > 2000;
+        
+        const preLastExam = (parseInt(s.id) * 7) % 40 + 45;
+        const lastExam = (parseInt(s.id) * 9) % 40 + 50;
+        const presentExam = (parseInt(s.id) * 11) % 40 + 55;
+        const improvement = presentExam - lastExam;
+        const overallTrend = presentExam - preLastExam;
+        
+        return { ...s, score, segment, feeDue, isDefaulter, preLastExam, lastExam, presentExam, improvement, overallTrend };
+      });
+
+      if (analyticsSortOrder === 'high') return base.sort((a, b) => b.presentExam - a.presentExam);
+      if (analyticsSortOrder === 'low') return base.sort((a, b) => a.presentExam - b.presentExam);
+      if (analyticsSortOrder === 'improvement') return base.sort((a, b) => b.improvement - a.improvement);
+      return base;
+    }, [users, analyticsSortOrder]);
+
+    const filteredAnalyticsStudents = sortedStudents.filter(s => {
+      const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSegment = segmentFilter === 'none' || s.segment === segmentFilter;
+      return matchesSearch && matchesSegment;
+    });
+
     const getChartData = () => {
       if (analyticsMetric === 'Attendance') {
         return {

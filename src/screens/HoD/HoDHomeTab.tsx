@@ -9,8 +9,12 @@ import {
   Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin
 } from 'lucide-react-native';
 
-export const HoDHomeTab = () => {
-  const { user, setUser, users, substitutions } = useStore();
+export const HoDHomeTab = ({
+  setMenuVisible
+}: {
+  setMenuVisible?: (visible: boolean) => void;
+}) => {
+  const { user, setUser, users, substitutions, leaveRequests } = useStore();
   const studentData = user?.universityData?.studentData;
   const facultyData = user?.universityData?.facultyData;
   
@@ -22,7 +26,7 @@ export const HoDHomeTab = () => {
               <View className="flex-row items-center">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
-                    onPress={() => setMenuVisible(true)}
+                    onPress={() => setMenuVisible?.(true)}
                     className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
                   >
                     <Menu color="white" size={20} />

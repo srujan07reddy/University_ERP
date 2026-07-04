@@ -14,7 +14,9 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminInventoryTab = () => (
+export const AdminInventoryTab = () => {
+  const { assets } = useStore();
+  return (
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10">
       <Text className="text-white text-2xl font-bold mb-8">Asset & Inventory Tracking</Text>
       <View className="space-y-4">
@@ -33,3 +35,4 @@ export const AdminInventoryTab = () => (
       </View>
     </View>
   );
+};

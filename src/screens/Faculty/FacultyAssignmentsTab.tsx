@@ -9,7 +9,11 @@ import {
   Trash2, Send, Download, Sparkles, Shield, RefreshCw
 } from 'lucide-react-native';
 
-export const FacultyAssignmentsTab = () => {
+export const FacultyAssignmentsTab = ({
+  setAssignmentModal
+}: {
+  setAssignmentModal?: (visible: boolean) => void;
+}) => {
   const { user, users, assignments, addAssignment, notes, addNote, leaveRequests, addLeaveRequest } = useStore();
   const facultyData = user?.universityData?.facultyData;
   const [newAssignment, setNewAssignment] = useState({ title: '', course: '', deadline: '', maxMarks: '100' });
@@ -130,7 +134,7 @@ export const FacultyAssignmentsTab = () => {
                 <Text className="text-white text-2xl font-bold">Coursework & Assignments</Text>
                 <Text className="text-slate-400 text-xs">Evaluate submissions, define prompts</Text>
               </View>
-              <TouchableOpacity onPress={() => setAssignmentModal(true)} className="bg-blue-600 p-3 rounded-xl">
+              <TouchableOpacity onPress={() => setAssignmentModal?.(true)} className="bg-blue-600 p-3 rounded-xl">
                 <Plus color="white" size={16} />
               </TouchableOpacity>
             </View>

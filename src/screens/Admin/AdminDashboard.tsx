@@ -427,18 +427,73 @@ export const AdminDashboard = () => {
           <View style={{ flex: 1, padding: 32, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
             {activeTab === 'Overview' && <AdminOverviewTab />}
             {activeTab === 'Approvals' && <ApprovalsPortal />}
-            {activeTab === 'Analytics' && <AdminAnalyticsTab />}
-            {activeTab === 'Surveys' && <AdminSurveysTab />}
+            {activeTab === 'Analytics' && (
+              <AdminAnalyticsTab 
+                messageForm={messageForm}
+                setMessageForm={setMessageForm}
+                setGroupMessageModalVisible={setGroupMessageModalVisible}
+                performanceSettings={performanceSettings}
+                messagingTargetIds={messagingTargetIds}
+                setMessagingTargetIds={setMessagingTargetIds}
+                setPerfSettingsModalVisible={setPerfSettingsModalVisible}
+              />
+            )}
+            {activeTab === 'Surveys' && (
+              <AdminSurveysTab setSurveyModalVisible={setSurveyModalVisible} />
+            )}
             {activeTab === 'Calendar' && <CalendarModule />}
-            {activeTab === 'Users' && <AdminUsersTab />}
-            {activeTab === 'Finance' && <AdminFinanceTab />}
+            {activeTab === 'Users' && (
+              <AdminUsersTab 
+                setAppointmentModalVisible={setAppointmentModalVisible} 
+                setAdmissionModalVisible={setAdmissionModalVisible} 
+              />
+            )}
+            {activeTab === 'Finance' && (
+              <AdminFinanceTab 
+                screenWidth={screenWidth}
+                sortedStudents={sortedStudents}
+                setMessagingTargetIds={setMessagingTargetIds}
+                setMessageForm={setMessageForm}
+                messageForm={messageForm}
+                setGroupMessageModalVisible={setGroupMessageModalVisible}
+              />
+            )}
             {activeTab === 'Inventory' && <AdminInventoryTab />}
             {activeTab === 'Payroll' && <AdminPayrollTab />}
-            {activeTab === 'StudentsMaster' && <AdminStudentMasterTab />}
-            {activeTab === 'StaffMaster' && <AdminStaffMasterTab />}
+            {activeTab === 'StudentsMaster' && (
+              <AdminStudentMasterTab 
+                sortedStudents={sortedStudents}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setSelectedUser={setSelectedUser}
+                setDetailModalVisible={setDetailModalVisible}
+                setIsEditing={setIsEditing}
+                setFormData={setFormData}
+              />
+            )}
+            {activeTab === 'StaffMaster' && (
+              <AdminStaffMasterTab 
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setSelectedUser={setSelectedUser}
+                setDetailModalVisible={setDetailModalVisible}
+                setIsEditing={setIsEditing}
+                setFormData={setFormData}
+              />
+            )}
             {activeTab === 'RulesConsole' && <AdminRulesConsoleTab />}
             {activeTab === 'Logs' && <AdminLogsTab />}
-            {activeTab === 'Timetable' && <AdminTimetableTab />}
+            {activeTab === 'Timetable' && (
+              <AdminTimetableTab 
+                timetableMode={timetableMode}
+                setTimetableMode={setTimetableMode}
+                timetableFilter={timetableFilter}
+                setTimetableFilter={setTimetableFilter}
+                timetableData={timetableData}
+                isGenerating={isGenerating}
+                handleAutoGenerateTimetable={handleAutoGenerateTimetable}
+              />
+            )}
           </View>
         </View>
       </View>

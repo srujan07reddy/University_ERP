@@ -50,7 +50,7 @@ export const FinanceDashboard = () => {
       case 'Calendar':
         return <FinanceCalendarTab />;
             default:
-        return <FinanceHomeTab />;
+        return <FinanceHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

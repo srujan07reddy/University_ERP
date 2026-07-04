@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform, Modal } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { 
@@ -12,6 +12,7 @@ export const StudentProfileTab = () => {
   const { user, businessRules } = useStore();
   const studentData = user?.universityData?.studentData;
   const [personalDetails, setPersonalDetails] = useState({ phone: '+1 234 567 890', email: user?.email || 'student@university.com', address: '123 Baker Street, London' });
+  const [editProfileModal, setEditProfileModal] = useState(false);
   const [pdfSubmitted, setPdfSubmitted] = useState(false);
   const [cvUploaded, setCvUploaded] = useState(false);
   const [atsAnalyzing, setAtsAnalyzing] = useState(false);
@@ -80,6 +81,43 @@ export const StudentProfileTab = () => {
                 <Text className="text-slate-300 text-xs font-bold">Robert Wilson (Parent)</Text>
               </View>
             </View>
+
+            <Modal animationType="slide" transparent={true} visible={editProfileModal} onRequestClose={() => setEditProfileModal(false)}>
+              <View className="flex-1 justify-center items-center bg-black/60 p-4">
+                <View className="bg-[#1E293B] w-full max-w-lg p-8 rounded-[32px] border border-white/10">
+                  <Text className="text-white text-2xl font-bold mb-4">Edit Profile Details</Text>
+                  <View className="space-y-4">
+                    <TextInput 
+                      placeholder="Phone" 
+                      placeholderTextColor="#64748b" 
+                      className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white"
+                      value={personalDetails.phone}
+                      onChangeText={(t) => setPersonalDetails({...personalDetails, phone: t})}
+                    />
+                    <TextInput 
+                      placeholder="Email" 
+                      placeholderTextColor="#64748b" 
+                      className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white"
+                      value={personalDetails.email}
+                      onChangeText={(t) => setPersonalDetails({...personalDetails, email: t})}
+                    />
+                    <TextInput 
+                      placeholder="Address" 
+                      placeholderTextColor="#64748b" 
+                      className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white"
+                      value={personalDetails.address}
+                      onChangeText={(t) => setPersonalDetails({...personalDetails, address: t})}
+                    />
+                    <TouchableOpacity onPress={() => { setEditProfileModal(false); Alert.alert('Success', 'Profile updated.'); }} className="bg-blue-600 p-4 rounded-xl items-center mt-4">
+                      <Text className="text-white font-bold">Save Details</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setEditProfileModal(false)} className="p-2 items-center">
+                      <Text className="text-slate-400">Cancel</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
         )
   );

@@ -6,11 +6,19 @@ import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
-  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin
+  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Wallet, DollarSign, TrendingUp, Briefcase, Database, MapPin,
+  Layers
 } from 'lucide-react-native';
 
-export const DeanHomeTab = () => {
-  const { user, setUser, users, substitutions } = useStore();
+export const DeanHomeTab = ({
+  setMenuVisible,
+  setActiveTab
+}: {
+  setMenuVisible?: (visible: boolean) => void;
+  setActiveTab?: (tab: string) => void;
+}) => {
+  const { user, setUser, users, substitutions, approvalRequests } = useStore();
+  const approvalsQueue = approvalRequests.filter(req => req.currentApproverRole === 'Dean' && req.status === 'Pending');
   const studentData = user?.universityData?.studentData;
   const facultyData = user?.universityData?.facultyData;
   
@@ -22,7 +30,7 @@ export const DeanHomeTab = () => {
               <View className="flex-row items-center">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
-                    onPress={() => setMenuVisible(true)}
+                    onPress={() => setMenuVisible?.(true)}
                     className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
                   >
                     <Menu color="white" size={20} />
@@ -75,7 +83,7 @@ export const DeanHomeTab = () => {
                   { label: 'Approvals Queue', id: 'Approvals' },
                   { label: 'School Budgets', id: 'Budget' }
                 ].map((btn, idx) => (
-                  <TouchableOpacity key={idx} onPress={() => setActiveTab(btn.id)} className="bg-white/5 border border-white/10 px-5 py-3 rounded-2xl">
+                  <TouchableOpacity key={idx} onPress={() => setActiveTab?.(btn.id)} className="bg-white/5 border border-white/10 px-5 py-3 rounded-2xl">
                     <Text className="text-blue-400 font-bold text-xs">{btn.label}</Text>
                   </TouchableOpacity>
                 ))}

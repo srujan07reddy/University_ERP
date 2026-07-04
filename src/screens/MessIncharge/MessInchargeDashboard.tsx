@@ -1,9 +1,10 @@
+// Mess Incharge Dashboard Wrapper
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { useStore } from '../../store/useStore';
-import { MessInchargeHomeTab } from './MessInchargeHomeTab';
-import { MessInchargeLogsTab } from './MessInchargeLogsTab';
-import { MessInchargeFeedbackTab } from './MessInchargeFeedbackTab';
+import MessInchargeHomeTab from './MessInchargeHomeTab';
+import MessInchargeLogsTab from './MessInchargeLogsTab';
+import MessInchargeFeedbackTab from './MessInchargeFeedbackTab';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { 
@@ -99,7 +100,6 @@ export const MessInchargeDashboard = () => {
         <BottomNavbar 
           activeTab={activeTab} 
           setActiveTab={setActiveTab} 
-          tabs={menuItems} 
         />
       </View>
     </View>

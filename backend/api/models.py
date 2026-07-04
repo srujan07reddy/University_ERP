@@ -34,6 +34,7 @@ class Student(models.Model):
     roll_number = models.CharField(max_length=20, unique=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
     course = models.CharField(max_length=100) # e.g. B.Tech Computer Science
+    specialization = models.CharField(max_length=100, blank=True, null=True)
     semester = models.IntegerField(default=1)
     batch = models.CharField(max_length=10) # e.g. 2024-2028
     parent_name = models.CharField(max_length=100, blank=True)
@@ -53,6 +54,14 @@ class Transaction(models.Model):
     date = models.DateField()
     status = models.CharField(max_length=10, choices=(('Paid', 'Paid'), ('Pending', 'Pending')))
     description = models.CharField(max_length=255)
+
+class StudentFeeLedger(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='fee_ledgers')
+    total_term_fees = models.DecimalField(max_digits=10, decimal_places=2)
+    paid_fees = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    due_date = models.DateField()
+    status = models.CharField(max_length=20, default='Unpaid', choices=(('Paid', 'Paid'), ('Partial', 'Partial'), ('Unpaid', 'Unpaid')))
+
 
 class BusRoute(models.Model):
     bus_number = models.CharField(max_length=20)

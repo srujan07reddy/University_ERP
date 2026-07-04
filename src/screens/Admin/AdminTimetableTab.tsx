@@ -14,7 +14,25 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminTimetableTab = () => {
+const DEPARTMENTS = ['Computer Science', 'Electrical', 'Mechanical', 'Civil', 'Business', 'Arts', 'Sciences'];
+
+export const AdminTimetableTab = ({
+  timetableMode,
+  setTimetableMode,
+  timetableFilter,
+  setTimetableFilter,
+  timetableData,
+  isGenerating,
+  handleAutoGenerateTimetable
+}: {
+  timetableMode: 'Class' | 'Teacher';
+  setTimetableMode: (mode: 'Class' | 'Teacher') => void;
+  timetableFilter: string;
+  setTimetableFilter: (filter: string) => void;
+  timetableData: any[];
+  isGenerating: boolean;
+  handleAutoGenerateTimetable: () => void;
+}) => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const timeSlots = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM'];
     

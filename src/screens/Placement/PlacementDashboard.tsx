@@ -229,7 +229,7 @@ export const PlacementDashboard = () => {
         return <MessageCenter />;
 
             default:
-        return <PlacementHomeTab />;
+        return <PlacementHomeTab setMenuVisible={setMenuVisible} setActiveTab={setActiveTab} />;
     }
   };
 

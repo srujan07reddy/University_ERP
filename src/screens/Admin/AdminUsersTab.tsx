@@ -14,7 +14,15 @@ import {
   Target, GraduationCap
 } from 'lucide-react-native';
 
-export const AdminUsersTab = () => (
+export const AdminUsersTab = ({
+  setAppointmentModalVisible,
+  setAdmissionModalVisible
+}: {
+  setAppointmentModalVisible: (visible: boolean) => void;
+  setAdmissionModalVisible: (visible: boolean) => void;
+}) => {
+  const { users } = useStore();
+  return (
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10 shadow-sm">
       <View className="flex-row justify-between items-center mb-8">
         <View>
@@ -58,3 +66,4 @@ export const AdminUsersTab = () => (
       </View>
     </View>
   );
+};

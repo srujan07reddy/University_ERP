@@ -389,7 +389,7 @@ export const HoDDashboard = () => {
       case 'StaffMarks':
         return <HoDStaffMarksTab />;
       case 'StaffAssignments':
-        return <HoDStaffAssignmentsTab />;
+        return <HoDStaffAssignmentsTab setAssignmentModal={setAssignmentModal} />;
       case 'StaffLessonPlans':
         return <HoDStaffLessonPlansTab />;
       case 'StaffResearch':
@@ -398,7 +398,7 @@ export const HoDDashboard = () => {
         return <MessageCenter />;
 
             default:
-        return <HoDHomeTab />;
+        return <HoDHomeTab setMenuVisible={setMenuVisible} />;
     }
   };
 

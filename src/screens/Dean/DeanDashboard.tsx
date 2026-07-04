@@ -253,7 +253,7 @@ export const DeanDashboard = () => {
       case 'StaffMarks':
         return <DeanStaffMarksTab />;
       case 'StaffAssignments':
-        return <DeanStaffAssignmentsTab />;
+        return <DeanStaffAssignmentsTab setAssignmentModal={setAssignmentModal} />;
       case 'StaffLessonPlans':
         return <DeanStaffLessonPlansTab />;
       case 'StaffResearch':
@@ -262,7 +262,7 @@ export const DeanDashboard = () => {
         return <MessageCenter />;
 
             default:
-        return <DeanHomeTab />;
+        return <DeanHomeTab setMenuVisible={setMenuVisible} setActiveTab={setActiveTab} />;
     }
   };
 
