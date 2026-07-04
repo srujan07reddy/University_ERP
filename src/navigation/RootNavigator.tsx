@@ -24,6 +24,7 @@ import { CoEDashboard } from '../screens/CoE/CoEDashboard';
 import { HoDDashboard } from '../screens/HoD/HoDDashboard';
 import { AdmissionsDashboard } from '../screens/Admissions/AdmissionsDashboard';
 import { BusInchargeDashboard } from '../screens/BusIncharge/BusInchargeDashboard';
+import { MessInchargeDashboard } from '../screens/MessIncharge/MessInchargeDashboard';
 
 // Floating Chatbot
 import { FloatingChatbot } from '../components/Navigation/FloatingChatbot';
@@ -85,6 +86,9 @@ export const RootNavigator = () => {
               )}
               {user.role === 'BusIncharge' && (
                 <Stack.Screen name="BusInchargeStack" component={BusInchargeDashboard} />
+              )}
+              {user.role === 'MessIncharge' && (
+                <Stack.Screen name="MessInchargeStack" component={MessInchargeDashboard} />
               )}
               <Stack.Screen name="SafeChat" component={SafeChat} />
             </>

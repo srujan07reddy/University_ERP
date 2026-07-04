@@ -36,7 +36,8 @@ export const LoginScreen = () => {
       PlacementOfficer: 'placement@university.com',
       HoD: 'hod@university.com',
       Admissions: 'admissions@university.com',
-      BusIncharge: 'busincharge@university.com'
+      BusIncharge: 'busincharge@university.com',
+      MessIncharge: 'messincharge@university.com'
     };
     if (roleEmailMap[newRole]) {
       setEmail(roleEmailMap[newRole]);
@@ -102,7 +103,7 @@ export const LoginScreen = () => {
               style={{ width: '100%' }}
               contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
             >
-              {(['Chancellor', 'ViceChancellor', 'ProVC', 'Registrar', 'Dean', 'HoD', 'CoE', 'Admissions', 'PlacementOfficer', 'Finance', 'Admin', 'Faculty', 'Student', 'Parent', 'BusIncharge'] as const).map((r) => (
+              {(['Chancellor', 'ViceChancellor', 'ProVC', 'Registrar', 'Dean', 'HoD', 'CoE', 'Admissions', 'PlacementOfficer', 'Finance', 'Admin', 'Faculty', 'Student', 'Parent', 'BusIncharge', 'MessIncharge'] as const).map((r) => (
                 <TouchableOpacity
                   key={r}
                   onPress={() => handleRoleChange(r)}

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User, UserRole, LiveStats, BusRoute, Asset, PayrollRecord, AuditLog, Message, CalendarEvent, Survey, ApprovalRequest, BusinessRule } from '../types';
+import { User, UserRole, LiveStats, BusRoute, Asset, PayrollRecord, AuditLog, Message, CalendarEvent, Survey, ApprovalRequest, BusinessRule, MessLog, MessReview } from '../types';
 import { MOCK_USERS } from '../utils/mockData';
 import { setAuthToken } from '../utils/api';
 
@@ -29,6 +29,8 @@ interface AppState {
   performanceSettings: { high: string; medium: string; low: string };
   businessRules: BusinessRule[];
   isLoading: boolean;
+  messLogs: MessLog[];
+  messReviews: MessReview[];
 
   setUser: (user: User | null, token?: string | null) => void;
   addUser: (user: User) => void;
@@ -52,6 +54,8 @@ interface AppState {
   simulateHours: (hours: number) => void;
   appointUser: (appointingRole: UserRole, newUser: User) => void;
   updateUser: (userId: string, updatedFields: Partial<User>) => void;
+  addMessLog: (log: Omit<MessLog, 'id'>) => void;
+  addMessReview: (review: Omit<MessReview, 'id'>) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -128,6 +132,17 @@ export const useStore = create<AppState>((set) => ({
     { id: 'rule_2', name: 'Placement Package Multiplier (x)', value: 2, isEnabled: true, category: 'Placement' },
     { id: 'rule_3', name: 'HOD vs Dean OD Threshold (Days)', value: 3, isEnabled: true, category: 'Leave' },
     { id: 'rule_4', name: 'Workflow Escalation Timeout (Hours)', value: 24, isEnabled: true, category: 'General' },
+  ],
+  messLogs: [
+    { id: 'm1', date: '2026-07-04', mealType: 'Breakfast', cookedQty: 120, wastedQty: 8, studentsFed: 420, rating: 4.2 },
+    { id: 'm2', date: '2026-07-04', mealType: 'Lunch', cookedQty: 250, wastedQty: 22, studentsFed: 780, rating: 3.8 },
+    { id: 'm3', date: '2026-07-03', mealType: 'Dinner', cookedQty: 220, wastedQty: 15, studentsFed: 690, rating: 4.5 },
+    { id: 'm4', date: '2026-07-03', mealType: 'Lunch', cookedQty: 240, wastedQty: 18, studentsFed: 750, rating: 4.0 },
+  ],
+  messReviews: [
+    { id: 'r1', studentName: 'Aditya Sen', rating: 4.5, comment: 'Puri Sabji was amazing today, less oil please.', date: '2026-07-04', mealType: 'Breakfast' },
+    { id: 'r2', studentName: 'Neha Nair', rating: 3.0, comment: 'Rice was a bit undercooked. Paneer gravy was good.', date: '2026-07-04', mealType: 'Lunch' },
+    { id: 'r3', studentName: 'Rahul Verma', rating: 5.0, comment: 'Chicken biryani was outstanding! Kudos.', date: '2026-07-03', mealType: 'Dinner' },
   ],
   isLoading: false,
 
@@ -388,6 +403,20 @@ export const useStore = create<AppState>((set) => ({
       }
     } : state.user;
     return { users: updatedUsers, user: currentUser };
+  }),
+  addMessLog: (log) => set((state) => {
+    const newLog: MessLog = {
+      ...log,
+      id: Math.random().toString(36).substr(2, 9),
+    };
+    return { messLogs: [newLog, ...state.messLogs] };
+  }),
+  addMessReview: (review) => set((state) => {
+    const newReview: MessReview = {
+      ...review,
+      id: Math.random().toString(36).substr(2, 9),
+    };
+    return { messReviews: [newReview, ...state.messReviews] };
   }),
 }));
 

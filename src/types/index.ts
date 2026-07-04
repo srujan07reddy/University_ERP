@@ -13,7 +13,8 @@ export type UserRole =
   | 'HoD'
   | 'Admissions'
   | 'Admin'
-  | 'BusIncharge';
+  | 'BusIncharge'
+  | 'MessIncharge';
 
 export interface UniversityData {
   studentData?: {
@@ -192,5 +193,24 @@ export interface BusinessRule {
   value: number | string | boolean;
   isEnabled: boolean;
   category: 'Attendance' | 'Placement' | 'Leave' | 'General';
+}
+
+export interface MessLog {
+  id: string;
+  date: string;
+  mealType: 'Breakfast' | 'Lunch' | 'Snacks' | 'Dinner';
+  cookedQty: number; // in kg
+  wastedQty: number; // in kg
+  studentsFed: number;
+  rating: number;
+}
+
+export interface MessReview {
+  id: string;
+  studentName: string;
+  rating: number;
+  comment: string;
+  date: string;
+  mealType: string;
 }
 
