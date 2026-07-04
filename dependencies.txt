@@ -1,0 +1,121 @@
+================================================================================
+UNIVERSITY ERP - DEPENDENCIES AND INSTALLATION GUIDE
+================================================================================
+
+This document details all the dependencies required for the University ERP
+system (both Frontend and Backend), along with installation instructions
+and commands to run the application.
+
+--------------------------------------------------------------------------------
+1. SYSTEM REQUIREMENTS
+--------------------------------------------------------------------------------
+- Node.js (Tested with v24.16.0)
+- npm (Tested with v11.17.0)
+- Python (Tested with v3.14.6)
+- pip (Tested with v26.1.2)
+
+--------------------------------------------------------------------------------
+2. FRONTEND DEPENDENCIES (React Native Expo)
+--------------------------------------------------------------------------------
+Defined in root `package.json`. These packages are required to run the
+cross-platform mobile/web frontend:
+
+Core Framework:
+- expo (~54.0.33)
+- react (19.1.0)
+- react-dom (19.1.0)
+- react-native (0.81.5)
+
+Navigation:
+- @react-navigation/native (^7.2.2)
+- @react-navigation/stack (^7.8.11)
+- react-native-screens (~4.16.0)
+- react-native-safe-area-context (~5.6.0)
+- react-native-gesture-handler (~2.28.0)
+
+State Management & API:
+- zustand (^5.0.12)
+- axios (^1.15.2)
+
+Styling & UI:
+- nativewind (^4.2.3)
+- tailwindcss (^3.4.19)
+- lucide-react-native (^1.11.0)
+- expo-linear-gradient (~15.0.8)
+- react-native-linear-gradient (^2.8.3)
+- react-native-svg (15.12.1)
+- react-native-chart-kit (^6.12.1)
+
+Web Support:
+- @expo/metro-runtime (~6.1.2)
+- react-native-web (^0.21.0)
+
+--------------------------------------------------------------------------------
+3. BACKEND DEPENDENCIES (Django API)
+--------------------------------------------------------------------------------
+Defined in `backend/requirements.txt`. These packages are required to power
+the REST API server:
+
+Web Framework & API:
+- Django>=5.1,<6.1 (Tested with 6.0.6)
+- djangorestframework>=3.15.0
+- django-cors-headers>=4.6.0
+- djangorestframework-simplejwt>=5.3.0 (for JSON Web Token authentication)
+
+Integrations:
+- firebase-admin>=6.5.0 (for Live GPS tracking and real-time streams)
+
+--------------------------------------------------------------------------------
+4. INSTALLATION INSTRUCTIONS
+--------------------------------------------------------------------------------
+
+Recommended: One-Command Installation (All Dependencies)
+---------------------------------------------------------
+This command automatically installs the frontend npm packages, creates a 
+Python virtual environment in the `backend` folder, and installs the backend 
+Python dependencies.
+
+1. Open a terminal in the root project folder:
+   cd d:\University_ERP
+2. Run the custom install script:
+   npm run install-all
+3. Navigate to the backend directory and apply migrations:
+   cd backend
+   venv\Scripts\python manage.py migrate
+
+Alternative: Manual Setup
+-------------------------
+For manual setup instructions, see below:
+
+- Frontend Manual Setup:
+  1. cd d:\University_ERP
+  2. npm install
+
+- Backend Manual Setup:
+  1. cd d:\University_ERP\backend
+  2. python -m venv venv
+  3. venv\Scripts\python -m pip install -r requirements.txt
+
+--------------------------------------------------------------------------------
+5. RUNNING THE APPLICATION
+--------------------------------------------------------------------------------
+
+To start the backend Django server:
+-----------------------------------
+1. Open a terminal in `d:\University_ERP\backend`.
+2. Activate the virtual environment (if not already activated):
+   venv\Scripts\Activate.ps1 (or appropriate activate script for your shell)
+3. Run the development server:
+   python manage.py runserver
+
+To start the frontend Expo app:
+-------------------------------
+1. Open another terminal in `d:\University_ERP`.
+2. Run the Expo packager:
+   npm run start
+3. Follow terminal prompts to open the application in:
+   - Android Emulator ('a')
+   - iOS Simulator ('i')
+   - Web Browser ('w')
+   - Expo Go app on a physical device (scan QR code)
+================================================================================

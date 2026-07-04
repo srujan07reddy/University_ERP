@@ -3,14 +3,14 @@ import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform, Modal
 import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { 
   GraduationCap, Users, BookOpen, Bell, ChevronRight, UserCheck, TrendingUp, LogOut, 
-  Menu, X, Home, Calendar, Settings, User, MessageSquare, BarChart3, ClipboardList
+  Menu, X, Home, Calendar, Settings, User, MessageSquare, BarChart3, ClipboardList, Shield, Award
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 
-export const VCDashboard = () => {
+export const ProVCDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('Home');
@@ -37,8 +37,8 @@ export const VCDashboard = () => {
                   </TouchableOpacity>
                 )}
                 <View>
-                  <Text className="text-slate-400 text-sm font-medium">University Leadership</Text>
-                  <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>Vice Chancellor</Text>
+                  <Text className="text-slate-400 text-sm font-medium">Academic & Student Affairs</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>Pro Vice Chancellor</Text>
                 </View>
               </View>
               <View className="flex-row gap-3">
@@ -57,51 +57,51 @@ export const VCDashboard = () => {
             {/* Strategic KPI Grid */}
             <View className="flex-row mb-6">
               <StatCard 
-                title="Academic Rating" 
-                value="4.85/5" 
+                title="Curriculum Completion" 
+                value="94.2%" 
                 icon={GraduationCap} 
-                trend="+0.2" 
+                trend="On Schedule" 
                 color="#3b82f6"
               />
               <StatCard 
-                title="Faculty Strength" 
-                value="1,240" 
+                title="Faculty Appraisals" 
+                value="142 / 160" 
                 icon={Users} 
-                trend="+45" 
+                trend="92% Completed" 
                 color="#10b981"
               />
             </View>
 
             <View className="flex-row mb-8">
               <StatCard 
-                title="Research Output" 
-                value="842" 
+                title="Research Proposals" 
+                value="34" 
                 icon={BookOpen} 
-                trend="+12%" 
+                trend="18 Approved" 
                 color="#8b5cf6"
               />
               <StatCard 
-                title="NIRF Rank" 
-                value="#14" 
-                icon={BarChart3} 
-                trend="Top 1%" 
+                title="Accreditation Score" 
+                value="A++ (3.72)" 
+                icon={Award} 
+                trend="NAAC Grade" 
                 color="#f59e0b"
               />
             </View>
 
-            {/* University Vision Progress */}
+            {/* Academic Progression */}
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 mb-8">
-              <Text style={{ color: '#FFFFFF', fontSize: 20, fontWeight: 'bold', marginBottom: 24 }}>Vision 2025 Progress</Text>
+              <Text style={{ color: '#FFFFFF', fontSize: 20, fontWeight: 'bold', marginBottom: 24 }}>Academic Milestones</Text>
               
               <View className="space-y-6">
                 <View>
                   <View className="flex-row justify-between mb-2">
-                    <Text className="text-slate-300 text-sm">International Accreditations</Text>
-                    <Text className="text-green-400 text-sm font-bold">85%</Text>
+                    <Text className="text-slate-300 text-sm">Outcome Based Education (OBE) Mapping</Text>
+                    <Text className="text-green-400 text-sm font-bold">90%</Text>
                   </View>
                   <View className="h-2 bg-white/5 rounded-full overflow-hidden">
                     <View 
-                      style={{ width: '85%' as any, backgroundColor: '#3b82f6' }} 
+                      style={{ width: '90%' as any, backgroundColor: '#3b82f6' }} 
                       className="h-full rounded-full" 
                     />
                   </View>
@@ -109,44 +109,16 @@ export const VCDashboard = () => {
 
                 <View>
                   <View className="flex-row justify-between mb-2">
-                    <Text className="text-slate-300 text-sm">Research Grant Utilization</Text>
-                    <Text className="text-blue-400 text-sm font-bold">$12.4M / $15M</Text>
+                    <Text className="text-slate-300 text-sm">Industry Collaborations & MoUs</Text>
+                    <Text className="text-blue-400 text-sm font-bold">42 signed / 50 Goal</Text>
                   </View>
                   <View className="h-2 bg-white/5 rounded-full overflow-hidden">
                     <View 
-                      style={{ width: '82%' as any, backgroundColor: '#10b981' }} 
+                      style={{ width: '84%' as any, backgroundColor: '#10b981' }} 
                       className="h-full rounded-full" 
                     />
                   </View>
                 </View>
-              </View>
-            </View>
-
-            {/* Quick Actions / Critical Tasks */}
-            <View className="mb-10">
-              <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold', marginBottom: 24 }}>Directives & Tasks</Text>
-              <View className="space-y-4">
-                <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 flex-row items-center">
-                  <View className="bg-blue-600/20 p-3 rounded-2xl mr-4">
-                    <TrendingUp color="#3b82f6" size={24} />
-                  </View>
-                  <View className="flex-1">
-                    <Text className="text-white font-bold">Annual Strategy Review</Text>
-                    <Text className="text-slate-400 text-xs">Due in 3 days: Board of Trustees</Text>
-                  </View>
-                  <ChevronRight color="#475569" size={20} />
-                </TouchableOpacity>
-
-                <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 flex-row items-center">
-                  <View className="bg-purple-600/20 p-3 rounded-2xl mr-4">
-                    <UserCheck color="#8b5cf6" size={24} />
-                  </View>
-                  <View className="flex-1">
-                    <Text className="text-white font-bold">Faculty Tenure Approvals</Text>
-                    <Text className="text-slate-400 text-xs">12 Pending reviews</Text>
-                  </View>
-                  <ChevronRight color="#475569" size={20} />
-                </TouchableOpacity>
               </View>
             </View>
           </>
@@ -163,7 +135,7 @@ export const VCDashboard = () => {
         {/* Web permanent sidebar */}
         {Platform.OS === 'web' && (
           <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
-            <Text className="text-2xl font-bold text-white mb-6">VC Office</Text>
+            <Text className="text-2xl font-bold text-white mb-6">Pro VC Office</Text>
             <View className="space-y-4">
               <View>
                 <Text className="text-slate-505 text-[10px] font-bold uppercase tracking-widest mb-2">Leadership</Text>
@@ -199,7 +171,7 @@ export const VCDashboard = () => {
           <View className="flex-1 bg-black/80 flex-row">
             <View className="w-72 bg-[#0F172A] p-8 border-r border-white/10">
               <View className="flex-row justify-between items-center mb-8">
-                <Text className="text-2xl font-bold text-white">VC Menu</Text>
+                <Text className="text-2xl font-bold text-white">Pro VC Menu</Text>
                 <TouchableOpacity onPress={() => setMenuVisible(false)}>
                   <X color="white" size={24} />
                 </TouchableOpacity>

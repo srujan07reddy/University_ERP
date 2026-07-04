@@ -63,7 +63,8 @@ export const MOCK_USERS: User[] = [
         feeHistory: [
           { date: '2024-01-10', amount: 3000, status: 'Success' },
           { date: '2023-08-15', amount: 3000, status: 'Success' }
-        ]
+        ],
+        backlogs: 0
       }
     }
   },
@@ -166,5 +167,11 @@ export const MOCK_USERS: User[] = [
         conversionRate: 14.2
       }
     }
+  },
+  {
+    id: '14',
+    name: 'Dr. Minerva McGonagall',
+    email: 'provc@university.com',
+    role: 'ProVC',
   }
 ];

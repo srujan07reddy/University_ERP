@@ -15,6 +15,7 @@ import {
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
+import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
 import { SurveyView } from '../../components/Dashboard/SurveyView';
@@ -27,6 +28,9 @@ export const FinanceDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState('Home');
+  
+  // Scroll event tracking
+  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -169,14 +173,10 @@ export const FinanceDashboard = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
       <View style={{ flex: 1 }}>
-        <ScrollView 
-          className="flex-1 px-6 pt-6"
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
-        >
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
           {renderContent()}
-        </ScrollView>
-        <BottomNavbar />
+        </View>
+        <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Mobile Menu Modal */}
         <Modal animationType="fade" transparent={true} visible={menuVisible} onRequestClose={() => setMenuVisible(false)}>
@@ -188,7 +188,7 @@ export const FinanceDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

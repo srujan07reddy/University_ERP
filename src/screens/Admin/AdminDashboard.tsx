@@ -292,7 +292,7 @@ export const AdminDashboard = () => {
         <View className="space-y-4 mb-2">
            {timetableMode === 'Class' ? (
              <View className="space-y-4">
-               <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-2">
+               <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-2" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
                  {DEPARTMENTS.map((dept) => (
                    <TouchableOpacity 
                      key={dept} 
@@ -316,7 +316,7 @@ export const AdminDashboard = () => {
                </View>
              </View>
            ) : (
-             <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-2">
+             <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-2" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
                {['Mr. Ramesh', 'Ms. Priya', 'Mr. Amit', 'Ms. Sneha', 'Mr. Vikram'].map((teacher) => (
                  <TouchableOpacity 
                    key={teacher} 
@@ -330,7 +330,7 @@ export const AdminDashboard = () => {
            )}
         </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="pb-4">
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="pb-4" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
           <View className="bg-white/5 p-4 rounded-[40px] border border-white/10">
             <View className="flex-row border-b border-white/10 pb-6">
               <View className="w-32 items-center justify-center">
@@ -814,9 +814,9 @@ export const AdminDashboard = () => {
 
   const renderLogs = () => {
     return (
-      <View className="bg-white/5 rounded-3xl p-8 border border-white/10">
+      <View className="bg-white/5 rounded-3xl p-8 border border-white/10" style={{ flex: 1 }}>
         <Text className="text-white text-xl font-bold mb-6">Audit Logs</Text>
-        <ScrollView className="max-h-[600px] space-y-3">
+        <ScrollView className="space-y-3" scrollEventThrottle={16} scrollEnabled={true} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
           {auditLogs.map((log) => (
             <View key={log.id} className="p-4 bg-white/5 rounded-2xl border border-white/5 flex-row justify-between">
               <View className="flex-1">
@@ -896,7 +896,7 @@ export const AdminDashboard = () => {
               ))}
           </View>
           <View className="mb-8">
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-3">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-3" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
               {SEMESTERS.map((grade: string) => (
                 <TouchableOpacity key={grade} onPress={() => setSelectedSem(grade)} className={`px-8 py-4 rounded-2xl border ${selectedSem === grade ? 'bg-blue-600 border-blue-500' : 'bg-white/5 border-white/10'}`}>
                   <Text className={`font-bold ${selectedSem === grade ? 'text-white' : 'text-slate-400'}`}>{grade}</Text>
@@ -905,7 +905,7 @@ export const AdminDashboard = () => {
             </ScrollView>
           </View>
           <ChartContainer title={`${analyticsMetric} Comparison`} subtitle={`Semester ${selectedSem}`}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="w-full">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="w-full" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
               <LineChart data={getChartData()} width={Math.max(screenWidth * 0.7, 600)} height={300} yAxisLabel="" yAxisSuffix={analyticsMetric === 'Assessments' ? "" : "%"} chartConfig={{...chartConfig, backgroundGradientFrom: '#0F172A', backgroundGradientTo: '#0F172A', decimalPlaces: 0 }} bezier style={{ marginVertical: 8, borderRadius: 24 }} />
             </ScrollView>
           </ChartContainer>
@@ -1014,7 +1014,7 @@ export const AdminDashboard = () => {
   );
 
   return (
-    <View style={(Platform.OS === 'web' ? { height: '100vh', overflow: 'hidden' } : { flex: 1 }) as any}>
+    <View style={{ flex: 1 }}>
       <View className="absolute inset-0 bg-[#0F172A]" />
       <View className="flex-1 flex-row">
         {/* Desktop Sidebar */}
@@ -1055,7 +1055,7 @@ export const AdminDashboard = () => {
           </ScrollView>
         </View>
 
-        <View className="flex-1" style={Platform.OS === 'web' ? { height: '100%', overflow: 'hidden' } : {}}>
+        <View className="flex-1">
           {/* Header */}
           <View className="bg-[#0F172A]/40 p-6 flex-row justify-between items-center border-b border-white/10 backdrop-blur-xl">
             <View className="flex-row items-center">
@@ -1078,7 +1078,7 @@ export const AdminDashboard = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <ScrollView className="flex-1" contentContainerStyle={{ padding: 32, paddingBottom: 300 }} showsVerticalScrollIndicator={false}>
+          <View style={{ flex: 1, padding: 32, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
             {activeTab === 'Overview' && renderOverview()}
             {activeTab === 'Analytics' && renderAnalytics()}
             {activeTab === 'Surveys' && renderSurveys()}
@@ -1092,15 +1092,14 @@ export const AdminDashboard = () => {
             {activeTab === 'Logs' && renderLogs()}
             {activeTab === 'Timetable' && renderTimetable()}
             {activeTab === 'BusTracking' && renderBusTracking()}
-            <View className="h-20" />
-          </ScrollView>
+          </View>
         </View>
       </View>
 
       <Modal animationType="slide" transparent={true} visible={groupMessageModalVisible} onRequestClose={() => setGroupMessageModalVisible(false)}><View className="flex-1 justify-center items-center bg-black/60 p-4"><View className="bg-[#1E293B] w-full max-w-xl p-10 rounded-[40px] border border-white/10"><Text className="text-white text-3xl font-bold mb-8">Targeted Messaging</Text><View className="space-y-4"><View className="flex-row gap-4">{['high', 'medium', 'low'].map((seg) => (<TouchableOpacity key={seg} onPress={() => setMessageForm({...messageForm, targetGroup: seg})} className={`flex-1 p-4 rounded-2xl border ${messageForm.targetGroup === seg ? 'bg-blue-600 border-blue-500' : 'bg-white/5 border-white/10'}`}><Text className={`text-center font-bold uppercase text-[10px] ${messageForm.targetGroup === seg ? 'text-white' : 'text-slate-400'}`}>{seg}</Text></TouchableOpacity>))}</View><TextInput placeholder="Subject" placeholderTextColor="#64748b" className="bg-white/5 p-5 rounded-2xl border border-white/10 text-white" value={messageForm.title} onChangeText={(t) => setMessageForm({...messageForm, title: t})} /><TextInput placeholder="Content" multiline numberOfLines={4} placeholderTextColor="#64748b" className="bg-white/5 p-5 rounded-2xl border border-white/10 text-white h-32" value={messageForm.body} onChangeText={(t) => setMessageForm({...messageForm, body: t})} /><TouchableOpacity onPress={handleGroupMessage} className="bg-blue-600 p-6 rounded-2xl items-center mt-6"><Text className="text-white font-bold">Send Private Broadcast</Text></TouchableOpacity><TouchableOpacity onPress={() => setGroupMessageModalVisible(false)} className="p-4 items-center"><Text className="text-slate-400">Cancel</Text></TouchableOpacity></View></View></View></Modal>
       <Modal animationType="slide" transparent={true} visible={surveyModalVisible} onRequestClose={() => setSurveyModalVisible(false)}><View className="flex-1 justify-center items-center bg-black/60 p-4"><View className="bg-[#1E293B] w-full max-w-xl p-10 rounded-[40px] border border-white/10"><Text className="text-white text-3xl font-bold mb-8">Create Survey</Text><View className="space-y-4"><TextInput placeholder="Title" placeholderTextColor="#64748b" className="bg-white/5 p-5 rounded-2xl border border-white/10 text-white" value={surveyForm.title} onChangeText={(t) => setSurveyForm({...surveyForm, title: t})} /><TextInput placeholder="Description" placeholderTextColor="#64748b" className="bg-white/5 p-5 rounded-2xl border border-white/10 text-white" value={surveyForm.description} onChangeText={(t) => setSurveyForm({...surveyForm, description: t})} /><TextInput placeholder="Options (comma separated)" placeholderTextColor="#64748b" className="bg-white/5 p-5 rounded-2xl border border-white/10 text-white" value={surveyForm.options} onChangeText={(t) => setSurveyForm({...surveyForm, options: t})} /><TouchableOpacity onPress={handleCreateSurvey} className="bg-blue-600 p-6 rounded-2xl items-center mt-6"><Text className="text-white font-bold">Publish Survey</Text></TouchableOpacity><TouchableOpacity onPress={() => setSurveyModalVisible(false)} className="p-4 items-center"><Text className="text-slate-400">Cancel</Text></TouchableOpacity></View></View></View></Modal>
       <Modal animationType="fade" transparent={true} visible={perfSettingsModalVisible} onRequestClose={() => setPerfSettingsModalVisible(false)}><View className="flex-1 justify-center items-center bg-black/60 p-4"><View className="bg-[#1E293B] w-full max-w-lg p-10 rounded-[40px] border border-white/10"><Text className="text-white text-2xl font-bold mb-6">Performance Definitions</Text><View className="space-y-6"><View><Text className="text-green-400 font-bold mb-2">High</Text><TextInput multiline className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white h-20" value={performanceSettings.high} onChangeText={(t) => updatePerformanceSettings({...performanceSettings, high: t})} /></View><View><Text className="text-blue-400 font-bold mb-2">Medium</Text><TextInput multiline className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white h-20" value={performanceSettings.medium} onChangeText={(t) => updatePerformanceSettings({...performanceSettings, medium: t})} /></View><View><Text className="text-red-400 font-bold mb-2">Low</Text><TextInput multiline className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white h-20" value={performanceSettings.low} onChangeText={(t) => updatePerformanceSettings({...performanceSettings, low: t})} /></View><TouchableOpacity onPress={() => setPerfSettingsModalVisible(false)} className="bg-blue-600 p-5 rounded-2xl items-center"><Text className="text-white font-bold">Update</Text></TouchableOpacity></View></View></View></Modal>
-      <Modal animationType="slide" transparent={true} visible={detailModalVisible} onRequestClose={() => setDetailModalVisible(false)}><View className="flex-1 justify-center items-center bg-black/60 p-4"><View className="bg-[#1E293B] w-full max-w-2xl p-10 rounded-[40px] border border-white/10"><Text className="text-white text-2xl font-bold mb-8">{selectedUser?.name}</Text><ScrollView className="max-h-96 mb-8">{isEditing ? (<View className="space-y-4"><TextInput className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white" value={formData.name} onChangeText={(t) => setFormData({...formData, name: t})} /><TextInput className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white" value={formData.email} onChangeText={(t) => setFormData({...formData, email: t})} /></View>) : (<View><Text className="text-slate-400 leading-relaxed">{selectedUser?.role} record details.</Text></View>)}</ScrollView><View className="flex-row gap-4"><TouchableOpacity onPress={() => setDetailModalVisible(false)} className="flex-1 bg-blue-600 p-4 rounded-2xl items-center"><Text className="text-white font-bold">Close</Text></TouchableOpacity></View></View></View></Modal>
+      <Modal animationType="slide" transparent={true} visible={detailModalVisible} onRequestClose={() => setDetailModalVisible(false)}><View className="flex-1 justify-center items-center bg-black/60 p-4"><View className="bg-[#1E293B] w-full max-w-2xl p-10 rounded-[40px] border border-white/10"><Text className="text-white text-2xl font-bold mb-8">{selectedUser?.name}</Text><ScrollView style={{ maxHeight: 384, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} className="mb-8">{isEditing ? (<View className="space-y-4"><TextInput className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white" value={formData.name} onChangeText={(t) => setFormData({...formData, name: t})} /><TextInput className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white" value={formData.email} onChangeText={(t) => setFormData({...formData, email: t})} /></View>) : (<View><Text className="text-slate-400 leading-relaxed">{selectedUser?.role} record details.</Text></View>)}</ScrollView><View className="flex-row gap-4"><TouchableOpacity onPress={() => setDetailModalVisible(false)} className="flex-1 bg-blue-600 p-4 rounded-2xl items-center"><Text className="text-white font-bold">Close</Text></TouchableOpacity></View></View></View></Modal>
       <Modal animationType="slide" transparent={true} visible={appointmentModalVisible} onRequestClose={() => setAppointmentModalVisible(false)}>
         <View className="flex-1 justify-center items-center bg-black/60 p-4">
           <View className="bg-[#1E293B] w-full max-w-xl p-10 rounded-[40px] border border-white/10 shadow-2xl">
@@ -1130,7 +1129,7 @@ export const AdminDashboard = () => {
               </TouchableOpacity>
             </View>
             
-            <ScrollView showsVerticalScrollIndicator={false} className="pr-4">
+            <ScrollView showsVerticalScrollIndicator={false} className="pr-4" style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
               <View className="space-y-8">
                 {/* Section 1: Student Details */}
                 <View>
@@ -1244,7 +1243,7 @@ export const AdminDashboard = () => {
         <View className="flex-1 justify-center items-center bg-black/60 p-4">
           <View className="bg-[#1E293B] w-full max-w-lg p-10 rounded-[40px] border border-white/10">
             <Text className="text-white text-2xl font-bold mb-8">Reassign</Text>
-            <ScrollView className="max-h-80 mb-6">
+            <ScrollView className="mb-6" style={{ maxHeight: 320, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
               {users.filter(u => u.role === 'Faculty' && u.id !== selectedAbsentStaff?.id).map((sub) => (
                 <TouchableOpacity key={sub.id} onPress={() => confirmReassignment(sub)} className="bg-white/5 p-4 rounded-2xl border border-white/10 mb-3 flex-row items-center justify-between">
                   <Text className="text-white font-bold">{sub.name}</Text>
@@ -1269,7 +1268,7 @@ export const AdminDashboard = () => {
                 <CheckCircle color="white" size={24} />
               </TouchableOpacity>
             </View>
-            <ScrollView>
+            <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
               <View className="space-y-2">
                 {[
                   { id: 'Overview', icon: Activity, label: 'Overview' },
@@ -1304,7 +1303,7 @@ export const AdminDashboard = () => {
           <TouchableOpacity className="flex-1" onPress={() => setMobileMenuVisible(false)} />
         </View>
       </Modal>
-      <BottomNavbar />
+      <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab as any} />
     </View>
   );
 };

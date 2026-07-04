@@ -45,6 +45,7 @@ interface AppState {
   assignSubstitution: (sub: Substitution) => void;
   updatePerformanceSettings: (settings: { high: string; medium: string; low: string }) => void;
   appointUser: (appointingRole: UserRole, newUser: User) => void;
+  updateUser: (userId: string, updatedFields: Partial<User>) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -160,5 +161,29 @@ export const useStore = create<AppState>((set) => ({
   addMessage: (msg) => set((state) => ({ messages: [...state.messages, msg] })),
   assignSubstitution: (sub) => set((state) => ({ substitutions: [...state.substitutions, sub] })),
   updatePerformanceSettings: (settings) => set({ performanceSettings: settings }),
+  updateUser: (userId, updatedFields) => set((state) => {
+    const updatedUsers = state.users.map(u => {
+      if (u.id === userId) {
+        return {
+          ...u,
+          ...updatedFields,
+          universityData: {
+            ...u.universityData,
+            ...updatedFields.universityData
+          }
+        };
+      }
+      return u;
+    });
+    const currentUser = state.user?.id === userId ? {
+      ...state.user,
+      ...updatedFields,
+      universityData: {
+        ...state.user.universityData,
+        ...updatedFields.universityData
+      }
+    } : state.user;
+    return { users: updatedUsers, user: currentUser };
+  }),
 }));
 

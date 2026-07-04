@@ -15,7 +15,15 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
   ];
 
   return (
-    <View className="space-y-8">
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnabled
+      scrollEventThrottle={16}
+      scrollEnabled={true}
+    >
+      <View className="space-y-8">
       <View className="flex-row justify-between items-center">
         <View>
           <Text className="text-white text-3xl font-bold mb-2">University Calendar</Text>
@@ -27,7 +35,15 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
       </View>
 
       {/* Date Picker Ribbon Mock */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-4 mb-4">
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false} 
+        scrollEventThrottle={16} 
+        scrollEnabled={true} 
+        className="flex-row gap-4 mb-4"
+        style={{ width: '100%' }}
+        contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+      >
         {[20, 21, 22, 23, 24, 25, 26, 27].map((day, i) => (
           <TouchableOpacity 
             key={day} 
@@ -71,6 +87,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
           </View>
         ))}
       </View>
-    </View>
+      </View>
+    </ScrollView>
   );
 };

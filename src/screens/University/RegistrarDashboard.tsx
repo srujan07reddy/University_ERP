@@ -1,50 +1,41 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform, Modal } from 'react-native';
 import { 
-  FileCheck, 
-  Users, 
-  Search, 
-  FileText, 
-  Bell, 
-  ChevronRight,
-  Database,
-  ShieldAlert as Shield,
-  LogOut,
-  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar
+  FileCheck, Users, Search, FileText, Bell, ChevronRight, Database, LogOut, 
+  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar, ShieldAlert as Shield
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
+import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
-import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
-import { SurveyView } from '../../components/Dashboard/SurveyView';
-import { CalendarView } from '../../components/Dashboard/CalendarView';
-import { Modal } from 'react-native';
+import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 
 export const RegistrarDashboard = () => {
   const { user, setUser } = useStore();
-  const [menuVisible, setMenuVisible] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState('Home');
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('Home');
+  
+  // Scroll event tracking
+  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Analytics':
-        return <AnalyticsView role="Registrar" />;
-      case 'Surveys':
-        return <SurveyView role="Registrar" />;
-      case 'Calendar':
-        return <CalendarView role="Registrar" />;
+      case 'SafeChat':
+        return <MessageCenter />;
       default:
         return (
           <>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
               <View className="flex-row items-center">
-                <TouchableOpacity 
-                  onPress={() => setMenuVisible(true)}
-                  className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
-                >
-                  <Menu color="white" size={20} />
-                </TouchableOpacity>
+                {Platform.OS !== 'web' && (
+                  <TouchableOpacity 
+                    onPress={() => setMenuVisible(true)}
+                    className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
+                  >
+                    <Menu color="white" size={20} />
+                  </TouchableOpacity>
+                )}
                 <View>
                   <Text className="text-slate-400 text-sm font-medium">Administrative Head</Text>
                   <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>University Registrar</Text>
@@ -98,7 +89,7 @@ export const RegistrarDashboard = () => {
               />
             </View>
 
-            {/* Critical Administrative Actions */}
+            {/* Compliance & Records */}
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 mb-8">
               <Text style={{ color: '#FFFFFF', fontSize: 20, fontWeight: 'bold', marginBottom: 24 }}>Compliance & Records</Text>
               
@@ -162,42 +153,62 @@ export const RegistrarDashboard = () => {
         );
     }
   };
-  const registrarData = user?.universityData?.registrarData;
+
+  const Container = Platform.OS === 'web' ? View : SafeAreaView;
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
-      <View style={{ flex: 1 }}>
-        <ScrollView 
-          className="flex-1 px-6 pt-6"
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
-        >
+    <Container style={{ flex: 1, backgroundColor: '#0F172A' } as any}>
+      <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column' }}>
+        
+        {/* Web permanent sidebar */}
+        {Platform.OS === 'web' && (
+          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+            <Text className="text-2xl font-bold text-white mb-6">Registrar Office</Text>
+            <View className="space-y-4">
+              <View>
+                <Text className="text-slate-505 text-[10px] font-bold uppercase tracking-widest mb-2">Administration</Text>
+                <View className="space-y-1">
+                  {[
+                    { id: 'Home', icon: Home, label: 'Dashboard' },
+                    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' }
+                  ].map((item) => (
+                    <TouchableOpacity 
+                      key={item.id} 
+                      onPress={() => setActiveTab(item.id)} 
+                      style={{ padding: 10, borderRadius: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: activeTab === item.id ? '#2563eb' : 'transparent', marginBottom: 2 }}
+                    >
+                      <item.icon color={activeTab === item.id ? 'white' : '#94a3b8'} size={16} />
+                      <Text style={{ fontWeight: 'bold', marginLeft: 12, color: activeTab === item.id ? 'white' : '#94a3b8', fontSize: 12 }}>{item.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+
+        {/* Workspace column */}
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
           {renderContent()}
-        </ScrollView>
-        <BottomNavbar />
+        </View>
+
+        <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Mobile Menu Modal */}
         <Modal animationType="fade" transparent={true} visible={menuVisible} onRequestClose={() => setMenuVisible(false)}>
           <View className="flex-1 bg-black/80 flex-row">
             <View className="w-72 bg-[#0F172A] p-8 border-r border-white/10">
-              <View className="flex-row justify-between items-center mb-10">
+              <View className="flex-row justify-between items-center mb-8">
                 <Text className="text-2xl font-bold text-white">Registrar Menu</Text>
                 <TouchableOpacity onPress={() => setMenuVisible(false)}>
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
-                    { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
-                    { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
-                    { id: 'Calendar', icon: Calendar, label: 'Calendar' },
-                    { id: 'Students', icon: Users, label: 'Enrollment Master' },
-                    { id: 'Records', icon: FileText, label: 'Academic Records' },
-                    { id: 'Inventory', icon: Database, label: 'Asset Management' },
-                    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' },
-                    { id: 'Profile', icon: User, label: 'Profile' },
-                    { id: 'Settings', icon: Settings, label: 'Settings' },
+                    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' }
                   ].map((item) => (
                     <TouchableOpacity 
                       key={item.id} 
@@ -225,7 +236,8 @@ export const RegistrarDashboard = () => {
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>
         </Modal>
+
       </View>
-    </SafeAreaView>
+    </Container>
   );
 };

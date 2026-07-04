@@ -10,22 +10,23 @@ export const CalendarModule = () => {
   const [formData, setFormData] = useState({
     title: '',
     date: new Date().toISOString().split('T')[0],
-    type: 'Event' as 'Holiday' | 'Event' | 'Meeting',
+    type: 'Event' as 'Holiday' | 'Event' | 'Meeting' | 'Exam',
     description: '',
-    visibility: 'All' as 'All' | 'Staff' | 'Admins'
+    visibility: 'All' as 'All' | 'Staff' | 'Students'
   });
 
   const isAdmin = user?.role === 'Admin';
   
   const filteredEvents = calendarEvents.filter((event: CalendarEvent) => {
     if (isAdmin) return true;
-    if (user?.role === 'Staff') return event.visibility !== 'Admins';
-    return event.visibility === 'All';
+    const isStaffUser = user?.role && !['Student', 'Parent'].includes(user?.role);
+    if (isStaffUser) return event.visibility !== 'Students';
+    return event.visibility === 'All' || event.visibility === 'Students';
   });
 
   const handleAddEvent = () => {
     if (!formData.title || !formData.date) return;
-    const newEvent = {
+    const newEvent: CalendarEvent = {
       ...formData,
       id: Math.random().toString(36).substr(2, 9)
     };
@@ -61,7 +62,7 @@ export const CalendarModule = () => {
         )}
       </View>
 
-      <ScrollView className="space-y-4 max-h-[600px]">
+      <ScrollView className="space-y-4" scrollEventThrottle={16} scrollEnabled={true} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
         {filteredEvents.sort((a: CalendarEvent, b: CalendarEvent) => new Date(a.date).getTime() - new Date(b.date).getTime()).map((event: CalendarEvent) => (
           <View key={event.id} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex-row items-start">
             <View className="bg-blue-600/10 p-4 rounded-2xl items-center justify-center mr-6 w-20">

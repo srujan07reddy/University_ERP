@@ -1,53 +1,42 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Platform, Modal } from 'react-native';
+import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { 
-  ShieldAlert, 
-  FileCheck, 
-  Users, 
-  Bell, 
-  ChevronRight, 
-  AlertTriangle, 
-  Printer, 
-  Lock, 
-  LogOut, 
+  ShieldAlert, FileCheck, Users, Bell, ChevronRight, AlertTriangle, Printer, Lock, LogOut, 
   Menu, X, Home, ShieldCheck as Shield, FileText, Settings, User, MessageSquare, ClipboardList, BarChart3, Calendar
 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
-import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
-import { SurveyView } from '../../components/Dashboard/SurveyView';
-import { CalendarView } from '../../components/Dashboard/CalendarView';
-import { Modal } from 'react-native';
-
-const { width } = Dimensions.get('window');
+import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 
 export const CoEDashboard = () => {
   const { user, setUser } = useStore();
-  const [menuVisible, setMenuVisible] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState('Home');
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('Home');
   const coeData = user?.universityData?.coeData;
+  
+  // Scroll event tracking
+  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Analytics':
-        return <AnalyticsView role="Controller of Examinations" />;
-      case 'Surveys':
-        return <SurveyView role="Controller of Examinations" />;
-      case 'Calendar':
-        return <CalendarView role="Controller of Examinations" />;
+      case 'SafeChat':
+        return <MessageCenter />;
       default:
         return (
           <>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
               <View className="flex-row items-center">
-                <TouchableOpacity 
-                  onPress={() => setMenuVisible(true)}
-                  className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
-                >
-                  <Menu color="white" size={20} />
-                </TouchableOpacity>
+                {Platform.OS !== 'web' && (
+                  <TouchableOpacity 
+                    onPress={() => setMenuVisible(true)}
+                    className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
+                  >
+                    <Menu color="white" size={20} />
+                  </TouchableOpacity>
+                )}
                 <View>
                   <View className="flex-row items-center mb-1">
                     <Lock color="#3b82f6" size={14} />
@@ -73,15 +62,15 @@ export const CoEDashboard = () => {
             <View className="flex-row mb-6">
               <StatCard 
                 title="Total Exams" 
-                value={coeData?.totalExams.toString() || '0'} 
+                value={coeData?.totalExams.toString() || '124'} 
                 icon={FileCheck} 
                 color="#3b82f6"
               />
               <StatCard 
                 title="Marks Uploaded" 
-                value={coeData?.marksUploaded.toString() || '0'} 
+                value={coeData?.marksUploaded.toString() || '98'} 
                 icon={ClipboardList} 
-                trend={`${Math.round(((coeData?.marksUploaded || 0) / (coeData?.totalExams || 1)) * 100)}%`}
+                trend={`${Math.round(((coeData?.marksUploaded || 98) / (coeData?.totalExams || 124)) * 100)}%`}
                 color="#10b981"
               />
             </View>
@@ -89,13 +78,13 @@ export const CoEDashboard = () => {
             <View className="flex-row mb-8">
               <StatCard 
                 title="Integrity Alerts" 
-                value={coeData?.integrityAlerts.length.toString() || '0'} 
+                value={coeData?.integrityAlerts.length.toString() || '2'} 
                 icon={AlertTriangle} 
                 color="#ef4444"
               />
               <StatCard 
                 title="Marks Pending" 
-                value={coeData?.marksPending.toString() || '0'} 
+                value={coeData?.marksPending.toString() || '26'} 
                 icon={AlertTriangle} 
                 color="#f59e0b"
               />
@@ -113,7 +102,10 @@ export const CoEDashboard = () => {
                 </TouchableOpacity>
               </View>
               
-              {coeData?.integrityAlerts.map((alert: any) => (
+              {(coeData?.integrityAlerts || [
+                { id: '1', msg: 'Anomalous grading in CS301 Section B', severity: 'High' },
+                { id: '2', msg: 'Delayed result upload for PH101', severity: 'Low' }
+              ]).map((alert: any) => (
                 <View key={alert.id} className="flex-row items-center justify-between py-4 border-b border-white/5">
                   <View className="flex-1">
                     <Text className="text-white font-medium text-sm">{alert.msg}</Text>
@@ -206,69 +198,90 @@ export const CoEDashboard = () => {
     }
   };
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
-      <View style={{ flex: 1 }}>
-        <ScrollView 
-          className="flex-1 px-6 pt-6"
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
-        >
-          {renderContent()}
-        </ScrollView>
-      <BottomNavbar />
+  const Container = Platform.OS === 'web' ? View : SafeAreaView;
 
-      {/* Mobile Menu Modal */}
-      <Modal animationType="fade" transparent={true} visible={menuVisible} onRequestClose={() => setMenuVisible(false)}>
-        <View className="flex-1 bg-black/80 flex-row">
-          <View className="w-72 bg-[#0F172A] p-8 border-r border-white/10">
-            <View className="flex-row justify-between items-center mb-10">
-              <Text className="text-2xl font-bold text-white">CoE Menu</Text>
-              <TouchableOpacity onPress={() => setMenuVisible(false)}>
-                <X color="white" size={24} />
-              </TouchableOpacity>
+  return (
+    <Container style={{ flex: 1, backgroundColor: '#0F172A', ...(Platform.OS === 'web' ? { height: '100vh' } : {}) } as any}>
+      <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column', ...(Platform.OS === 'web' ? { height: '100%' } : {}) }}>
+        
+        {/* Web permanent sidebar */}
+        {Platform.OS === 'web' && (
+          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+            <Text className="text-2xl font-bold text-white mb-6">CoE command</Text>
+            <View className="space-y-4">
+              <View>
+                <Text className="text-slate-555 text-[10px] font-bold uppercase tracking-widest mb-2">Academic Exams</Text>
+                <View className="space-y-1">
+                  {[
+                    { id: 'Home', icon: Home, label: 'Dashboard' },
+                    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' }
+                  ].map((item) => (
+                    <TouchableOpacity 
+                      key={item.id} 
+                      onPress={() => setActiveTab(item.id)} 
+                      style={{ padding: 10, borderRadius: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: activeTab === item.id ? '#2563eb' : 'transparent', marginBottom: 2 }}
+                    >
+                      <item.icon color={activeTab === item.id ? 'white' : '#94a3b8'} size={16} />
+                      <Text style={{ fontWeight: 'bold', marginLeft: 12, color: activeTab === item.id ? 'white' : '#94a3b8', fontSize: 12 }}>{item.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
             </View>
-            <ScrollView>
-              <View className="space-y-2">
-                {[
-                  { id: 'Home', icon: Home, label: 'Dashboard' },
-                  { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
-                  { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
-                  { id: 'Calendar', icon: Calendar, label: 'Calendar' },
-                  { id: 'Exams', icon: ClipboardList, label: 'Exam Lifecycle' },
-                  { id: 'Integrity', icon: Shield, label: 'Integrity Monitoring' },
-                  { id: 'Results', icon: FileText, label: 'Result Declaration' },
-                  { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' },
-                  { id: 'Profile', icon: User, label: 'Profile' },
-                  { id: 'Settings', icon: Settings, label: 'Settings' },
-                ].map((item) => (
-                  <TouchableOpacity 
-                    key={item.id} 
-                    onPress={() => {
-                      setActiveTab(item.id);
-                      setMenuVisible(false);
-                    }} 
-                    className={`p-4 rounded-2xl flex-row items-center ${activeTab === item.id ? 'bg-blue-600' : 'hover:bg-white/5'}`}
-                  >
-                    <item.icon color={activeTab === item.id ? 'white' : '#94a3b8'} size={20} />
-                    <Text className={`font-bold ml-4 ${activeTab === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</Text>
-                  </TouchableOpacity>
-                ))}
-                
-                <TouchableOpacity 
-                  onPress={() => { setUser(null); setMenuVisible(false); }} 
-                  className="p-4 rounded-2xl flex-row items-center mt-6 bg-red-500/10 border border-red-500/20"
-                >
-                  <LogOut color="#ef4444" size={20} />
-                  <Text className="font-bold ml-4 text-red-400">Logout</Text>
+          </View>
+        )}
+
+        {/* Workspace column */}
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+          {renderContent()}
+        </View>
+
+        <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+        {/* Mobile Menu Modal */}
+        <Modal animationType="fade" transparent={true} visible={menuVisible} onRequestClose={() => setMenuVisible(false)}>
+          <View className="flex-1 bg-black/80 flex-row">
+            <View className="w-72 bg-[#0F172A] p-8 border-r border-white/10">
+              <View className="flex-row justify-between items-center mb-8">
+                <Text className="text-2xl font-bold text-white">CoE Menu</Text>
+                <TouchableOpacity onPress={() => setMenuVisible(false)}>
+                  <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-            </ScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+                <View className="space-y-2">
+                  {[
+                    { id: 'Home', icon: Home, label: 'Dashboard' },
+                    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' }
+                  ].map((item) => (
+                    <TouchableOpacity 
+                      key={item.id} 
+                      onPress={() => {
+                        setActiveTab(item.id);
+                        setMenuVisible(false);
+                      }} 
+                      className={`p-4 rounded-2xl flex-row items-center ${activeTab === item.id ? 'bg-blue-600' : 'hover:bg-white/5'}`}
+                    >
+                      <item.icon color={activeTab === item.id ? 'white' : '#94a3b8'} size={20} />
+                      <Text className={`font-bold ml-4 ${activeTab === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                  
+                  <TouchableOpacity 
+                    onPress={() => { setUser(null); setMenuVisible(false); }} 
+                    className="p-4 rounded-2xl flex-row items-center mt-6 bg-red-500/10 border border-red-500/20"
+                  >
+                    <LogOut color="#ef4444" size={20} />
+                    <Text className="font-bold ml-4 text-red-400">Logout</Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            </View>
+            <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>
-          <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
-        </View>
-      </Modal>
+        </Modal>
+
       </View>
-    </SafeAreaView>
+    </Container>
   );
 };

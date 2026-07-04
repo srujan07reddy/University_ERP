@@ -9,10 +9,9 @@ export const useRole = () => {
   return {
     role: user?.role,
     isAdmin: isRole('Admin'),
-    isAccountant: isRole('Accountant'),
-    isSectionCoord: isRole('SectionCoord'),
-    isStaff: isRole('Staff'),
-    isStudentParent: isRole('StudentParent'),
+    isAccountant: user?.role === 'Finance',
+    isSectionCoord: user?.role === 'Faculty',
+    isStaff: !!user?.role && !['Student', 'Parent'].includes(user.role),
     isAuthenticated: !!user,
   };
 };

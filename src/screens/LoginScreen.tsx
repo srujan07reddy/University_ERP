@@ -24,6 +24,7 @@ export const LoginScreen = () => {
     const roleEmailMap: Record<string, string> = {
       Admin: 'admin@university.com',
       ViceChancellor: 'vc@university.com',
+      ProVC: 'provc@university.com',
       Faculty: 'faculty@university.com',
       Student: 'student@university.com',
       CoE: 'coe@university.com',
@@ -48,15 +49,14 @@ export const LoginScreen = () => {
     let user;
     if (!isOtpLogin) {
       user = MOCK_USERS.find(u => u.email === email && u.role === role);
-      if (!user) user = MOCK_USERS.find(u => u.email === email);
     } else {
-      user = MOCK_USERS.find(u => u.role === role);
+      user = MOCK_USERS.find(u => u.role === role); // OTP login fallback
     }
 
     if (user) {
       setUser(user, 'mock-jwt-token');
     } else {
-      alert(`Invalid credentials for ${role}. Try using the default email provided.`);
+      alert('Invalid credentials');
     }
     setLoading(false);
   };
@@ -71,11 +71,8 @@ export const LoginScreen = () => {
   };
 
   return (
-    <View className="flex-1 bg-[#0F172A]">
-      <ScrollView 
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 40 }} 
-        className="px-6"
-      >
+    <View className="flex-1 bg-[#0F172A] justify-center items-center p-6">
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View 
           style={{ 
             maxWidth: 450, 
@@ -95,8 +92,16 @@ export const LoginScreen = () => {
           </View>
 
           <View className="mb-8">
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="bg-white/5 p-1.5 rounded-2xl border border-white/5">
-              {(['Admin', 'Faculty', 'Chancellor', 'ViceChancellor', 'CoE', 'Admissions', 'Registrar', 'Dean', 'HoD', 'PlacementOfficer', 'Finance', 'Student', 'Parent'] as const).map((r) => (
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false} 
+              scrollEventThrottle={16} 
+              scrollEnabled={true} 
+              className="bg-white/5 p-1.5 rounded-2xl border border-white/5"
+              style={{ width: '100%' }}
+              contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+            >
+              {(['Admin', 'Faculty', 'Chancellor', 'ViceChancellor', 'ProVC', 'CoE', 'Admissions', 'Registrar', 'Dean', 'HoD', 'PlacementOfficer', 'Finance', 'Student', 'Parent'] as const).map((r) => (
                 <TouchableOpacity
                   key={r}
                   onPress={() => handleRoleChange(r)}

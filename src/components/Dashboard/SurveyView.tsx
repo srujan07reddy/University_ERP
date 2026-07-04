@@ -15,7 +15,15 @@ export const SurveyView: React.FC<SurveyViewProps> = ({ role }) => {
   ];
 
   return (
-    <View className="space-y-8">
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnabled
+      scrollEventThrottle={16}
+      scrollEnabled={true}
+    >
+      <View className="space-y-8">
       <View>
         <Text className="text-white text-3xl font-bold mb-2">Surveys & Feedback</Text>
         <Text className="text-slate-400">Help us improve the university experience</Text>
@@ -75,6 +83,7 @@ export const SurveyView: React.FC<SurveyViewProps> = ({ role }) => {
           <Text className="text-white font-bold text-center">Start Mandatory Audit</Text>
         </TouchableOpacity>
       </View>
-    </View>
+      </View>
+    </ScrollView>
   );
 };

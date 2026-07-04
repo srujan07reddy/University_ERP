@@ -1,6 +1,7 @@
 export type UserRole = 
   | 'Chancellor' 
   | 'ViceChancellor' 
+  | 'ProVC'
   | 'Dean' 
   | 'Registrar' 
   | 'Finance' 
@@ -25,6 +26,7 @@ export interface UniversityData {
     registeredCourses: string[];
     feesDue: number;
     feeHistory: { date: string; amount: number; status: string }[];
+    backlogs: number;
   };
   facultyData?: {
     facultyId: string;

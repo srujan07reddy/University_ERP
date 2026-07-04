@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingVi
 import { useStore } from '../store/useStore';
 import { ShieldCheck, Lock, Send, Clock, ChevronLeft } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
+import { BottomNavbar } from '../components/Navigation/BottomNavbar';
 
 export const SafeChat = () => {
   const navigation = useNavigation();
@@ -43,7 +44,7 @@ export const SafeChat = () => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView className="flex-1 p-4">
+      <ScrollView className="flex-1 p-4" contentContainerStyle={{ paddingBottom: 120 }}>
         <View className="items-center mb-6">
           <View className="bg-primary-900/50 px-4 py-2 rounded-full border border-primary-800">
             <Text className="text-slate-500 text-[10px]">Today • Messages are time-gated</Text>
@@ -74,7 +75,7 @@ export const SafeChat = () => {
         ))}
       </ScrollView>
 
-      <View className="p-4 bg-primary-900 border-t border-primary-800">
+      <View className="p-4 bg-primary-900 border-t border-primary-800 pb-28">
         <View className="flex-row items-center bg-primary-950 rounded-2xl border border-primary-800 px-4 py-1">
           <TextInput
             placeholder="Type a secure message..."
@@ -88,6 +89,7 @@ export const SafeChat = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <BottomNavbar />
     </KeyboardAvoidingView>
   );
 };

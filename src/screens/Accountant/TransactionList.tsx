@@ -1,7 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native';
 import { useStore } from '../../store/useStore';
-import { MOCK_TRANSACTIONS } from '../../utils/mockData';
+const MOCK_TRANSACTIONS = [
+  { id: '1', description: 'Tuition Fee - John Doe', date: '2026-07-01', amount: 1500, status: 'Paid' },
+  { id: '2', description: 'Library Fine - Jane Smith', date: '2026-06-28', amount: 25, status: 'Paid' },
+  { id: '3', description: 'Lab Fee - Bob Johnson', date: '2026-07-02', amount: 200, status: 'Pending' },
+  { id: '4', description: 'Hostel Fee - Alice Williams', date: '2026-07-03', amount: 1200, status: 'Paid' },
+];
 import { CreditCard, FileText, Filter, LogOut, Search, TrendingUp, DollarSign } from 'lucide-react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { ChartContainer, chartConfig } from '../../components/Dashboard/ChartContainer';
@@ -32,7 +37,10 @@ export const TransactionList = () => {
   );
 
   return (
-    <View className="flex-1 bg-slate-50 flex-row">
+    <View 
+      className="flex-1 bg-slate-50 flex-row"
+      style={(Platform.OS === 'web' ? { height: '100vh' } : {}) as any}
+    >
       {/* Sidebar - Visible on Desktop/Web layout */}
       <View className="w-64 bg-white border-r border-slate-200 p-6 hidden md:flex">
         <Text className="text-xl font-bold text-slate-900 mb-8">Ledger Portal</Text>
@@ -56,7 +64,7 @@ export const TransactionList = () => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView className="p-8">
+        <ScrollView className="p-8" style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 140 }}>
           <View className="flex-row flex-wrap -mx-4 mb-8">
             <View className="w-full lg:w-1/2 px-4">
               <ChartContainer title="Collection Overview" subtitle="Paid vs Pending targets">
@@ -101,7 +109,7 @@ export const TransactionList = () => {
               </TouchableOpacity>
             </View>
 
-            {MOCK_TRANSACTIONS.map((item) => (
+            {MOCK_TRANSACTIONS.map((item: any) => (
               <View key={item.id}>
                 {renderItem({ item })}
               </View>
