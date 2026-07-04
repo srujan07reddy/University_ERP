@@ -11,7 +11,7 @@ import {
   PieChart, 
   AlertCircle, 
   LogOut, 
-  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar, Clock, Users
+  Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar, Clock, Users, CheckCircle
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
@@ -21,6 +21,7 @@ import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
 import { SurveyView } from '../../components/Dashboard/SurveyView';
 import { CalendarView } from '../../components/Dashboard/CalendarView';
 import { Modal, Alert } from 'react-native';
+import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
 const { width } = Dimensions.get('window');
 
@@ -34,6 +35,8 @@ export const FinanceDashboard = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Approvals':
+        return <ApprovalsPortal />;
       case 'Analytics':
         return <AnalyticsView role="Finance Officer" />;
       case 'Surveys':
@@ -192,6 +195,7 @@ export const FinanceDashboard = () => {
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
+                    { id: 'Approvals', icon: CheckCircle, label: 'Approvals Desk' },
                     { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
                     { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
                     { id: 'Calendar', icon: Calendar, label: 'Calendar' },

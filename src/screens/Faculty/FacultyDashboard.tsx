@@ -10,6 +10,7 @@ import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
+import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
 export const FacultyDashboard = () => {
   const { user, setUser, users, updateUser, assignments, addAssignment, notes, addNote, leaveRequests, addLeaveRequest } = useStore();
@@ -432,31 +433,7 @@ export const FacultyDashboard = () => {
         );
 
       case 'Leave':
-        return (
-          <View className="space-y-6">
-            <View className="flex-row justify-between items-center mb-2">
-              <View>
-                <Text className="text-white text-2xl font-bold">Personal Leave & OD Portal</Text>
-                <Text className="text-slate-400 text-xs">Balance: 12 days remaining</Text>
-              </View>
-              <TouchableOpacity onPress={() => setLeaveModal(true)} className="bg-blue-600 p-3 rounded-xl">
-                <Plus color="white" size={16} />
-              </TouchableOpacity>
-            </View>
-
-            {leaveRequests.filter(req => req.senderId === user?.id).map((req) => (
-              <View key={req.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
-                <View>
-                  <Text className="text-white font-bold">{req.reason}</Text>
-                  <Text className="text-slate-400 text-xs mt-1">Submitted: {req.date}</Text>
-                </View>
-                <View className={`px-4 py-1.5 rounded-full border ${req.status === 'Pending' ? 'bg-orange-500/10 border-orange-500/20' : req.status === 'Approved' ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
-                  <Text className={`text-[10px] font-bold ${req.status === 'Pending' ? 'text-orange-400' : req.status === 'Approved' ? 'text-green-400' : 'text-red-400'}`}>{req.status.toUpperCase()}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
+        return <ApprovalsPortal />;
 
       case 'Research':
         return (

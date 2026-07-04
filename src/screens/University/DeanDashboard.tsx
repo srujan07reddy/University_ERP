@@ -6,6 +6,7 @@ import {
   Trash2, Send, Download, Sparkles, Shield, RefreshCw, Layers, Database, Wallet, Info
 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
+import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
@@ -205,38 +206,7 @@ export const DeanDashboard = () => {
         );
 
       case 'Approvals':
-        return (
-          <View className="space-y-6">
-            <Text className="text-white text-2xl font-bold mb-2">Dean School Approval Roster</Text>
-            {approvalsQueue.length === 0 ? (
-              <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
-                <CheckCircle color="#10b981" size={40} className="mb-4" />
-                <Text className="text-white font-bold text-lg">Zero Pending Approvals</Text>
-                <Text className="text-slate-500 text-xs mt-2">All school budgets, equipment purchases, event proposals are fully cleared.</Text>
-              </View>
-            ) : null}
-
-            {approvalsQueue.map((req) => (
-              <View key={req.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10">
-                <View className="flex-row justify-between items-start">
-                  <View>
-                    <Text className="text-purple-400 text-[10px] font-bold uppercase">{req.type}</Text>
-                    <Text className="text-white font-bold text-lg mt-1">{req.details}</Text>
-                    <Text className="text-slate-400 text-xs mt-1">Dept: {req.dept} • Requester: {req.requester}</Text>
-                  </View>
-                </View>
-                <View className="flex-row gap-4 mt-6">
-                  <TouchableOpacity onPress={() => handleApproveDeanRequest(req.id)} className="flex-1 bg-green-600 p-3.5 rounded-xl items-center">
-                    <Text className="text-white font-bold text-xs">APPROVE</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleRejectDeanRequest(req.id)} className="flex-1 bg-red-500/10 border border-red-500/20 p-3.5 rounded-xl items-center">
-                    <Text className="text-red-400 font-bold text-xs">REJECT</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        );
+        return <ApprovalsPortal />;
 
       case 'Budget':
         return (

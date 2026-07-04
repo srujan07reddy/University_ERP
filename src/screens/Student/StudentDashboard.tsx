@@ -10,9 +10,10 @@ import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
+import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
 export const StudentDashboard = () => {
-  const { user, setUser } = useStore();
+  const { user, setUser, businessRules } = useStore();
   const [activeTab, setActiveTab] = useState('Home');
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -202,15 +203,37 @@ export const StudentDashboard = () => {
           </View>
         );
 
-      case 'Attendance':
+      case 'Attendance': {
+        const attendanceRule = businessRules?.find(r => r.id === 'rule_1');
+        const minAttendance = attendanceRule?.isEnabled && typeof attendanceRule.value === 'number' ? attendanceRule.value : 75;
+        const isEligible = (studentData?.attendancePercentage || 0) >= minAttendance;
+
         return (
           <View className="space-y-6">
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
               <Text className="text-slate-400 text-sm font-medium">Overall Attendance</Text>
               <Text className="text-white text-5xl font-bold mt-2">{studentData?.attendancePercentage}%</Text>
-              <View className="bg-green-600/10 px-4 py-1.5 rounded-full border border-green-500/20 mt-4">
-                <Text className="text-green-400 text-xs font-bold">ELIGIBLE FOR EXAMS</Text>
+              
+              <View className={`px-4 py-1.5 rounded-full border mt-4 ${isEligible ? 'bg-green-600/10 border-green-500/20' : 'bg-red-600/10 border-red-500/20'}`}>
+                <Text className={`text-xs font-bold ${isEligible ? 'text-green-400' : 'text-red-400'}`}>
+                  {isEligible ? 'ELIGIBLE FOR EXAMS' : `BLOCKED: ATTENDANCE < ${minAttendance}%`}
+                </Text>
               </View>
+
+              {isEligible ? (
+                <TouchableOpacity 
+                  onPress={() => Alert.alert('Hall Ticket', 'Your Hall Ticket (HT-2026-CSE) has been generated and downloaded.')}
+                  className="bg-blue-600 px-6 py-3 rounded-2xl mt-6 flex-row items-center gap-2"
+                >
+                  <Award color="white" size={16} />
+                  <Text className="text-white font-bold text-xs">Download Hall Ticket</Text>
+                </TouchableOpacity>
+              ) : (
+                <View className="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl mt-6 flex-row items-center gap-3">
+                  <AlertCircle color="#f87171" size={18} />
+                  <Text className="text-slate-450 text-xs flex-1">Hall Ticket blocked automatically by system policy since attendance is below the configured {minAttendance}% requirement.</Text>
+                </View>
+              )}
             </View>
 
             <Text className="text-white font-bold text-lg mt-2">Subject-wise History</Text>
@@ -226,6 +249,7 @@ export const StudentDashboard = () => {
             ))}
           </View>
         );
+      }
 
       case 'Marks':
         return (
@@ -422,6 +446,9 @@ export const StudentDashboard = () => {
             </View>
           </View>
         );
+
+      case 'Leave':
+        return <ApprovalsPortal />;
 
       case 'Grievance':
         return (

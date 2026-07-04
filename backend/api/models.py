@@ -126,3 +126,18 @@ class Substitution(models.Model):
     date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
+class RoleTabMapping(models.Model):
+    role = models.CharField(max_length=50)
+    tab_id = models.CharField(max_length=100)
+    label = models.CharField(max_length=100)
+    icon = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
+    category = models.CharField(max_length=100, default='Base Portal')
+
+    class Meta:
+        ordering = ['role', 'category', 'order']
+        unique_together = ('role', 'tab_id')
+
+    def __str__(self):
+        return f"{self.role} -> {self.tab_id} ({self.category})"
+

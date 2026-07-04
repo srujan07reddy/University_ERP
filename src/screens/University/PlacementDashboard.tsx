@@ -12,18 +12,21 @@ import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 
 export const PlacementDashboard = () => {
-  const { user, setUser } = useStore();
+  const { user, setUser, businessRules } = useStore();
   const [activeTab, setActiveTab] = useState('Home');
   const [menuVisible, setMenuVisible] = useState(false);
 
   // Scroll event tracking
   const { handleScroll: handleMainScroll } = useScrollEvents();
 
+  const attendanceRule = businessRules?.find(r => r.id === 'rule_1');
+  const initialAttendance = attendanceRule?.isEnabled ? String(attendanceRule.value) : '75';
+
   // TPMS Eligibility Criteria Config State
   const [eligibilityCriteria, setEligibilityCriteria] = useState({
     minCgpa: '7.5',
     maxArrears: '0',
-    minAttendance: '75',
+    minAttendance: initialAttendance,
     dept: 'CSE, IT, AI'
   });
   const [eligibilityResultCount, setEligibilityResultCount] = useState(326);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User, UserRole, LiveStats, BusRoute, Asset, PayrollRecord, AuditLog, Message, CalendarEvent, Survey } from '../types';
+import { User, UserRole, LiveStats, BusRoute, Asset, PayrollRecord, AuditLog, Message, CalendarEvent, Survey, ApprovalRequest, BusinessRule } from '../types';
 import { MOCK_USERS } from '../utils/mockData';
 import { setAuthToken } from '../utils/api';
 
@@ -21,11 +21,13 @@ interface AppState {
   notes: Array<{ id: string; sender: string; title: string; content: string; date: string; department: string }>;
   assignments: Array<{ id: string; title: string; deadline: string; totalMarks: number; submissions: number; course: string }>;
   leaveRequests: Array<{ id: string; senderId: string; senderName: string; receiverRole: string; reason: string; status: 'Pending' | 'Approved' | 'Rejected'; date: string }>;
+  approvalRequests: ApprovalRequest[];
   assets: Asset[];
   payroll: PayrollRecord[];
   messages: Message[];
   substitutions: Substitution[];
   performanceSettings: { high: string; medium: string; low: string };
+  businessRules: BusinessRule[];
   isLoading: boolean;
 
   setUser: (user: User | null, token?: string | null) => void;
@@ -36,6 +38,8 @@ interface AppState {
   addAssignment: (assignment: any) => void;
   addLeaveRequest: (req: any) => void;
   updateLeaveStatus: (id: string, status: 'Approved' | 'Rejected') => void;
+  submitApprovalRequest: (req: Omit<ApprovalRequest, 'id' | 'status' | 'dateCreated' | 'history'>) => void;
+  updateApprovalStatus: (id: string, action: 'Approve' | 'Reject' | 'Correction' | 'Escalate', actorName: string, actorRole: UserRole, comments?: string) => void;
   approvePayroll: (id: string) => void;
   addLog: (log: Omit<AuditLog, 'id' | 'timestamp'>) => void;
   addCalendarEvent: (event: CalendarEvent) => void;
@@ -44,6 +48,8 @@ interface AppState {
   addMessage: (msg: any) => void;
   assignSubstitution: (sub: Substitution) => void;
   updatePerformanceSettings: (settings: { high: string; medium: string; low: string }) => void;
+  updateBusinessRule: (id: string, value: number | string | boolean, isEnabled?: boolean) => void;
+  simulateHours: (hours: number) => void;
   appointUser: (appointingRole: UserRole, newUser: User) => void;
   updateUser: (userId: string, updatedFields: Partial<User>) => void;
 }
@@ -73,6 +79,39 @@ export const useStore = create<AppState>((set) => ({
     { id: '1', title: 'Quantum Computing Research', deadline: '2026-05-15', totalMarks: 100, submissions: 45, course: 'Advanced Physics' },
   ],
   leaveRequests: [],
+  approvalRequests: [
+    {
+      id: 'app_1',
+      category: 'Leave',
+      title: 'Medical Leave - Dr. Wilson',
+      senderId: 'fac_1',
+      senderName: 'Dr. Sarah Wilson',
+      senderRole: 'Faculty',
+      description: 'Requesting sick leave for surgery recovery (3 days).',
+      status: 'Pending',
+      currentApproverRole: 'HoD',
+      dateCreated: '2026-07-01',
+      history: [
+        { status: 'Pending', actorName: 'Dr. Sarah Wilson', actorRole: 'Faculty', actionDate: '2026-07-01', comments: 'Submitted for HOD review.' }
+      ]
+    },
+    {
+      id: 'app_2',
+      category: 'Budget',
+      title: 'Lab Equipments Purchase for Biotech Dept',
+      senderId: 'hod_1',
+      senderName: 'Dr. Ramesh Kumar',
+      senderRole: 'HoD',
+      description: 'Procurement of PCR Thermal Cyclers & Centrifuges. Total budget: $12,500.',
+      amount: 12500,
+      status: 'Pending',
+      currentApproverRole: 'Dean',
+      dateCreated: '2026-07-02',
+      history: [
+        { status: 'Pending', actorName: 'Dr. Ramesh Kumar', actorRole: 'HoD', actionDate: '2026-07-02', comments: 'Requested budget clearance.' }
+      ]
+    }
+  ],
   assets: [
     { id: '1', name: 'Supercomputer Cluster A', category: 'IT', condition: 'Good', lastMaintenance: '2026-01-10', nextMaintenance: '2026-07-10' },
   ],
@@ -84,6 +123,12 @@ export const useStore = create<AppState>((set) => ({
     medium: 'Meeting standards (75-89%)',
     low: 'Below requirement (<75%)'
   },
+  businessRules: [
+    { id: 'rule_1', name: 'Minimum Attendance Criteria (%)', value: 75, isEnabled: true, category: 'Attendance' },
+    { id: 'rule_2', name: 'Placement Package Multiplier (x)', value: 2, isEnabled: true, category: 'Placement' },
+    { id: 'rule_3', name: 'HOD vs Dean OD Threshold (Days)', value: 3, isEnabled: true, category: 'Leave' },
+    { id: 'rule_4', name: 'Workflow Escalation Timeout (Hours)', value: 24, isEnabled: true, category: 'General' },
+  ],
   isLoading: false,
 
   setUser: (user, token) => {
@@ -105,6 +150,91 @@ export const useStore = create<AppState>((set) => ({
   updateLeaveStatus: (id, status) => set((state) => ({
     leaveRequests: state.leaveRequests.map(r => r.id === id ? { ...r, status } : r)
   })),
+  submitApprovalRequest: (req) => set((state) => {
+    const newReq: ApprovalRequest = {
+      ...req,
+      id: Math.random().toString(36).substr(2, 9),
+      status: 'Pending',
+      dateCreated: new Date().toISOString().split('T')[0],
+      history: [
+        {
+          status: 'Pending',
+          actorName: req.senderName,
+          actorRole: req.senderRole,
+          actionDate: new Date().toISOString().split('T')[0],
+          comments: 'Request submitted.'
+        }
+      ]
+    };
+    const log: AuditLog = {
+      id: Math.random().toString(36).substr(2, 9),
+      timestamp: new Date().toISOString(),
+      actor: req.senderRole,
+      action: 'Approval Request Submitted',
+      details: `${req.category} request: "${req.title}"`,
+      severity: 'Info'
+    };
+    return {
+      approvalRequests: [newReq, ...state.approvalRequests],
+      auditLogs: [log, ...state.auditLogs]
+    };
+  }),
+  updateApprovalStatus: (id, action, actorName, actorRole, comments) => set((state) => {
+    const statusMap: Record<string, 'Approved' | 'Rejected' | 'CorrectionRequired' | 'Escalated'> = {
+      Approve: 'Approved',
+      Reject: 'Rejected',
+      Correction: 'CorrectionRequired',
+      Escalate: 'Escalated'
+    };
+
+    const newStatus = statusMap[action];
+
+    const updatedRequests = state.approvalRequests.map((req) => {
+      if (req.id === id) {
+        let nextApprover: UserRole = req.currentApproverRole;
+        if (action === 'Approve') {
+          if (req.currentApproverRole === 'HoD' && req.category === 'Budget') {
+            nextApprover = 'Dean';
+          } else if (req.currentApproverRole === 'Dean' && req.category === 'Budget' && (req.amount || 0) > 5000) {
+            nextApprover = 'ProVC';
+          }
+        }
+        
+        return {
+          ...req,
+          status: newStatus,
+          currentApproverRole: nextApprover,
+          comments: comments || req.comments,
+          history: [
+            ...req.history,
+            {
+              status: newStatus,
+              actorName,
+              actorRole,
+              actionDate: new Date().toISOString().split('T')[0],
+              comments
+            }
+          ]
+        };
+      }
+      return req;
+    });
+
+    const targetReq = state.approvalRequests.find(r => r.id === id);
+    const log: AuditLog = {
+      id: Math.random().toString(36).substr(2, 9),
+      timestamp: new Date().toISOString(),
+      actor: actorRole,
+      action: `Approval Request ${action}`,
+      details: `${targetReq?.category} request: "${targetReq?.title}" updated to ${newStatus}`,
+      severity: action === 'Reject' ? 'Warning' : 'Info'
+    };
+
+    return {
+      approvalRequests: updatedRequests,
+      auditLogs: [log, ...state.auditLogs]
+    };
+  }),
   approvePayroll: (id) => set((state) => ({
     payroll: state.payroll.map(p => p.id === id ? { ...p, status: 'Disbursed' } : p)
   })),
@@ -161,6 +291,80 @@ export const useStore = create<AppState>((set) => ({
   addMessage: (msg) => set((state) => ({ messages: [...state.messages, msg] })),
   assignSubstitution: (sub) => set((state) => ({ substitutions: [...state.substitutions, sub] })),
   updatePerformanceSettings: (settings) => set({ performanceSettings: settings }),
+  updateBusinessRule: (id, value, isEnabled) => set((state) => {
+    const updated = state.businessRules.map(r => {
+      if (r.id === id) {
+        return { ...r, value, isEnabled: isEnabled !== undefined ? isEnabled : r.isEnabled };
+      }
+      return r;
+    });
+    const targetRule = state.businessRules.find(r => r.id === id);
+    const log: AuditLog = {
+      id: Math.random().toString(36).substr(2, 9),
+      timestamp: new Date().toISOString(),
+      actor: 'Admin',
+      action: 'Business Rule Updated',
+      details: `${targetRule?.name} updated to ${value}`,
+      severity: 'Warning'
+    };
+    return { businessRules: updated, auditLogs: [log, ...state.auditLogs] };
+  }),
+  simulateHours: (hours) => set((state) => {
+    const escalationTimeoutRule = state.businessRules.find(r => r.id === 'rule_4');
+    const timeout = typeof escalationTimeoutRule?.value === 'number' ? escalationTimeoutRule.value : 24;
+    
+    let newLogs: AuditLog[] = [];
+    const updatedRequests = state.approvalRequests.map(req => {
+      if (req.status === 'Pending') {
+        const currentElapsed = (req.hoursElapsed || 0) + hours;
+        let isEscated = req.isEscalated || false;
+        let currentApproverRole = req.currentApproverRole;
+        let history = [...req.history];
+        
+        if (currentElapsed >= timeout && !req.isEscalated) {
+          isEscated = true;
+          let nextRole: UserRole = currentApproverRole;
+          if (currentApproverRole === 'HoD') nextRole = 'Dean';
+          else if (currentApproverRole === 'Dean') nextRole = 'ProVC';
+          else if (currentApproverRole === 'ProVC') nextRole = 'ViceChancellor';
+          
+          if (nextRole !== currentApproverRole) {
+            currentApproverRole = nextRole;
+            history.push({
+              status: 'Escalated',
+              actorName: 'System Escalation Engine',
+              actorRole: 'Admin',
+              actionDate: new Date().toISOString().split('T')[0],
+              comments: `Automatically escalated after exceeding ${timeout} hours threshold.`
+            });
+            
+            newLogs.push({
+              id: Math.random().toString(36).substr(2, 9),
+              timestamp: new Date().toISOString(),
+              actor: 'System',
+              action: 'Workflow Escalation',
+              details: `Request "${req.title}" escalated to ${nextRole}`,
+              severity: 'Critical'
+            });
+          }
+        }
+        
+        return {
+          ...req,
+          hoursElapsed: currentElapsed,
+          isEscalated: isEscated,
+          currentApproverRole,
+          history
+        };
+      }
+      return req;
+    });
+    
+    return {
+      approvalRequests: updatedRequests,
+      auditLogs: [...newLogs, ...state.auditLogs]
+    };
+  }),
   updateUser: (userId, updatedFields) => set((state) => {
     const updatedUsers = state.users.map(u => {
       if (u.id === userId) {

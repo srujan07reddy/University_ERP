@@ -157,3 +157,39 @@ export interface Survey {
   createdAt: string;
   isActive: boolean;
 }
+
+export interface ApprovalHistoryItem {
+  status: string;
+  actorName: string;
+  actorRole: string;
+  actionDate: string;
+  comments?: string;
+}
+
+export interface ApprovalRequest {
+  id: string;
+  category: 'Leave' | 'OD' | 'Budget' | 'Event' | 'Purchase' | 'Research' | 'MarksLocking';
+  title: string;
+  senderId: string;
+  senderName: string;
+  senderRole: UserRole;
+  description: string;
+  amount?: number;
+  status: 'Pending' | 'Approved' | 'Rejected' | 'CorrectionRequired' | 'Escalated';
+  currentApproverRole: UserRole;
+  comments?: string;
+  dateCreated: string;
+  history: ApprovalHistoryItem[];
+  hoursElapsed?: number;
+  isEscalated?: boolean;
+  escalationTargetRole?: UserRole;
+}
+
+export interface BusinessRule {
+  id: string;
+  name: string;
+  value: number | string | boolean;
+  isEnabled: boolean;
+  category: 'Attendance' | 'Placement' | 'Leave' | 'General';
+}
+

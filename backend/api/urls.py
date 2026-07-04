@@ -4,7 +4,7 @@ from .views import (
     UserViewSet, DepartmentViewSet, StudentViewSet, AttendanceViewSet, TransactionViewSet, 
     BusRouteViewSet, MessageViewSet, AssignmentViewSet, 
     LeaveRequestViewSet, SubstitutionViewSet, TimetableEntryViewSet,
-    SubjectViewSet, FacultyProfileViewSet, 
+    SubjectViewSet, FacultyProfileViewSet, RoleTabMappingViewSet,
     GenerateTimetableAPIView, ResourcePlanningAPIView
 )
 
@@ -22,6 +22,7 @@ router.register(r'substitutions', SubstitutionViewSet)
 router.register(r'timetable', TimetableEntryViewSet)
 router.register(r'subjects', SubjectViewSet)
 router.register(r'faculty-profiles', FacultyProfileViewSet)
+router.register(r'role-tab-mappings', RoleTabMappingViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

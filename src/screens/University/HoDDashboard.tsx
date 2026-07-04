@@ -10,6 +10,7 @@ import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
+import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 
 export const HoDDashboard = () => {
   const { user, setUser, users, updateUser, leaveRequests, updateLeaveStatus, assignments, addAssignment, notes, addNote } = useStore();
@@ -203,6 +204,8 @@ export const HoDDashboard = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Approvals':
+        return <ApprovalsPortal />;
       // --- HOD MANAGEMENT SECTIONS ---
       case 'Faculty':
         return (

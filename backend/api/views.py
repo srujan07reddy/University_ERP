@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import User, Student, Attendance, Transaction, BusRoute, Message, Assignment, LeaveRequest, Substitution, TimetableEntry, Subject, FacultyProfile, Department
+from .models import User, Student, Attendance, Transaction, BusRoute, Message, Assignment, LeaveRequest, Substitution, TimetableEntry, Subject, FacultyProfile, Department, RoleTabMapping
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,12 +8,24 @@ from .serializers import (
     UserSerializer, StudentSerializer, AttendanceSerializer, 
     TransactionSerializer, BusRouteSerializer, MessageSerializer,
     AssignmentSerializer, LeaveRequestSerializer, SubstitutionSerializer,
-    TimetableEntrySerializer, SubjectSerializer, FacultyProfileSerializer, DepartmentSerializer
+    TimetableEntrySerializer, SubjectSerializer, FacultyProfileSerializer, DepartmentSerializer,
+    RoleTabMappingSerializer
 )
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class RoleTabMappingViewSet(viewsets.ModelViewSet):
+    queryset = RoleTabMapping.objects.all()
+    serializer_class = RoleTabMappingSerializer
+
+    def get_queryset(self):
+        queryset = RoleTabMapping.objects.all()
+        role = self.request.query_params.get('role')
+        if role is not None:
+            queryset = queryset.filter(role=role)
+        return queryset
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
