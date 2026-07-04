@@ -78,22 +78,26 @@ export const AdminDashboard = () => {
   const [selectedSem, setSelectedSem] = useState('Sem 1');
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Safe string hash — works for both numeric and alphanumeric IDs
+  const strHash = (str: string) => str.split('').reduce((acc, c) => (acc * 31 + c.charCodeAt(0)) | 0, 0);
+
   // Performance Segmentation Logic
   const sortedStudents = useMemo(() => {
     let base = users.filter(u => u.role === 'Student').map((s: any) => {
-      const score = (parseInt(s.id) * 7) % 100 || 75;
+      const h = Math.abs(strHash(s.id));
+      const score = (h * 7) % 100 || 75;
       let segment: 'high' | 'medium' | 'low' = 'medium';
       if (score >= 85) segment = 'high';
       else if (score < 60) segment = 'low';
       
       // Mock fee due logic
-      const feeDue = (parseInt(s.id) * 100) % 5000;
+      const feeDue = (h * 100) % 5000;
       const isDefaulter = feeDue > 2000;
       
       // Mock exam comparison data
-      const preLastExam = (parseInt(s.id) * 7) % 40 + 45;
-      const lastExam = (parseInt(s.id) * 9) % 40 + 50;
-      const presentExam = (parseInt(s.id) * 11) % 40 + 55;
+      const preLastExam = (h * 7) % 40 + 45;
+      const lastExam = (h * 9) % 40 + 50;
+      const presentExam = (h * 11) % 40 + 55;
       const improvement = presentExam - lastExam;
       const overallTrend = presentExam - preLastExam;
       
