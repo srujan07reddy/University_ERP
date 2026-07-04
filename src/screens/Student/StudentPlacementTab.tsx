@@ -1,57 +1,60 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform } from 'react-native';
-import { useStore } from '../../store/useStore';
-import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
-import { 
-  Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
-  MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
-  Trash2, Send, Download, Sparkles, Shield, RefreshCw, Layers, Database, Wallet, MapPin, Search, Compass, BookOpenCheck
-} from 'lucide-react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { Upload } from 'lucide-react-native';
 
 export const StudentPlacementTab = () => {
-  const { user, businessRules } = useStore();
-  const studentData = user?.universityData?.studentData;
-  const [personalDetails, setPersonalDetails] = useState({ phone: '+1 234 567 890', email: user?.email || 'student@university.com', address: '123 Baker Street, London' });
-  const [pdfSubmitted, setPdfSubmitted] = useState(false);
   const [cvUploaded, setCvUploaded] = useState(false);
   const [atsAnalyzing, setAtsAnalyzing] = useState(false);
   const [atsResult, setAtsResult] = useState('');
-  const [grievanceText, setGrievanceText] = useState('');
-  const [selectedFaculty, setSelectedFaculty] = useState<any>(null);
-
-  const facultyProfiles: Record<string, { qualifications: string, experience: string, rating: string, papers: string[], patents: string[] }> = {
-    'Dr. Sarah Smith': {
-      qualifications: 'Ph.D. in Computer Science (Artificial Intelligence)',
-      experience: '12 Years',
-      rating: '4.8 / 5.0',
-      papers: [
-        'Federated Learning Frameworks in Private Cloud ERPs - IEEE Transactions, 2026',
-        'Scalable Multi-Tenant Architectures in Higher Ed SaaS - Springer, 2025'
-      ],
-      patents: [
-        'System and Method for Encrypted Distributed Database Sharding (Patent No: 18/402,129)'
-      ]
-    }
-  };
-
-  const handlePayFees = () => {
-    Alert.alert('Payment Portal', 'Online transaction successful! Receipt downloaded.', [
-      { text: 'OK', onPress: () => Alert.alert('Downloaded', 'Receipt_FEES_OCT2026.pdf saved to device.') }
-    ]);
-  };
 
   return (
-    (
-          <View className="space-y-6">
-            {/* Student CV Ingestion & ATS Analyzer Widget */}
-            <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
-              <Text className="text-white font-bold text-lg">AI Resume Optimizer & ATS Matcher</Text>
-              <Text className="text-slate-400 text-xs">
-                Upload your CV to run the **STUDENT SKILL SCORER** parser. Measures ATS compatibility and flags missing technical competencies.
-              </Text>
-              
-              <TouchableOpacity 
-                onPress={() => {
-                  setAtsAnalyzing(true)
+    <View className="space-y-6">
+      {/* Student CV Ingestion & ATS Analyzer Widget */}
+      <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
+        <Text className="text-white font-bold text-lg">AI Resume Optimizer & ATS Matcher</Text>
+        <Text className="text-slate-400 text-xs">
+          Upload your CV to run the **STUDENT SKILL SCORER** parser. Measures ATS compatibility and flags missing technical competencies.
+        </Text>
+        
+        <TouchableOpacity 
+          onPress={() => {
+            setAtsAnalyzing(true);
+            setTimeout(() => {
+              setCvUploaded(true);
+              setAtsAnalyzing(false);
+              setAtsResult(`[STUDENT SKILL SCORER - ATS ANALYSIS]\n\n• Score: 84 / 100\n• Identified Skills: React Native, JavaScript, Zustand, TailwindCSS\n• Skill Gaps: Docker, AWS Cloud, DSA (Red-Black Trees)\n• Fitment: Strong fit for Frontend Eng & Cross-Platform Mobile roles.`);
+            }, 1200);
+          }} 
+          className="bg-white/5 border border-dashed border-white/20 p-8 rounded-2xl items-center"
+        >
+          <Upload color="#94a3b8" size={32} />
+          <Text className="text-slate-400 text-xs mt-2">
+            {atsAnalyzing ? 'Running AI Parser...' : cvUploaded ? 'Resume_John_Doe.pdf (Ingested)' : 'Drop Resume PDF to check ATS score'}
+          </Text>
+        </TouchableOpacity>
+
+        {atsResult ? (
+          <View className="bg-green-500/10 p-5 rounded-2xl border border-green-500/20">
+            <Text className="text-green-400 text-xs font-bold leading-relaxed">{atsResult}</Text>
+          </View>
+        ) : null}
+      </View>
+
+      <Text className="text-white text-2xl font-bold mt-4">Placement Drives</Text>
+      {[
+        { company: 'Google Inc.', date: 'Oct 30', role: 'Software Engineer Intern', status: 'Registered' },
+        { company: 'Microsoft corp.', date: 'Nov 04', role: 'Full Stack Associate', status: 'Resume Screen' }
+      ].map((drive, idx) => (
+        <View key={idx} className="bg-white/5 p-6 rounded-[32px] border border-white/10 flex-row justify-between items-center">
+          <View>
+            <Text className="text-white font-bold text-lg">{drive.company}</Text>
+            <Text className="text-slate-450 text-xs mt-1">{drive.role} • Date: {drive.date}</Text>
+          </View>
+          <View className="bg-blue-600/10 px-3 py-1.5 rounded-full border border-blue-500/20">
+            <Text className="text-blue-400 text-[10px] font-bold">{drive.status}</Text>
+          </View>
+        </View>
+      ))}
+    </View>
   );
 };
