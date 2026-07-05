@@ -330,9 +330,30 @@ export const DeanDashboard = () => {
         )}
 
         {/* Right content / workspace column */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
-          {renderContent()}
-        </View>
+        {Platform.OS === 'web' ? (
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 24,
+              paddingTop: 24,
+
+            }}
+          >
+            {renderContent()}
+          </View>
+        ) : (
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              paddingTop: 24,
+              paddingBottom: 140, // space for BottomNavbar
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            {renderContent()}
+          </ScrollView>
+        )}
 
         <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
 

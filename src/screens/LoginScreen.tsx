@@ -73,12 +73,18 @@ export const LoginScreen = () => {
   };
 
   return (
-    <View className="flex-1 bg-[#0F172A] justify-center items-center p-6">
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View 
-          style={{ 
-            maxWidth: 450, 
-            width: '100%', 
+    <View
+      style={{ flex: 1, width: '100%', backgroundColor: '#0F172A', padding: 24 }}
+      className="justify-center items-center"
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            maxWidth: 450,
+            width: '100%',
             backgroundColor: 'rgba(255, 255, 255, 0.08)',
             borderWidth: 1,
             borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -94,23 +100,48 @@ export const LoginScreen = () => {
           </View>
 
           <View className="mb-8">
-            <ScrollView 
-              horizontal 
-              showsHorizontalScrollIndicator={false} 
-              scrollEventThrottle={16} 
-              scrollEnabled={true} 
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={16}
+              scrollEnabled={true}
               className="bg-white/5 p-1.5 rounded-2xl border border-white/5"
               style={{ width: '100%' }}
               contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
             >
-              {(['Chancellor', 'ViceChancellor', 'ProVC', 'Registrar', 'Dean', 'HoD', 'CoE', 'Admissions', 'PlacementOfficer', 'Finance', 'Admin', 'Faculty', 'Student', 'Parent', 'BusIncharge', 'MessIncharge'] as const).map((r) => (
+              {(
+                [
+                  'Chancellor',
+                  'ViceChancellor',
+                  'ProVC',
+                  'Registrar',
+                  'Dean',
+                  'HoD',
+                  'CoE',
+                  'Admissions',
+                  'PlacementOfficer',
+                  'Finance',
+                  'Admin',
+                  'Faculty',
+                  'Student',
+                  'Parent',
+                  'BusIncharge',
+                  'MessIncharge',
+                ] as const
+              ).map((r) => (
                 <TouchableOpacity
                   key={r}
                   onPress={() => handleRoleChange(r)}
                   className={`px-4 py-3.5 rounded-xl items-center mx-1 ${role === r ? 'bg-blue-600 shadow-lg' : ''}`}
                 >
-                  <Text className={`text-[10px] font-bold tracking-tight ${role === r ? 'text-white' : 'text-slate-400'}`}>
-                    {r === 'Faculty' ? 'STAFF / FACULTY' : r.replace(/([A-Z])/g, ' $1').trim().toUpperCase()}
+                  <Text
+                    className={`text-[10px] font-bold tracking-tight ${
+                      role === r ? 'text-white' : 'text-slate-400'
+                    }`}
+                  >
+                    {r === 'Faculty'
+                      ? 'STAFF / FACULTY'
+                      : r.replace(/([A-Z])/g, ' $1').trim().toUpperCase()}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -121,7 +152,9 @@ export const LoginScreen = () => {
             {!isOtpLogin ? (
               <>
                 <View className="mb-4">
-                  <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">Institutional Email</Text>
+                  <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">
+                    Institutional Email
+                  </Text>
                   <View className="bg-white/5 p-4 rounded-2xl flex-row items-center border border-white/10">
                     <Mail color="#64748b" size={20} />
                     <TextInput
@@ -136,7 +169,9 @@ export const LoginScreen = () => {
 
                 <View className="mb-6">
                   <View className="flex-row justify-between items-center mb-2 px-1">
-                    <Text className="text-slate-300 font-bold text-[10px] tracking-wider uppercase">Security Password</Text>
+                    <Text className="text-slate-300 font-bold text-[10px] tracking-wider uppercase">
+                      Security Password
+                    </Text>
                     <TouchableOpacity>
                       <Text className="text-blue-500 text-[11px] font-bold">Forgot Password?</Text>
                     </TouchableOpacity>
@@ -152,11 +187,7 @@ export const LoginScreen = () => {
                       onChangeText={setPassword}
                     />
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                      {showPassword ? (
-                        <EyeOff color="#64748b" size={20} />
-                      ) : (
-                        <Eye color="#64748b" size={20} />
-                      )}
+                      {showPassword ? <EyeOff color="#64748b" size={20} /> : <Eye color="#64748b" size={20} />}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -164,7 +195,9 @@ export const LoginScreen = () => {
             ) : (
               <>
                 <View className="mb-4">
-                  <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">Registered Mobile</Text>
+                  <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">
+                    Registered Mobile
+                  </Text>
                   <View className="bg-white/5 p-4 rounded-2xl flex-row items-center border border-white/10">
                     <Phone color="#64748b" size={20} />
                     <TextInput
@@ -177,9 +210,12 @@ export const LoginScreen = () => {
                     />
                   </View>
                 </View>
+
                 {showOtp && (
                   <View className="mb-6">
-                    <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">Identity Verification</Text>
+                    <Text className="text-slate-300 font-bold text-[10px] mb-2 ml-1 tracking-wider uppercase">
+                      Identity Verification
+                    </Text>
                     <View className="bg-white/5 p-4 rounded-2xl flex-row items-center border border-white/10">
                       <Lock color="#64748b" size={20} />
                       <TextInput
@@ -210,24 +246,24 @@ export const LoginScreen = () => {
                 ) : (
                   <>
                     <Text className="text-white font-bold text-lg mr-2">
-                      {!isOtpLogin ? 'Sign In' : (showOtp ? 'Verify & Continue' : 'Send OTP')}
+                      {!isOtpLogin ? 'Sign In' : showOtp ? 'Verify & Continue' : 'Send OTP'}
                     </Text>
                     <ChevronRight color="white" size={20} />
                   </>
                 )}
               </TouchableOpacity>
-              
+
               <TouchableOpacity className="mt-6">
-                <Text className="text-slate-500 text-xs font-medium">Enterprise Security Protocol Active</Text>
+                <Text className="text-slate-500 text-xs font-medium">
+                  Enterprise Security Protocol Active
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
 
         <View className="mt-12 items-center">
-          <Text className="text-white/40 text-sm font-medium">
-            System Version 4.2.0-stable
-          </Text>
+          <Text className="text-white/40 text-sm font-medium">System Version 4.2.0-stable</Text>
           <Text className="text-white/40 text-[10px] mt-1 tracking-widest">
             ENTERPRISE INFRASTRUCTURE • SECURE NODE
           </Text>

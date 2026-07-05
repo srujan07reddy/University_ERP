@@ -428,7 +428,11 @@ export const AdminDashboard = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ flex: 1, padding: 32, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ padding: 32, paddingBottom: 300 }}
+            showsVerticalScrollIndicator={false}
+          >
             {activeTab === 'Overview' && <AdminOverviewTab />}
             {activeTab === 'Approvals' && <ApprovalsPortal />}
             {activeTab === 'Analytics' && (
@@ -448,8 +452,8 @@ export const AdminDashboard = () => {
             {activeTab === 'Calendar' && <CalendarModule />}
             {activeTab === 'Users' && (
               <AdminUsersTab 
-                setAppointmentModalVisible={setAppointmentModalVisible} 
-                setAdmissionModalVisible={setAdmissionModalVisible} 
+                setAppointmentModalVisible={setAppointmentModalVisible}
+                setAdmissionModalVisible={setAdmissionModalVisible}
               />
             )}
             {activeTab === 'Finance' && (
@@ -498,7 +502,7 @@ export const AdminDashboard = () => {
                 handleAutoGenerateTimetable={handleAutoGenerateTimetable}
               />
             )}
-          </View>
+          </ScrollView>
         </View>
       </View>
 
