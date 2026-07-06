@@ -137,6 +137,7 @@ export const HoDStaffTimetableTab = () => {
   );
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold">My Personal Classes</Text>
@@ -147,5 +148,6 @@ export const HoDStaffTimetableTab = () => {
             </View>
           </View>
         )
+    </ScrollView>
   );
 };

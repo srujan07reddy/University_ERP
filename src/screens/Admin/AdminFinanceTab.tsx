@@ -30,7 +30,7 @@ export const AdminFinanceTab = ({
   setGroupMessageModalVisible: (visible: boolean) => void;
 }) => {
   return (
-    <View className="space-y-8">
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="space-y-8">
       <View className="bg-white/5 p-8 rounded-3xl border border-white/10">
         <Text className="text-white text-xl font-bold mb-6">Live Revenue vs. Expenses</Text>
         <ChartContainer title="Financial Performance" subtitle="Real-time collection vs operational costs">
@@ -110,6 +110,6 @@ export const AdminFinanceTab = ({
           ))}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { RefreshCw } from 'lucide-react-native';
 
 const INITIAL_SLOTS = [
@@ -11,6 +11,7 @@ export const HoDTimetableTab = () => {
   const [timetableSlots] = useState(INITIAL_SLOTS);
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <View className="bg-white/5 p-6 rounded-[32px] border border-white/10">
         <Text className="text-white font-bold text-lg mb-2">Conflict Detector &amp; Timetable Scheduler</Text>
@@ -42,5 +43,6 @@ export const HoDTimetableTab = () => {
         </View>
       ))}
     </View>
+    </ScrollView>
   );
 };

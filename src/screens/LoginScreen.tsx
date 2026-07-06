@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Dimensions, ActivityIndicator, ScrollView } from 'react-native';
+
 import { useStore } from '../store/useStore';
 import { MOCK_USERS } from '../utils/mockData';
 import { UserRole } from '../types';
@@ -79,8 +80,8 @@ export const LoginScreen = () => {
     >
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={true}
+       showsHorizontalScrollIndicator={true} className="">
         <View
           style={{
             maxWidth: 450,
@@ -102,13 +103,13 @@ export const LoginScreen = () => {
           <View className="mb-8">
             <ScrollView
               horizontal
-              showsHorizontalScrollIndicator={false}
+              showsHorizontalScrollIndicator={true}
               scrollEventThrottle={16}
               scrollEnabled={true}
               className="bg-white/5 p-1.5 rounded-2xl border border-white/5"
               style={{ width: '100%' }}
               contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
-            >
+             showsVerticalScrollIndicator={true}>
               {(
                 [
                   'Chancellor',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native';
+
 import { useStore } from '../../store/useStore';
 const MOCK_TRANSACTIONS = [
   { id: '1', description: 'Tuition Fee - John Doe', date: '2026-07-01', amount: 1500, status: 'Paid' },
@@ -64,7 +65,7 @@ export const TransactionList = () => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView className="p-8" style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 140 }}>
+        <ScrollView className="p-8" style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 140 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
           <View className="flex-row flex-wrap -mx-4 mb-8">
             <View className="w-full lg:w-1/2 px-4">
               <ChartContainer title="Collection Overview" subtitle="Paid vs Pending targets">

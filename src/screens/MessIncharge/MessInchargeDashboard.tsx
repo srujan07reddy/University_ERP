@@ -1,6 +1,6 @@
 // Mess Incharge Dashboard Wrapper
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Platform, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import MessInchargeHomeTab from './MessInchargeHomeTab';
 import MessInchargeLogsTab from './MessInchargeLogsTab';
@@ -90,7 +90,7 @@ export const MessInchargeDashboard = () => {
         </View>
 
         {/* Content Area */}
-        <ScrollView className="flex-1 p-8" contentContainerStyle={{ paddingBottom: 100 }}>
+        <ScrollView className="flex-1 p-8" contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
           {renderContent()}
         </ScrollView>
       </View>

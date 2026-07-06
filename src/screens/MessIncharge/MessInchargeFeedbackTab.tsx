@@ -12,6 +12,7 @@ export const MessInchargeFeedbackTab = () => {
     : messReviews.filter(r => Math.floor(r.rating) === selectedRatingFilter);
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-8">
       {/* Title */}
       <View className="flex-row justify-between items-center bg-white/5 p-8 rounded-[40px] border border-white/10">
@@ -91,6 +92,7 @@ export const MessInchargeFeedbackTab = () => {
         )}
       </View>
     </View>
+    </ScrollView>
   );
 };
 

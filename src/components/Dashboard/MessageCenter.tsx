@@ -73,7 +73,7 @@ export const MessageCenter = () => {
   });
 
   return (
-    <View style={{ flex: 1, height: '100%' }} className="space-y-6">
+    <View style={{ flex: 1, minHeight: 0 }} className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
           <Text className="text-white text-2xl font-bold">SafeChat Communication Center</Text>
@@ -88,7 +88,7 @@ export const MessageCenter = () => {
           <View className="p-5 border-b border-white/5">
             <Text className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Active Channels</Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={true}>
             <View className="p-3 space-y-1">
               
               {/* Broadcast item */}

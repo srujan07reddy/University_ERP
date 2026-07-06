@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { TrendingUp, Users, Clock, AlertCircle } from 'lucide-react-native';
 
 export const BusInchargeAnalyticsTab = () => {
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white text-3xl font-bold">Transport Analytics</Text>
@@ -21,5 +22,6 @@ export const BusInchargeAnalyticsTab = () => {
         <StatCard title="Maintenance Alerts" value="1" icon={AlertCircle} color="#f59e0b" />
       </View>
     </View>
+    </ScrollView>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { Award, AlertCircle } from 'lucide-react-native';
 
@@ -12,6 +12,7 @@ export const StudentAttendanceTab = () => {
   const isEligible = (studentData?.attendancePercentage || 0) >= minAttendance;
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
         <Text className="text-slate-400 text-sm font-medium">Overall Attendance</Text>
@@ -51,5 +52,6 @@ export const StudentAttendanceTab = () => {
         </View>
       ))}
     </View>
+    </ScrollView>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { MapPin, Activity } from 'lucide-react-native';
 
 export const BusInchargeHomeTab = () => {
@@ -10,6 +10,7 @@ export const BusInchargeHomeTab = () => {
   ];
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-8">
       <View className="flex-row justify-between items-center bg-white/5 p-8 rounded-[40px] border border-white/10">
         <View>
@@ -71,5 +72,6 @@ export const BusInchargeHomeTab = () => {
         ))}
       </View>
     </View>
+    </ScrollView>
   );
 };

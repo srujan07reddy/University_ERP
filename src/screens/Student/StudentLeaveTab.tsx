@@ -41,6 +41,7 @@ export const StudentLeaveTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
@@ -56,5 +57,6 @@ export const StudentLeaveTab = () => {
             </View>
           </View>
         )
+    </ScrollView>
   );
 };

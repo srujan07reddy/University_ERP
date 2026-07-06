@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { CheckCircle } from 'lucide-react-native';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { useStore } from '../../store/useStore';
@@ -20,6 +20,7 @@ export const HoDApprovalsTab = () => {
   const pendingLeaves = leaveRequests.filter(r => r.status === 'Pending');
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <Text className="text-white text-2xl font-bold mb-2">Central Approval Center</Text>
 
@@ -54,5 +55,6 @@ export const HoDApprovalsTab = () => {
       {/* Full approvals portal below */}
       <ApprovalsPortal />
     </View>
+    </ScrollView>
   );
 };

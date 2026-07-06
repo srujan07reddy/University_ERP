@@ -32,6 +32,7 @@ export const AdminStaffMasterTab = ({
     const { users, deleteUser } = useStore();
     const filtered = users.filter((u: any) => u.role === 'Faculty' && (u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.id.includes(searchQuery)));
     return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
       <View className="space-y-6">
         <View className="bg-white/5 p-6 rounded-3xl border border-white/10 flex-row items-center">
           <Search color="#64748b" size={20} />
@@ -58,5 +59,6 @@ export const AdminStaffMasterTab = ({
           </View>
         </View>
       </View>
+    </ScrollView>
     );
   };

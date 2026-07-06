@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, TextInput, Alert, Modal, FlatList, Platform } from 'react-native';
+
 import { useStore } from '../../store/useStore';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { ChartContainer, chartConfig } from '../../components/Dashboard/ChartContainer';
@@ -69,7 +70,7 @@ export const AdminTimetableTab = ({
         <View className="space-y-4 mb-2">
            {timetableMode === 'Class' ? (
              <View className="space-y-4">
-               <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-2" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
+               <ScrollView horizontal showsHorizontalScrollIndicator={true} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-2" style={{ width: '100%' }}  showsVerticalScrollIndicator={true}>
                  {DEPARTMENTS.map((dept) => (
                    <TouchableOpacity 
                      key={dept} 
@@ -93,7 +94,7 @@ export const AdminTimetableTab = ({
                </View>
              </View>
            ) : (
-             <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-2" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
+             <ScrollView horizontal showsHorizontalScrollIndicator={true} className="flex-row gap-2" style={{ width: '100%' }}  showsVerticalScrollIndicator={true}>
                {['Mr. Ramesh', 'Ms. Priya', 'Mr. Amit', 'Ms. Sneha', 'Mr. Vikram'].map((teacher) => (
                  <TouchableOpacity 
                    key={teacher} 
@@ -107,7 +108,7 @@ export const AdminTimetableTab = ({
            )}
         </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="pb-4" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={true} scrollEventThrottle={16} scrollEnabled={true} className="pb-4" style={{ width: '100%' }}  showsVerticalScrollIndicator={true}>
           <View className="bg-white/5 p-4 rounded-[40px] border border-white/10">
             <View className="flex-row border-b border-white/10 pb-6">
               <View className="w-32 items-center justify-center">

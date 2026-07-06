@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Platform, Modal } from 'react-native';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
+import { View, Text, TouchableOpacity, SafeAreaView, Dimensions, Platform, Modal, ScrollView } from 'react-native';
+
 import { 
   ShieldAlert, FileCheck, Users, Bell, ChevronRight, AlertTriangle, Printer, Lock, LogOut, 
   Menu, X, Home, ShieldCheck as Shield, FileText, Settings, User, MessageSquare, ClipboardList, BarChart3, Calendar
@@ -23,7 +23,6 @@ export const CoEDashboard = () => {
   const coeData = user?.universityData?.coeData;
   
   // Scroll event tracking
-  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -37,12 +36,12 @@ export const CoEDashboard = () => {
   const Container = Platform.OS === 'web' ? View : SafeAreaView;
 
   return (
-    <Container style={{ flex: 1, backgroundColor: '#0F172A', ...(Platform.OS === 'web' ? { height: '100vh' } : {}) } as any}>
-      <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column', ...(Platform.OS === 'web' ? { height: '100%' } : {}) }}>
+    <Container style={{ flex: 1, backgroundColor: '#0F172A', ...(Platform.OS === 'web' ? { minHeight: '100vh' as const } : {}) } as any}>
+      <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column', ...(Platform.OS === 'web' ? { minHeight: 0 } : {}) }}>
         
         {/* Web permanent sidebar */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">CoE command</Text>
             <View className="space-y-4">
               <View>
@@ -64,11 +63,11 @@ export const CoEDashboard = () => {
                 </View>
               </View>
             </View>
-          </View>
+          </ScrollView>
         )}
 
         {/* Workspace column */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}), minHeight: 0 } as any}>
           {renderContent()}
         </View>
 
@@ -84,7 +83,7 @@ export const CoEDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

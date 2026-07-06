@@ -17,6 +17,7 @@ import {
 export const AdminPayrollTab = () => {
   const { payroll, approvePayroll, addLog } = useStore();
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10">
       <Text className="text-white text-2xl font-bold mb-8">Monthly Payroll Approval</Text>
       <View className="space-y-4">
@@ -43,5 +44,6 @@ export const AdminPayrollTab = () => {
         ))}
       </View>
     </View>
+    </ScrollView>
   );
 };

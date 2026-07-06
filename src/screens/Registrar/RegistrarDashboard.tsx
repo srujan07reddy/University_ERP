@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Platform, Modal, ScrollView } from 'react-native';
+
 import { 
   FileCheck, Users, Search, FileText, Bell, ChevronRight, Database, LogOut, 
   Menu, X, Home, Settings, User, MessageSquare, BarChart3, ClipboardList, Calendar, ShieldAlert as Shield
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 
@@ -21,7 +21,6 @@ export const RegistrarDashboard = () => {
   const [activeTab, setActiveTab] = useState('Home');
   
   // Scroll event tracking
-  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -40,7 +39,7 @@ export const RegistrarDashboard = () => {
         
         {/* Web permanent sidebar */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">Registrar Office</Text>
             <View className="space-y-4">
               <View>
@@ -62,11 +61,11 @@ export const RegistrarDashboard = () => {
                 </View>
               </View>
             </View>
-          </View>
+          </ScrollView>
         )}
 
         {/* Workspace column */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}), minHeight: 0 } as any}>
           {renderContent()}
         </View>
 
@@ -82,7 +81,7 @@ export const RegistrarDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

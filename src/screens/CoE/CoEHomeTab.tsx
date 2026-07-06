@@ -31,6 +31,7 @@ export const CoEHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <>
             {/* Header */}
@@ -202,5 +203,6 @@ export const CoEHomeTab = ({
             </View>
           </>
         )
+    </ScrollView>
   );
 };

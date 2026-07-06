@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, TextInput, Alert, ScrollView } from 'react-native';
 import { Plus, Trash2 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
 
@@ -29,6 +29,7 @@ export const HoDSubjectAllocTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -76,5 +77,6 @@ export const HoDSubjectAllocTab = () => {
         </View>
       </Modal>
     </View>
+    </ScrollView>
   );
 };

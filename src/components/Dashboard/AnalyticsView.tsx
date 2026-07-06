@@ -11,10 +11,11 @@ interface AnalyticsViewProps {
 
 export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ role, data }) => {
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={true}
       nestedScrollEnabled
       scrollEventThrottle={16}
       scrollEnabled={true}
@@ -81,6 +82,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ role, data }) => {
         </View>
       </View>
       </View>
+    </ScrollView>
     </ScrollView>
   );
 };

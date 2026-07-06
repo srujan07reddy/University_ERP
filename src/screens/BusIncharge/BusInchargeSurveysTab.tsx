@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { ClipboardList, Star } from 'lucide-react-native';
 
 export const BusInchargeSurveysTab = () => {
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white text-3xl font-bold">Commuter Feedback</Text>
@@ -23,5 +24,6 @@ export const BusInchargeSurveysTab = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };

@@ -41,6 +41,7 @@ export const StudentTimetableTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold mb-2">My Timetable</Text>
@@ -60,5 +61,6 @@ export const StudentTimetableTab = () => {
             ))}
           </View>
         )
+    </ScrollView>
   );
 };

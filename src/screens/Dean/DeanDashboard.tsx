@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Modal, TextInput, Alert, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Dimensions, Modal, TextInput, Alert, Platform, ScrollView } from 'react-native';
+
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -7,7 +8,6 @@ import {
 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
@@ -32,7 +32,6 @@ export const DeanDashboard = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   // Scroll event tracking
-  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   // Simulated Engineering School Data (Dean of SET)
   const [schoolDepartments, setSchoolDepartments] = useState([
@@ -88,30 +87,13 @@ export const DeanDashboard = () => {
     (st) => st.subject === filterSubject && st.batch === filterBatch && st.section === filterSection
   );
 
-  const renderFilterSelectors = () => (
-    <View className="bg-white/5 p-6 rounded-3xl border border-white/10 mb-6 space-y-4">
-      <Text className="text-white font-bold text-xs">Filter Student Group</Text>
-      
-      <View>
-        <Text className="text-slate-400 text-[9px] uppercase font-bold mb-1.5">Subject</Text>
-        <View className="flex-row gap-2">
-          {['Advanced Algorithms', 'Distributed Systems'].map((sub) => (
-            <TouchableOpacity 
-              key={sub} 
-              onPress={() => setFilterSubject(sub)}
-              className={`px-3 py-1.5 rounded-lg border ${filterSubject === sub ? 'bg-blue-600 border-blue-500' : 'bg-white/5 border-white/10'}`}
-            >
-              <Text className="text-white text-[10px] font-bold">{sub}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
+  const renderStudentFilters = () => (
+    <View className="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6">
       <View className="flex-row gap-4">
         <View className="flex-1">
-          <Text className="text-slate-400 text-[9px] uppercase font-bold mb-1.5">Batch / Year</Text>
+          <Text className="text-slate-400 text-[9px] uppercase font-bold mb-1.5">Batch</Text>
           <View className="flex-row gap-2">
-            {['3rd Year', '2nd Year'].map((bat) => (
+            {['3rd Year', '4th Year'].map((bat) => (
               <TouchableOpacity 
                 key={bat} 
                 onPress={() => setFilterBatch(bat)}
@@ -274,7 +256,7 @@ export const DeanDashboard = () => {
         
         {/* Web permanent sidebar - left side column */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">Dean Office</Text>
             <View className="space-y-4">
               
@@ -326,34 +308,13 @@ export const DeanDashboard = () => {
               </View>
 
             </View>
-          </View>
+          </ScrollView>
         )}
 
         {/* Right content / workspace column */}
-        {Platform.OS === 'web' ? (
-          <View
-            style={{
-              flex: 1,
-              paddingHorizontal: 24,
-              paddingTop: 24,
-
-            }}
-          >
-            {renderContent()}
-          </View>
-        ) : (
-          <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              paddingHorizontal: 24,
-              paddingTop: 24,
-              paddingBottom: 140, // space for BottomNavbar
-            }}
-            showsVerticalScrollIndicator={false}
-          >
-            {renderContent()}
-          </ScrollView>
-        )}
+        <View style={{ flex: 1, overflow: 'hidden' }} className="px-6 pt-6 pb-32">
+          {renderContent()}
+        </View>
 
         <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -367,7 +328,7 @@ export const DeanDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

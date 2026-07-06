@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Dimensions, Platform, ScrollView } from 'react-native';
+
 import { 
   TrendingUp, 
   Users, 
@@ -12,7 +13,6 @@ import {
   Menu, X, Home, FileText, Settings, User, MessageSquare, ShieldCheck as Shield, BarChart3, ClipboardList, Calendar
 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
@@ -32,7 +32,6 @@ export const ChancellorDashboard = () => {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState('Home');  
   // Scroll event tracking
-  const { handleScroll: handleMainScroll } = useScrollEvents();
   const renderContent = () => {
     switch (activeTab) {
       case 'Analytics':
@@ -49,7 +48,7 @@ export const ChancellorDashboard = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, overflow: 'hidden' }} className="px-6 pt-6 pb-32">
           {renderContent()}
         </View>
         <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -64,7 +63,7 @@ export const ChancellorDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

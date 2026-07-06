@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Upload } from 'lucide-react-native';
 
 export const StudentPlacementTab = () => {
@@ -8,6 +8,7 @@ export const StudentPlacementTab = () => {
   const [atsResult, setAtsResult] = useState('');
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       {/* Student CV Ingestion & ATS Analyzer Widget */}
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
@@ -56,5 +57,6 @@ export const StudentPlacementTab = () => {
         </View>
       ))}
     </View>
+    </ScrollView>
   );
 };

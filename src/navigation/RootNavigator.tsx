@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform, useWindowDimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useStore } from '../store/useStore';
@@ -33,10 +33,11 @@ const Stack = createStackNavigator();
 
 export const RootNavigator = () => {
   const user = useStore((state) => state.user);
+  const { height } = useWindowDimensions();
 
   return (
     <NavigationContainer>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, ...(Platform.OS === 'web' ? { height } : {}) }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {!user ? (
             <Stack.Screen name="Login" component={LoginScreen} />

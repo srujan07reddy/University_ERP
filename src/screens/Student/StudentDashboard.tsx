@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, Modal, Alert, Platform } from 'react-native';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
+import { View, Text, SafeAreaView, TouchableOpacity, Modal, Alert, Platform, ScrollView } from 'react-native';
+
 import {
   Users, Clock, Bell, LogOut, Menu, X, Home, Settings, User,
   MessageSquare, Calendar, Award, FileText, CheckCircle, RefreshCw,
@@ -48,7 +48,6 @@ export const StudentDashboard = () => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   // Scroll tracking
-  useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -115,7 +114,7 @@ export const StudentDashboard = () => {
       <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column' }}>
         {/* Web sidebar */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">Student Hub</Text>
             <View className="space-y-4">
               {MENU_ITEMS.map(item => (
@@ -129,10 +128,10 @@ export const StudentDashboard = () => {
                 </TouchableOpacity>
               ))}
             </View>
-          </View>
+          </ScrollView>
         )}
         {/* Main content */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, overflow: 'hidden' }} className="px-6 pt-6 pb-32">
           {renderContent()}
         </View>
         <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -146,7 +145,7 @@ export const StudentDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-4">
                   {MENU_ITEMS.map(item => (
                     <TouchableOpacity

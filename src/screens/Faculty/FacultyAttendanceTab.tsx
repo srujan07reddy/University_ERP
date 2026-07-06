@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Bell } from 'lucide-react-native';
 
 export const FacultyAttendanceTab = () => {
@@ -75,6 +75,7 @@ export const FacultyAttendanceTab = () => {
   );
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -116,5 +117,6 @@ export const FacultyAttendanceTab = () => {
         </View>
       ))}
     </View>
+    </ScrollView>
   );
 };

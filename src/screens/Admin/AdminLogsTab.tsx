@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, TextInput, Alert, Modal, FlatList, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, TextInput, Alert, Modal, FlatList, Platform, ScrollView } from 'react-native';
+
 import { useStore } from '../../store/useStore';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { ChartContainer, chartConfig } from '../../components/Dashboard/ChartContainer';
@@ -17,9 +18,10 @@ import {
 export const AdminLogsTab = () => {
   const { auditLogs } = useStore();
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
       <View className="bg-white/5 rounded-3xl p-8 border border-white/10" style={{ flex: 1 }}>
         <Text className="text-white text-xl font-bold mb-6">Audit Logs</Text>
-        <ScrollView className="space-y-3" scrollEventThrottle={16} scrollEnabled={true} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView className="space-y-3" style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
           {auditLogs.map((log) => (
             <View key={log.id} className="p-4 bg-white/5 rounded-2xl border border-white/5 flex-row justify-between">
               <View className="flex-1">
@@ -34,5 +36,6 @@ export const AdminLogsTab = () => {
           ))}
         </ScrollView>
       </View>
+    </ScrollView>
     );
   };

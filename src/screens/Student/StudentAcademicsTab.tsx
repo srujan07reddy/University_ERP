@@ -41,6 +41,7 @@ export const StudentAcademicsTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold mb-2">Registered Courses</Text>
@@ -71,5 +72,6 @@ export const StudentAcademicsTab = () => {
             ))}
           </View>
         )
+    </ScrollView>
   );
 };

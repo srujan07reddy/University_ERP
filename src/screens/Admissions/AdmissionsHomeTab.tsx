@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform, TextInput, Alert, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Platform, TextInput, Alert, Modal, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { api } from '../../utils/api';
@@ -94,7 +94,7 @@ export const AdmissionsHomeTab = () => {
   
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
         {/* Header */}
         <View className="flex-row justify-between items-center mb-8">
           <View className="flex-row items-center">
@@ -255,7 +255,7 @@ export const AdmissionsHomeTab = () => {
               </TouchableOpacity>
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false} className="space-y-4">
+            <ScrollView className="space-y-4" showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
               <View>
                 <Text className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">Student Name *</Text>
                 <TextInput

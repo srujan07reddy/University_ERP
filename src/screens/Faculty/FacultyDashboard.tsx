@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Alert, Platform } from 'react-native';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
+import { View, Text, TouchableOpacity, SafeAreaView, Modal, Alert, Platform, ScrollView } from 'react-native';
 import {
   Home, User, Calendar, Clock, ClipboardList, FileText, BookOpen,
   RefreshCw, Award, MessageSquare, LogOut, Menu, X, Bell
@@ -39,7 +38,6 @@ export const FacultyDashboard = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [assignmentModal, setAssignmentModal] = useState(false);
 
-  const { handleScroll: handleMainScroll } = useScrollEvents();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -54,7 +52,7 @@ export const FacultyDashboard = () => {
       case 'SafeChat':     return <MessageCenter />;
       default:
         return (
-          <>
+          <ScrollView showsVerticalScrollIndicator={true} contentContainerStyle={{ paddingBottom: 24 }}>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
               <View className="flex-row items-center">
@@ -104,7 +102,7 @@ export const FacultyDashboard = () => {
                 ))}
               </View>
             </View>
-          </>
+          </ScrollView>
         );
     }
   };
@@ -117,7 +115,7 @@ export const FacultyDashboard = () => {
 
         {/* Web sidebar */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">Faculty Hub</Text>
             <View className="space-y-1">
               {MENU_ITEMS.map((item) => (
@@ -131,11 +129,11 @@ export const FacultyDashboard = () => {
                 </TouchableOpacity>
               ))}
             </View>
-          </View>
+          </ScrollView>
         )}
 
         {/* Main content */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, overflow: 'hidden' }} className="px-6 pt-6 pb-32">
           {renderContent()}
         </View>
 
@@ -151,7 +149,7 @@ export const FacultyDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {MENU_ITEMS.map((item) => (
                     <TouchableOpacity

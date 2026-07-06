@@ -23,6 +23,7 @@ export const AdminUsersTab = ({
 }) => {
   const { users } = useStore();
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10 shadow-sm">
       <View className="flex-row justify-between items-center mb-8">
         <View>
@@ -65,5 +66,6 @@ export const AdminUsersTab = ({
         ))}
       </View>
     </View>
+    </ScrollView>
   );
 };

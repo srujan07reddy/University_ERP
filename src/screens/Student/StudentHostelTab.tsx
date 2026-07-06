@@ -41,6 +41,7 @@ export const StudentHostelTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold mb-2">Hostel Details</Text>
@@ -60,5 +61,6 @@ export const StudentHostelTab = () => {
             </View>
           </View>
         )
+    </ScrollView>
   );
 };

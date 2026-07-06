@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { RefreshCw } from 'lucide-react-native';
 
 const INITIAL_INVENTORY = [
@@ -12,6 +12,7 @@ export const HoDInventoryTab = () => {
   const [inventoryItems] = useState(INITIAL_INVENTORY);
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <Text className="text-white text-2xl font-bold mb-2">Inventory &amp; Lab Equipment</Text>
       {inventoryItems.map((item, idx) => (
@@ -30,5 +31,6 @@ export const HoDInventoryTab = () => {
         </View>
       ))}
     </View>
+    </ScrollView>
   );
 };

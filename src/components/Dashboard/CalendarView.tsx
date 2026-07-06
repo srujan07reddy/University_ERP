@@ -18,7 +18,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={true}
       nestedScrollEnabled
       scrollEventThrottle={16}
       scrollEnabled={true}
@@ -37,7 +37,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
       {/* Date Picker Ribbon Mock */}
       <ScrollView 
         horizontal 
-        showsHorizontalScrollIndicator={false} 
+        showsHorizontalScrollIndicator={true} 
         scrollEventThrottle={16} 
         scrollEnabled={true} 
         className="flex-row gap-4 mb-4"

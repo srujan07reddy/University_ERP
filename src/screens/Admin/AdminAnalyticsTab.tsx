@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, TextInput, Alert, Modal, FlatList, Platform } from 'react-native';
+
 import { useStore } from '../../store/useStore';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 import { ChartContainer, chartConfig } from '../../components/Dashboard/ChartContainer';
@@ -119,6 +120,7 @@ export const AdminAnalyticsTab = ({
     };
 
     return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
       <View className="space-y-8">
         <View className="bg-white/5 rounded-[40px] p-8 border border-white/10 shadow-sm">
           <View className="flex-row justify-between items-center mb-8">
@@ -138,7 +140,7 @@ export const AdminAnalyticsTab = ({
               ))}
           </View>
           <View className="mb-8">
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-3" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true} scrollEventThrottle={16} scrollEnabled={true} className="flex-row gap-3" style={{ width: '100%' }} showsVerticalScrollIndicator={true}>
               {SEMESTERS.map((grade: string) => (
                 <TouchableOpacity key={grade} onPress={() => setSelectedSem(grade)} className={`px-8 py-4 rounded-2xl border ${selectedSem === grade ? 'bg-blue-600 border-blue-500' : 'bg-white/5 border-white/10'}`}>
                   <Text className={`font-bold ${selectedSem === grade ? 'text-white' : 'text-slate-400'}`}>{grade}</Text>
@@ -147,7 +149,7 @@ export const AdminAnalyticsTab = ({
             </ScrollView>
           </View>
           <ChartContainer title={`${analyticsMetric} Comparison`} subtitle={`Semester ${selectedSem}`}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16} scrollEnabled={true} className="w-full" style={{ width: '100%' }} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true} scrollEventThrottle={16} scrollEnabled={true} className="w-full" style={{ width: '100%' }} showsVerticalScrollIndicator={true}>
               <LineChart data={getChartData()} width={Math.max(screenWidth * 0.7, 600)} height={300} yAxisLabel="" yAxisSuffix={analyticsMetric === 'Assessments' ? "" : "%"} chartConfig={{...chartConfig, backgroundGradientFrom: '#0F172A', backgroundGradientTo: '#0F172A', decimalPlaces: 0 }} bezier style={{ marginVertical: 8, borderRadius: 24 }} />
             </ScrollView>
           </ChartContainer>
@@ -221,5 +223,6 @@ export const AdminAnalyticsTab = ({
           </View>
         </View>
       </View>
+    </ScrollView>
     );
   };

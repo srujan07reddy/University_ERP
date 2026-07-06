@@ -141,6 +141,7 @@ export const HoDStaffAssignmentsTab = ({
   );
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <View className="flex-row justify-between items-center mb-2">
@@ -168,5 +169,6 @@ export const HoDStaffAssignmentsTab = ({
             ))}
           </View>
         )
+    </ScrollView>
   );
 };

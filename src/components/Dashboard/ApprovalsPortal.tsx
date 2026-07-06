@@ -80,6 +80,7 @@ export const ApprovalsPortal = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="flex-1 space-y-6">
       <View className="flex-row justify-between items-center mb-6">
         <View>
@@ -325,5 +326,6 @@ export const ApprovalsPortal = () => {
         </ScrollView>
       )}
     </View>
+    </ScrollView>
   );
 };

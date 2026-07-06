@@ -17,6 +17,7 @@ import {
 export const AdminRulesConsoleTab = () => {
   const { businessRules, updateBusinessRule, simulateHours } = useStore();
     return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
       <View className="space-y-8">
         <View className="flex-row justify-between items-center">
           <View>
@@ -128,5 +129,6 @@ export const AdminRulesConsoleTab = () => {
           </View>
         </View>
       </View>
+    </ScrollView>
     );
   };

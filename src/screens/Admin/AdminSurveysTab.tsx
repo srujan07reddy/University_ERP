@@ -21,7 +21,7 @@ export const AdminSurveysTab = ({
 }) => {
   const { surveys } = useStore();
   return (
-    <View className="space-y-8">
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="space-y-8">
       <View className="flex-row justify-between items-center">
         <View><Text className="text-white text-3xl font-bold">Surveys</Text></View>
         <TouchableOpacity onPress={() => setSurveyModalVisible(true)} className="bg-blue-600 px-8 py-4 rounded-2xl flex-row items-center"><Plus color="white" size={24} /><Text className="text-white font-bold ml-2">New Survey</Text></TouchableOpacity>
@@ -48,6 +48,6 @@ export const AdminSurveysTab = ({
           </View>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };

@@ -1,6 +1,6 @@
 // Bus Incharge Dashboard
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Modal, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Modal, Platform, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { 
   Users, Calendar, AlertCircle, Activity, ShieldCheck, Database, Wallet, Clock, MapPin, CheckCircle, 
@@ -44,7 +44,7 @@ export const BusInchargeDashboard = () => {
         
         {/* Web permanent sidebar - left side column */}
         {Platform.OS === 'web' && (
-          <View style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', padding: 24, height: '100%', overflowY: 'auto' } as any}>
+          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
             <Text className="text-2xl font-bold text-white mb-6">Transport Desk</Text>
             <View className="space-y-4">
               <View>
@@ -69,11 +69,11 @@ export const BusInchargeDashboard = () => {
                 </View>
               </View>
             </View>
-          </View>
+          </ScrollView>
         )}
 
         {/* Right content / workspace column */}
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}), minHeight: 0 } as any}>
           {/* Mobile Header */}
           {Platform.OS !== 'web' && (
             <View className="flex-row justify-between items-center mb-6">
@@ -101,7 +101,7 @@ export const BusInchargeDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-4">
                   {[
                     { id: 'Home', icon: Home, label: 'Live Tracking' },

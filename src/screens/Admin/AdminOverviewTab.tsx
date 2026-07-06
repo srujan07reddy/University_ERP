@@ -34,6 +34,7 @@ export const AdminOverviewTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-8">
       <View className="flex-row flex-wrap -mx-2">
         <StatCard title="Total Students" value={850} icon={Users} trend="+12%" color="#3b82f6" />
@@ -80,5 +81,6 @@ export const AdminOverviewTab = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };

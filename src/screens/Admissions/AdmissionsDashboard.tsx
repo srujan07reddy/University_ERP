@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Platform, ScrollView } from 'react-native';
+
 import { 
   Users, 
   UserPlus, 
@@ -15,7 +16,6 @@ import {
 } from 'lucide-react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
-import { useScrollEvents } from '../../hooks/useScrollEvents';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
 import { SurveyView } from '../../components/Dashboard/SurveyView';
@@ -32,7 +32,6 @@ export const AdmissionsDashboard = () => {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState('Home');  
   // Scroll event tracking
-  const { handleScroll: handleMainScroll } = useScrollEvents();
   const renderContent = () => {
     switch (activeTab) {
       case 'Analytics':
@@ -50,7 +49,7 @@ export const AdmissionsDashboard = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24, ...(Platform.OS === 'web' ? { overflowY: 'auto' } : {}) } as any}>
+        <View style={{ flex: 1, overflow: 'hidden' }} className="px-6 pt-6 pb-32">
           {renderContent()}
         </View>
         <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -65,7 +64,7 @@ export const AdmissionsDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },

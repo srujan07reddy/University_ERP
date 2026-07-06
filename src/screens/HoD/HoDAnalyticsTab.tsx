@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
 import { AnalyticsView } from '../../components/Dashboard/AnalyticsView';
 
@@ -18,6 +18,7 @@ export const HoDAnalyticsTab = () => {
   };
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <View className="space-y-6">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
         <Text className="text-white font-bold text-lg">AI At-Risk &amp; Performance Predictor</Text>
@@ -37,5 +38,6 @@ export const HoDAnalyticsTab = () => {
 
       <AnalyticsView role="HoD" />
     </View>
+    </ScrollView>
   );
 };

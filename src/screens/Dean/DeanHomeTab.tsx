@@ -23,6 +23,7 @@ export const DeanHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <>
             {/* Header */}
@@ -91,5 +92,6 @@ export const DeanHomeTab = ({
             </View>
           </>
         )
+    </ScrollView>
   );
 };

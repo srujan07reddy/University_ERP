@@ -20,6 +20,7 @@ export const ParentHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <>
             {/* Header */}
@@ -167,5 +168,6 @@ export const ParentHomeTab = ({
             <View className="h-40" />
           </>
         )
+    </ScrollView>
   );
 };

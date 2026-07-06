@@ -137,6 +137,7 @@ export const HoDStaffResearchTab = () => {
   );
 
   return (
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold mb-2">My Research Portfolio</Text>
@@ -153,5 +154,6 @@ export const HoDStaffResearchTab = () => {
             ))}
           </View>
         )
+    </ScrollView>
   );
 };
