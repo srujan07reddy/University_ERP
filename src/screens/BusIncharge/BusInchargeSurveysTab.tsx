@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { ClipboardList, Star } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const BusInchargeSurveysTab = () => {
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white text-3xl font-bold">Commuter Feedback</Text>
@@ -25,6 +24,6 @@ export const BusInchargeSurveysTab = () => {
         </View>
       </View>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

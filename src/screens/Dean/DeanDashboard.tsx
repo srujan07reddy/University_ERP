@@ -25,7 +25,6 @@ import { DeanStaffMarksTab } from './DeanStaffMarksTab';
 import { DeanStaffAssignmentsTab } from './DeanStaffAssignmentsTab';
 import { DeanStaffLessonPlansTab } from './DeanStaffLessonPlansTab';
 import { DeanStaffResearchTab } from './DeanStaffResearchTab';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const DeanDashboard = () => {
   const { user, setUser, leaveRequests, updateLeaveStatus, assignments, addAssignment } = useStore();
   const [activeTab, setActiveTab] = useState('Home');
@@ -329,7 +328,7 @@ export const DeanDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -386,7 +385,7 @@ export const DeanDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

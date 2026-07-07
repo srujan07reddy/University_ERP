@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { MessageSquare, Star, Filter } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const MessInchargeFeedbackTab = () => {
   const { messReviews } = useStore();
@@ -13,7 +12,7 @@ export const MessInchargeFeedbackTab = () => {
     : messReviews.filter(r => Math.floor(r.rating) === selectedRatingFilter);
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-8">
       {/* Title */}
       <View className="flex-row justify-between items-center bg-white/5 p-8 rounded-[40px] border border-white/10">
@@ -93,7 +92,7 @@ export const MessInchargeFeedbackTab = () => {
         )}
       </View>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };
 

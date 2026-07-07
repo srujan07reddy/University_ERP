@@ -27,7 +27,6 @@ import { AdmissionsHomeTab } from './AdmissionsHomeTab';
 import { AdmissionsAnalyticsTab } from './AdmissionsAnalyticsTab';
 import { AdmissionsSurveysTab } from './AdmissionsSurveysTab';
 import { AdmissionsCalendarTab } from './AdmissionsCalendarTab';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const AdmissionsDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = React.useState(false);
@@ -65,7 +64,7 @@ export const AdmissionsDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -99,7 +98,7 @@ export const AdmissionsDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

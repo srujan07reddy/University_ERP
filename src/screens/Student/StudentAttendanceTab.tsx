@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { Award, AlertCircle } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const StudentAttendanceTab = () => {
   const { user, businessRules } = useStore();
@@ -13,7 +12,7 @@ export const StudentAttendanceTab = () => {
   const isEligible = (studentData?.attendancePercentage || 0) >= minAttendance;
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center justify-center">
         <Text className="text-slate-400 text-sm font-medium">Overall Attendance</Text>
@@ -53,6 +52,6 @@ export const StudentAttendanceTab = () => {
         </View>
       ))}
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

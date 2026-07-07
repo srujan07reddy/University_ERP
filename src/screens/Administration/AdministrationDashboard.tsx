@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { useStore } from '../../store/useStore';
-import { Sidebar } from '../../components/Navigation/Sidebar';
-import { Home, BarChart3, ClipboardList, Settings, User, MessageSquare, Shield, FileText } from 'lucide-react-native';
+import { Home, BarChart3, ClipboardList, Settings, User, MessageSquare, Shield, FileText, LogOut, Menu } from 'lucide-react-native';
+import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
 
 import { AdministrationHomeTab } from './AdministrationHomeTab';
 import { AdministrationAnalyticsTab } from './AdministrationAnalyticsTab';
@@ -12,8 +12,6 @@ import { AdministrationReportsTab } from './AdministrationReportsTab';
 import { AdministrationSafeChatTab } from './AdministrationSafeChatTab';
 import { AdministrationUsersTab } from './AdministrationUsersTab';
 import { AdministrationSettingsTab } from './AdministrationSettingsTab';
-
-const { width } = Dimensions.get('window');
 
 export const AdministrationDashboard = () => {
   const { user, setUser } = useStore();
@@ -33,30 +31,59 @@ export const AdministrationDashboard = () => {
     }
   };
 
+  const menuItems = [
+    { id: 'Home', icon: Home, label: 'Dashboard' },
+    { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
+    { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
+    { id: 'Compliance', icon: Shield, label: 'Compliance Audit' },
+    { id: 'Reports', icon: FileText, label: 'Reports' },
+    { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' },
+    { id: 'Users', icon: User, label: 'User Management' },
+    { id: 'Settings', icon: Settings, label: 'Settings' },
+  ];
+
   return (
-    <View className="flex-1 bg-slate-900 flex-row">
-      <Sidebar
-        role="Administration"
-        userName={user?.name || 'Administrator'}
-        activeTab={activeTab}
-        onTabSelect={(t) => { setActiveTab(t); setMenuVisible(false); }}
-        isVisible={menuVisible}
-        onClose={() => setMenuVisible(false)}
-        menuItems={[
-          { id: 'Home', icon: Home, label: 'Dashboard' },
-          { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
-          { id: 'Surveys', icon: ClipboardList, label: 'Surveys' },
-          { id: 'Compliance', icon: Shield, label: 'Compliance Audit' },
-          { id: 'Reports', icon: FileText, label: 'Reports' },
-          { id: 'SafeChat', icon: MessageSquare, label: 'SafeChat' },
-          { id: 'Users', icon: User, label: 'User Management' },
-          { id: 'Settings', icon: Settings, label: 'Settings' },
-        ]}
-      />
-      
-      <View className="flex-1 p-6" style={{ marginLeft: width > 768 ? 280 : 0 }}>
-        {renderContent()}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0F172A' }}>
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        
+        {/* Desktop Sidebar */}
+        <View className="hidden md:flex w-72 bg-slate-900 border-r border-white/5 p-6 h-full">
+          <View className="mb-8 px-2">
+            <Text className="text-white font-bold text-xl">Administration</Text>
+            <Text className="text-slate-400 text-xs mt-1">Institutional Governance</Text>
+          </View>
+          
+          <View className="flex-1 space-y-2">
+            {menuItems.map((item) => (
+              <TouchableOpacity 
+                key={item.id} 
+                onPress={() => setActiveTab(item.id)} 
+                className={`p-4 rounded-2xl flex-row items-center transition-all ${activeTab === item.id ? 'bg-blue-600' : 'hover:bg-white/5'}`}
+              >
+                <item.icon color={activeTab === item.id ? 'white' : '#94a3b8'} size={20} />
+                <Text className={`font-bold ml-4 ${activeTab === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          
+          <TouchableOpacity 
+            onPress={() => setUser(null)} 
+            className="p-4 rounded-2xl flex-row items-center mt-6 bg-red-500/10 border border-red-500/20"
+          >
+            <LogOut color="#ef4444" size={20} />
+            <Text className="font-bold ml-4 text-red-400">Logout</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Main Content Area */}
+        <View style={{ flex: 1, overflow: 'hidden' }} className={`px-6 pt-6 ${Platform.OS === 'web' ? 'pb-6' : 'pb-32'}`}>
+          {renderContent()}
+        </View>
+
       </View>
-    </View>
+      
+      {/* Mobile Bottom Navigation */}
+      <BottomNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
+    </SafeAreaView>
   );
 };

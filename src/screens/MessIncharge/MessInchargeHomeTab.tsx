@@ -4,7 +4,6 @@ import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ChartContainer, chartConfig } from '../../components/Dashboard/ChartContainer';
 import { BarChart } from 'react-native-chart-kit';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, Flame, Trash2, Star, Calendar, MessageSquare 
 } from 'lucide-react-native';
@@ -54,7 +53,7 @@ export const MessInchargeHomeTab = () => {
   };
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-8">
       {/* Welcome Banner */}
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 flex-row justify-between items-center">
@@ -128,7 +127,7 @@ export const MessInchargeHomeTab = () => {
         </View>
       </View>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };
 

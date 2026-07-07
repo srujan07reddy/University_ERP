@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { useStore } from '../../store/useStore';
 import { Users, DollarSign, GraduationCap, Shield, Menu, Bell, LogOut } from 'lucide-react-native';
@@ -10,7 +9,7 @@ export const AdministrationHomeTab = ({ setMenuVisible }: { setMenuVisible: (v: 
   const { user, setUser } = useStore();
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
       <>
         {/* Header */}
         <View className="flex-row justify-between items-center mb-8">
@@ -57,6 +56,6 @@ export const AdministrationHomeTab = ({ setMenuVisible }: { setMenuVisible: (v: 
 
         <ApprovalsPortal />
       </>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

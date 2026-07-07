@@ -2,11 +2,10 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { TrendingUp, Users, Clock, AlertCircle } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const BusInchargeAnalyticsTab = () => {
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white text-3xl font-bold">Transport Analytics</Text>
@@ -23,6 +22,6 @@ export const BusInchargeAnalyticsTab = () => {
         <StatCard title="Maintenance Alerts" value="1" icon={AlertCircle} color="#f59e0b" />
       </View>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

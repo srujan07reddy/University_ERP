@@ -8,7 +8,7 @@ import { Mail, Lock, Phone, ShieldCheck, ChevronRight, Eye, EyeOff } from 'lucid
 
 export const LoginScreen = () => {
   const setUser = useStore((state) => state.setUser);
-  const [role, setRole] = useState<UserRole>('Admin');
+  const [role, setRole] = useState<UserRole>('Administration');
   const [email, setEmail] = useState('admin@university.com');
   const [password, setPassword] = useState('password123');
   const [phone, setPhone] = useState('9876543210');
@@ -23,17 +23,13 @@ export const LoginScreen = () => {
     setRole(newRole);
     setShowOtp(false);
     const roleEmailMap: Record<string, string> = {
-      Admin: 'admin@university.com',
-      ViceChancellor: 'vc@university.com',
-      ProVC: 'provc@university.com',
+      Administration: 'admin@university.com',
       Faculty: 'faculty@university.com',
       Student: 'student@university.com',
       CoE: 'coe@university.com',
       Dean: 'dean@university.com',
-      Registrar: 'registrar@university.com',
       Finance: 'finance@university.com',
       Parent: 'parent@university.com',
-      Chancellor: 'chancellor@university.com',
       PlacementOfficer: 'placement@university.com',
       HoD: 'hod@university.com',
       Admissions: 'admissions@university.com',
@@ -112,17 +108,13 @@ export const LoginScreen = () => {
              showsVerticalScrollIndicator={true}>
               {(
                 [
-                  'Chancellor',
-                  'ViceChancellor',
-                  'ProVC',
-                  'Registrar',
+                  'Administration',
                   'Dean',
                   'HoD',
                   'CoE',
                   'Admissions',
                   'PlacementOfficer',
                   'Finance',
-                  'Admin',
                   'Faculty',
                   'Student',
                   'Parent',

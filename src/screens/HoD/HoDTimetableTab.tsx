@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { RefreshCw } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const INITIAL_SLOTS = [
   { time: '10:00 AM', subject: 'Advanced Algorithms', faculty: 'Dr. Sarah Smith',   room: 'LH 402' },
@@ -12,7 +11,7 @@ export const HoDTimetableTab = () => {
   const [timetableSlots] = useState(INITIAL_SLOTS);
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <View className="bg-white/5 p-6 rounded-[32px] border border-white/10">
         <Text className="text-white font-bold text-lg mb-2">Conflict Detector &amp; Timetable Scheduler</Text>
@@ -44,6 +43,6 @@ export const HoDTimetableTab = () => {
         </View>
       ))}
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

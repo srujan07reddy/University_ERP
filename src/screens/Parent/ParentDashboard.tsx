@@ -28,7 +28,6 @@ import { ParentHomeTab } from './ParentHomeTab';
 import { ParentAnalyticsTab } from './ParentAnalyticsTab';
 import { ParentSurveysTab } from './ParentSurveysTab';
 import { ParentCalendarTab } from './ParentCalendarTab';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const ParentDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = React.useState(false);
@@ -66,7 +65,7 @@ export const ParentDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -100,7 +99,7 @@ export const ParentDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Clock } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const TIMETABLE_SLOTS = [
   { day: 'Monday',    time: '10:00 AM', subject: 'Advanced Algorithms',  room: 'Lab 3 (Ground Floor)' },
@@ -11,7 +10,7 @@ const TIMETABLE_SLOTS = [
 ];
 
 export const FacultyTimetableTab = () => (
-  <GlobalScrollView>
+  <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <Text className="text-white text-2xl font-bold mb-2">Weekly Schedule</Text>
       {TIMETABLE_SLOTS.map((slot, i) => (
@@ -30,5 +29,5 @@ export const FacultyTimetableTab = () => (
         </View>
       ))}
     </View>
-  </GlobalScrollView>
+  </ScrollView>
 );

@@ -3,7 +3,6 @@ import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform } 
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -124,7 +123,7 @@ export const FacultyResearchTab = () => {
   );
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     (
           <View className="space-y-6">
             <Text className="text-white text-2xl font-bold mb-2">My Research Portfolio</Text>
@@ -141,6 +140,6 @@ export const FacultyResearchTab = () => {
             ))}
           </View>
         )
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

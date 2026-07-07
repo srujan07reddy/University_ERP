@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { ClipboardList, Plus, Trash2, Calendar, Star } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const MessInchargeLogsTab = () => {
   const { messLogs, addMessLog } = useStore();
@@ -38,7 +37,7 @@ export const MessInchargeLogsTab = () => {
   };
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-8">
       {/* Page Title */}
       <View className="flex-row justify-between items-center bg-white/5 p-8 rounded-[40px] border border-white/10">
@@ -180,7 +179,7 @@ export const MessInchargeLogsTab = () => {
         </View>
       </View>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };
 

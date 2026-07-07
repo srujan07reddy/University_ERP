@@ -27,7 +27,6 @@ import { StudentTransportTab } from './StudentTransportTab';
 import { StudentPlacementTab } from './StudentPlacementTab';
 import { StudentProjectsTab } from './StudentProjectsTab';
 import { StudentGrievanceTab } from './StudentGrievanceTab';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const MENU_ITEMS = [
   { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -146,7 +145,7 @@ export const StudentDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-4">
                   {MENU_ITEMS.map(item => (
                     <TouchableOpacity
@@ -163,7 +162,7 @@ export const StudentDashboard = () => {
                     <Text className="font-bold ml-3 text-xs text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

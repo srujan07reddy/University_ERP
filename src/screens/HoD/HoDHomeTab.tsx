@@ -3,7 +3,6 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform, TextInp
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -20,7 +19,7 @@ export const HoDHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     (
           <>
             {/* Dashboard Overview */}
@@ -72,6 +71,6 @@ export const HoDHomeTab = ({
             </View>
           </>
         )
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

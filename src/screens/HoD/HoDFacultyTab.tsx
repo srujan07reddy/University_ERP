@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const INITIAL_FACULTY = [
   { id: 'FAC-001', name: 'Dr. Sarah Smith',        qualification: 'Ph.D. in AI',            experience: '12 Years', subjects: 'Advanced Algorithms', workload: '18h/wk', rating: '4.8/5' },
@@ -12,7 +11,7 @@ export const HoDFacultyTab = () => {
   const [localFaculty] = useState(INITIAL_FACULTY);
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -38,6 +37,6 @@ export const HoDFacultyTab = () => {
         </View>
       ))}
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

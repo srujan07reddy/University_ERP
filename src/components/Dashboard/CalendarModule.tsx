@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Alert } fro
 import { useStore } from '../../store/useStore';
 import { CalendarEvent } from '../../types';
 import { Calendar as CalendarIcon, Plus, ChevronLeft, ChevronRight, Clock, MapPin, Tag } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const CalendarModule = () => {
   const { user, calendarEvents, addCalendarEvent } = useStore();
@@ -46,7 +45,7 @@ export const CalendarModule = () => {
   };
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10 shadow-sm">
       <View className="flex-row justify-between items-center mb-8">
         <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
@@ -177,6 +176,6 @@ export const CalendarModule = () => {
         </View>
       </Modal>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

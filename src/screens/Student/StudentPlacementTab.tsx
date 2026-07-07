@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Upload } from 'lucide-react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const StudentPlacementTab = () => {
   const [cvUploaded, setCvUploaded] = useState(false);
@@ -9,7 +8,7 @@ export const StudentPlacementTab = () => {
   const [atsResult, setAtsResult] = useState('');
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       {/* Student CV Ingestion & ATS Analyzer Widget */}
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
@@ -58,6 +57,6 @@ export const StudentPlacementTab = () => {
         </View>
       ))}
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

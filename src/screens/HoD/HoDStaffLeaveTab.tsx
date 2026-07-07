@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const HoDStaffLeaveTab = () => {
   const [myLeaveReason, setMyLeaveReason] = useState('');
@@ -19,7 +18,7 @@ export const HoDStaffLeaveTab = () => {
   };
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
         <Text className="text-white font-bold text-lg">Apply for Personal Leave</Text>
@@ -48,6 +47,6 @@ export const HoDStaffLeaveTab = () => {
         </View>
       ))}
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };

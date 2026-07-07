@@ -13,7 +13,6 @@ import { BusInchargeSurveysTab } from './BusInchargeSurveysTab';
 import { BusInchargeCalendarTab } from './BusInchargeCalendarTab';
 import { MessageCenter } from '../../components/Dashboard/MessageCenter';
 import { BottomNavbar } from '../../components/Navigation/BottomNavbar';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const BusInchargeDashboard = () => {
   const { user, setUser } = useStore();
@@ -102,7 +101,7 @@ export const BusInchargeDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-4">
                   {[
                     { id: 'Home', icon: Home, label: 'Live Tracking' },
@@ -121,7 +120,7 @@ export const BusInchargeDashboard = () => {
                     <Text className="font-bold ml-3 text-xs text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

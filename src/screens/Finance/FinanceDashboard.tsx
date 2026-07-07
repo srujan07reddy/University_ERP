@@ -31,7 +31,6 @@ import { FinanceAnalyticsTab } from './FinanceAnalyticsTab';
 import { FinanceSurveysTab } from './FinanceSurveysTab';
 import { FinanceCalendarTab } from './FinanceCalendarTab';
 import { FinanceApprovalsTab } from './FinanceApprovalsTab';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const FinanceDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = React.useState(false);
@@ -72,7 +71,7 @@ export const FinanceDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <GlobalScrollView>
+              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -108,7 +107,7 @@ export const FinanceDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </GlobalScrollView>
+              </ScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

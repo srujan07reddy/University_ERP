@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TextInput, Alert, ScrollView } from 'react-native';
 import { Plus, Trash2 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
-import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const INITIAL_ALLOCATIONS = [
   { subject: 'Advanced Algorithms', assignedFaculty: 'Dr. Sarah Smith',      class: '3rd Year CSE-A' },
@@ -30,7 +29,7 @@ export const HoDSubjectAllocTab = () => {
   };
 
   return (
-    <GlobalScrollView>
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 120 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={false} scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -78,6 +77,6 @@ export const HoDSubjectAllocTab = () => {
         </View>
       </Modal>
     </View>
-    </GlobalScrollView>
+    </ScrollView>
   );
 };
