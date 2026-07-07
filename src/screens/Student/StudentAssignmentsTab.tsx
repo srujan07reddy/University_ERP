@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Upload } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const StudentAssignmentsTab = () => {
   const [pdfSubmitted, setPdfSubmitted] = useState(false);
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white font-bold text-lg mb-2">Upload Assignment PDF</Text>
@@ -27,6 +28,6 @@ export const StudentAssignmentsTab = () => {
         )}
       </View>
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

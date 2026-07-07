@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TextInput, Alert, ScrollView } from 'react-native';
 import { Plus, Trash2 } from 'lucide-react-native';
 import { useStore } from '../../store/useStore';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const INITIAL_ALLOCATIONS = [
   { subject: 'Advanced Algorithms', assignedFaculty: 'Dr. Sarah Smith',      class: '3rd Year CSE-A' },
@@ -29,7 +30,7 @@ export const HoDSubjectAllocTab = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -59,7 +60,7 @@ export const HoDSubjectAllocTab = () => {
 
       {/* Allocate Subject Modal */}
       <Modal animationType="slide" transparent visible={editAllocModal} onRequestClose={() => setEditAllocModal(false)}>
-        <View className="flex-1 justify-center items-center bg-black/60 p-4">
+        <View className="flex-1 w-full md:w-auto justify-center items-center bg-black/60 p-4">
           <View className="bg-[#1E293B] w-full max-w-lg p-8 rounded-[32px] border border-white/10">
             <Text className="text-white text-2xl font-bold mb-4">Allocate Subject</Text>
             <View className="space-y-4">
@@ -77,6 +78,6 @@ export const HoDSubjectAllocTab = () => {
         </View>
       </Modal>
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

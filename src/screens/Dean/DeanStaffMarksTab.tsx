@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const DeanStaffMarksTab = () => {
   const [filterSubject, setFilterSubject] = useState('Advanced Algorithms');
@@ -70,7 +71,7 @@ export const DeanStaffMarksTab = () => {
   );
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -99,6 +100,6 @@ export const DeanStaffMarksTab = () => {
         </View>
       ))}
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

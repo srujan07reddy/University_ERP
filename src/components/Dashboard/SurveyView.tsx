@@ -15,7 +15,6 @@ export const SurveyView: React.FC<SurveyViewProps> = ({ role }) => {
   ];
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
@@ -58,12 +57,12 @@ export const SurveyView: React.FC<SurveyViewProps> = ({ role }) => {
               <View className="flex-row items-center mb-1">
                 <Text className="text-white font-bold text-lg">{survey.title}</Text>
               </View>
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 <View className="flex-row items-center mr-4">
                   <Clock color="#64748b" size={12} />
                   <Text className="text-slate-400 text-xs ml-1">{survey.deadline}</Text>
                 </View>
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <Users color="#64748b" size={12} />
                   <Text className="text-slate-400 text-xs ml-1">{survey.participants}</Text>
                 </View>
@@ -85,7 +84,6 @@ export const SurveyView: React.FC<SurveyViewProps> = ({ role }) => {
         </TouchableOpacity>
       </View>
       </View>
-    </ScrollView>
     </ScrollView>
   );
 };

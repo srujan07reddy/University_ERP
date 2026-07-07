@@ -80,7 +80,7 @@ export const HoDDashboard = () => {
 
         {/* Web sidebar */}
         {Platform.OS === 'web' && (
-          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+          <ScrollView style={{ width: 280, flexShrink: 0, flexGrow: 0, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="hidden lg:flex flex-col">
             <Text className="text-2xl font-bold text-white mb-6">HOD Console</Text>
             <View className="space-y-4">
               <View>

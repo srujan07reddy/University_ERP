@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform, TextInp
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -19,12 +20,12 @@ export const HoDHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     (
           <>
             {/* Dashboard Overview */}
             <View className="flex-row justify-between items-center mb-8">
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
                     onPress={() => setMenuVisible?.(true)}
@@ -49,12 +50,12 @@ export const HoDHomeTab = ({
             </View>
 
             {/* Department KPIs widgets */}
-            <View className="flex-row mb-6">
+            <View className="flex-col md:flex-row gap-4 mb-6">
               <StatCard title="Total Faculty" value="16" icon={Users} trend="CS Department" color="#3b82f6" />
               <StatCard title="Total Students" value="480" icon={Users} trend="4 Active Batches" color="#10b981" />
             </View>
 
-            <View className="flex-row mb-8">
+            <View className="flex-col md:flex-row gap-4 mb-8">
               <StatCard title="Faculty on Leave" value="2" icon={Clock} trend="Today" color="#8b5cf6" />
               <StatCard title="Pending Approvals" value={leaveRequests.filter(req => req.status === 'Pending').length.toString()} icon={AlertCircle} trend="Requires Action" color="#ef4444" />
             </View>
@@ -71,6 +72,6 @@ export const HoDHomeTab = ({
             </View>
           </>
         )
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

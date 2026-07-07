@@ -28,13 +28,13 @@ export const SafeChat = () => {
       className="flex-1 bg-primary-950"
     >
       <View className="p-6 bg-primary-900 border-b border-primary-800 flex-row items-center justify-between">
-        <View className="flex-row items-center">
+        <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
           <TouchableOpacity onPress={() => navigation.goBack()} className="mr-4">
             <ChevronLeft color="white" size={24} />
           </TouchableOpacity>
           <View>
             <Text className="text-white font-bold text-lg">Safe-Chat</Text>
-            <View className="flex-row items-center">
+            <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
               <ShieldCheck color="#10b981" size={12} />
               <Text className="text-success text-[10px] ml-1">E2E Encrypted</Text>
             </View>

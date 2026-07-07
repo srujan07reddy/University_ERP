@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Alert } fro
 import { useStore } from '../../store/useStore';
 import { CalendarEvent } from '../../types';
 import { Calendar as CalendarIcon, Plus, ChevronLeft, ChevronRight, Clock, MapPin, Tag } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const CalendarModule = () => {
   const { user, calendarEvents, addCalendarEvent } = useStore();
@@ -45,10 +46,10 @@ export const CalendarModule = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="bg-white/5 rounded-3xl p-8 border border-white/10 shadow-sm">
       <View className="flex-row justify-between items-center mb-8">
-        <View className="flex-row items-center">
+        <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
           <CalendarIcon color="#60a5fa" size={24} />
           <Text className="text-white text-2xl font-bold ml-3">Academic Calendar</Text>
         </View>
@@ -79,11 +80,11 @@ export const CalendarModule = () => {
               </View>
               <Text className="text-slate-400 text-sm mb-3">{event.description}</Text>
               <View className="flex-row gap-4">
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <Clock color="#64748b" size={12} />
                   <Text className="text-slate-500 text-xs ml-1">Full Day</Text>
                 </View>
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <Tag color="#64748b" size={12} />
                   <Text className="text-slate-500 text-xs ml-1">Visible to: {event.visibility}</Text>
                 </View>
@@ -176,6 +177,6 @@ export const CalendarModule = () => {
         </View>
       </Modal>
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

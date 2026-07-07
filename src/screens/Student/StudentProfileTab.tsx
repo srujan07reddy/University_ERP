@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform, Modal } from 'react-native';
 import { useStore } from '../../store/useStore';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -42,7 +43,7 @@ export const StudentProfileTab = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     (
           <View className="space-y-6">
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 items-center">
@@ -84,7 +85,7 @@ export const StudentProfileTab = () => {
             </View>
 
             <Modal animationType="slide" transparent={true} visible={editProfileModal} onRequestClose={() => setEditProfileModal(false)}>
-              <View className="flex-1 justify-center items-center bg-black/60 p-4">
+              <View className="flex-1 w-full md:w-auto justify-center items-center bg-black/60 p-4">
                 <View className="bg-[#1E293B] w-full max-w-lg p-8 rounded-[32px] border border-white/10">
                   <Text className="text-white text-2xl font-bold mb-4">Edit Profile Details</Text>
                   <View className="space-y-4">
@@ -121,6 +122,6 @@ export const StudentProfileTab = () => {
             </Modal>
           </View>
         )
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

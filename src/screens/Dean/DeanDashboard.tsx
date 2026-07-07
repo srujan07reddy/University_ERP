@@ -25,6 +25,7 @@ import { DeanStaffMarksTab } from './DeanStaffMarksTab';
 import { DeanStaffAssignmentsTab } from './DeanStaffAssignmentsTab';
 import { DeanStaffLessonPlansTab } from './DeanStaffLessonPlansTab';
 import { DeanStaffResearchTab } from './DeanStaffResearchTab';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const DeanDashboard = () => {
   const { user, setUser, leaveRequests, updateLeaveStatus, assignments, addAssignment } = useStore();
   const [activeTab, setActiveTab] = useState('Home');
@@ -256,7 +257,7 @@ export const DeanDashboard = () => {
         
         {/* Web permanent sidebar - left side column */}
         {Platform.OS === 'web' && (
-          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+          <ScrollView style={{ width: 280, flexShrink: 0, flexGrow: 0, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="hidden lg:flex flex-col">
             <Text className="text-2xl font-bold text-white mb-6">Dean Office</Text>
             <View className="space-y-4">
               
@@ -328,7 +329,7 @@ export const DeanDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+              <GlobalScrollView>
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -385,7 +386,7 @@ export const DeanDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </ScrollView>
+              </GlobalScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

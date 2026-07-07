@@ -27,6 +27,7 @@ import { StudentTransportTab } from './StudentTransportTab';
 import { StudentPlacementTab } from './StudentPlacementTab';
 import { StudentProjectsTab } from './StudentProjectsTab';
 import { StudentGrievanceTab } from './StudentGrievanceTab';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const MENU_ITEMS = [
   { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -69,7 +70,7 @@ export const StudentDashboard = () => {
         <View>
           {/* Header */}
           <View className="flex-row justify-between items-center mb-8">
-            <View className="flex-row items-center">
+            <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
               {Platform.OS !== 'web' && (
                 <TouchableOpacity
                   onPress={() => setMenuVisible(true)}
@@ -114,7 +115,7 @@ export const StudentDashboard = () => {
       <View style={{ flex: 1, flexDirection: Platform.OS === 'web' ? 'row' : 'column' }}>
         {/* Web sidebar */}
         {Platform.OS === 'web' && (
-          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+          <ScrollView style={{ width: 280, flexShrink: 0, flexGrow: 0, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="hidden lg:flex flex-col">
             <Text className="text-2xl font-bold text-white mb-6">Student Hub</Text>
             <View className="space-y-4">
               {MENU_ITEMS.map(item => (
@@ -145,7 +146,7 @@ export const StudentDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+              <GlobalScrollView>
                 <View className="space-y-4">
                   {MENU_ITEMS.map(item => (
                     <TouchableOpacity
@@ -162,7 +163,7 @@ export const StudentDashboard = () => {
                     <Text className="font-bold ml-3 text-xs text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </ScrollView>
+              </GlobalScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>

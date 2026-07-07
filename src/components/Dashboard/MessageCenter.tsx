@@ -81,10 +81,10 @@ export const MessageCenter = () => {
         </View>
       </View>
 
-      <View style={{ flex: 1, flexDirection: 'row', minHeight: 480 }} className="bg-white/5 rounded-[40px] border border-white/10 overflow-hidden">
+      <View style={{ flex: 1, minHeight: 480 }} className="flex-col lg:flex-row bg-white/5 rounded-[40px] border border-white/10 overflow-hidden">
         
         {/* Chats list sidebar */}
-        <View className="w-80 border-r border-white/10 bg-slate-950/40">
+        <View className="w-full lg:w-80 border-b lg:border-r lg:border-b-0 border-white/10 bg-slate-950/40">
           <View className="p-5 border-b border-white/5">
             <Text className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Active Channels</Text>
           </View>
@@ -96,7 +96,7 @@ export const MessageCenter = () => {
                 onPress={() => setSelectedChat('Broadcasts')}
                 className={`p-4 rounded-2xl flex-row items-center justify-between ${selectedChat === 'Broadcasts' ? 'bg-blue-600' : 'hover:bg-white/5'}`}
               >
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <Bell color="white" size={16} />
                   <Text className="text-white font-bold text-xs ml-3">Push Notifications</Text>
                 </View>
@@ -193,7 +193,7 @@ export const MessageCenter = () => {
 
           {/* Form Composer */}
           <View className="p-6 border-t border-white/5 bg-slate-950/20 space-y-4">
-            {selectedChat === 'Broadcasts' && (user?.role === 'Dean' || user?.role === 'ViceChancellor' || user?.role === 'Admin') && (
+            {selectedChat === 'Broadcasts' && (user?.role === 'Dean' || user?.role === 'Administration') && (
               <View className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10">
                 <Text className="text-white font-bold text-[10px] uppercase tracking-wide">Configure Push Notification Broadcast</Text>
                 

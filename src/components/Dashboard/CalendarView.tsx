@@ -74,11 +74,11 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ role }) => {
               </View>
               <Text className="text-white font-bold text-lg mb-2">{event.title}</Text>
               <View className="flex-row items-center gap-4">
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <Clock color="#64748b" size={14} />
                   <Text className="text-slate-400 text-xs ml-1.5">{event.time}</Text>
                 </View>
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <MapPin color="#64748b" size={14} />
                   <Text className="text-slate-400 text-xs ml-1.5">{event.location}</Text>
                 </View>

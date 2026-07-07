@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { RefreshCw } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 const INITIAL_INVENTORY = [
   { name: 'Dell Precision Workstations',  count: 40, status: 'Operational',  maintenance: 'Good' },
@@ -12,7 +13,7 @@ export const HoDInventoryTab = () => {
   const [inventoryItems] = useState(INITIAL_INVENTORY);
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <Text className="text-white text-2xl font-bold mb-2">Inventory &amp; Lab Equipment</Text>
       {inventoryItems.map((item, idx) => (
@@ -31,6 +32,6 @@ export const HoDInventoryTab = () => {
         </View>
       ))}
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

@@ -55,7 +55,7 @@ export const FacultyDashboard = () => {
           <ScrollView showsVerticalScrollIndicator={true} contentContainerStyle={{ paddingBottom: 24 }}>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity onPress={() => setMenuVisible(true)} className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4">
                     <Menu color="white" size={20} />
@@ -115,7 +115,7 @@ export const FacultyDashboard = () => {
 
         {/* Web sidebar */}
         {Platform.OS === 'web' && (
-          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+          <ScrollView style={{ width: 280, flexShrink: 0, flexGrow: 0, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="hidden lg:flex flex-col">
             <Text className="text-2xl font-bold text-white mb-6">Faculty Hub</Text>
             <View className="space-y-1">
               {MENU_ITEMS.map((item) => (

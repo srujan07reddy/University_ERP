@@ -12,7 +12,7 @@ interface StatCardProps {
 
 export const StatCard = ({ title, value, icon: Icon, trend, color = '#3b82f6' }: StatCardProps) => {
   return (
-    <View className="bg-white/5 p-6 rounded-3xl border border-white/10 shadow-sm flex-1 mx-2 relative overflow-hidden">
+    <View className="bg-white/5 p-6 rounded-3xl border border-white/10 shadow-sm flex-1 relative overflow-hidden">
       {/* Decorative shape from screenshot */}
       <View 
         style={{ backgroundColor: `${color}20` }} 

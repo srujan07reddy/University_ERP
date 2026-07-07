@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Upload, Download } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const FacultyGradesTab = () => {
   const [filterSubject, setFilterSubject] = useState('Advanced Algorithms');
@@ -79,7 +80,7 @@ export const FacultyGradesTab = () => {
   );
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <View className="flex-row justify-between items-center mb-2">
         <View>
@@ -99,12 +100,12 @@ export const FacultyGradesTab = () => {
       {renderFilterSelectors()}
 
       <View className="flex-row gap-4 mb-2">
-        <View className="flex-1 bg-green-500/10 p-5 rounded-3xl border border-green-500/20">
+        <View className="flex-1 w-full md:w-auto bg-green-500/10 p-5 rounded-3xl border border-green-500/20">
           <Text className="text-green-400 font-bold text-xs uppercase">Class Topper</Text>
           <Text className="text-white font-bold text-lg mt-1">{filterSubject === 'Advanced Algorithms' ? 'Alice Becker' : 'Gwen Stacy'}</Text>
           <Text className="text-slate-400 text-xs mt-1">Score: {filterSubject === 'Advanced Algorithms' ? '95%' : '98%'}</Text>
         </View>
-        <View className="flex-1 bg-orange-500/10 p-5 rounded-3xl border border-orange-500/20">
+        <View className="flex-1 w-full md:w-auto bg-orange-500/10 p-5 rounded-3xl border border-orange-500/20">
           <Text className="text-orange-400 font-bold text-xs uppercase">Slow Learner Alert</Text>
           <Text className="text-white font-bold text-lg mt-1">{filterSubject === 'Advanced Algorithms' ? 'None' : 'Mark Ruffalo'}</Text>
           <Text className="text-slate-400 text-xs mt-1">Needs counseling</Text>
@@ -129,6 +130,6 @@ export const FacultyGradesTab = () => {
         </View>
       ))}
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

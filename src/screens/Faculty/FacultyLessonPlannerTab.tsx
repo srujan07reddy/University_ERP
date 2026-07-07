@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform } 
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -123,7 +124,7 @@ export const FacultyLessonPlannerTab = () => {
   );
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     (
           <View className="space-y-6">
             <View className="bg-white/5 p-8 rounded-[40px] border border-white/10 space-y-4">
@@ -169,6 +170,6 @@ export const FacultyLessonPlannerTab = () => {
             ))}
           </View>
         )
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

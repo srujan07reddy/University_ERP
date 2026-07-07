@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { CheckCircle } from 'lucide-react-native';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
 import { useStore } from '../../store/useStore';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const HoDApprovalsTab = () => {
   const { leaveRequests, updateLeaveStatus } = useStore();
@@ -20,7 +21,7 @@ export const HoDApprovalsTab = () => {
   const pendingLeaves = leaveRequests.filter(r => r.status === 'Pending');
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-6">
       <Text className="text-white text-2xl font-bold mb-2">Central Approval Center</Text>
 
@@ -42,10 +43,10 @@ export const HoDApprovalsTab = () => {
             </View>
           </View>
           <View className="flex-row gap-4 mt-6">
-            <TouchableOpacity onPress={() => handleApproveLeave(req.id)} className="flex-1 bg-green-600 p-3.5 rounded-xl items-center">
+            <TouchableOpacity onPress={() => handleApproveLeave(req.id)} className="flex-1 w-full md:w-auto bg-green-600 p-3.5 rounded-xl items-center">
               <Text className="text-white font-bold text-xs">APPROVE</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleRejectLeave(req.id)} className="flex-1 bg-red-500/10 border border-red-500/20 p-3.5 rounded-xl items-center">
+            <TouchableOpacity onPress={() => handleRejectLeave(req.id)} className="flex-1 w-full md:w-auto bg-red-500/10 border border-red-500/20 p-3.5 rounded-xl items-center">
               <Text className="text-red-400 font-bold text-xs">REJECT</Text>
             </TouchableOpacity>
           </View>
@@ -55,6 +56,6 @@ export const HoDApprovalsTab = () => {
       {/* Full approvals portal below */}
       <ApprovalsPortal />
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

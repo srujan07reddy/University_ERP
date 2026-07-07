@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform, TextInp
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -22,12 +23,12 @@ export const PlacementHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     (
           <>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
                     onPress={() => setMenuVisible?.(true)}
@@ -55,12 +56,12 @@ export const PlacementHomeTab = ({
             </View>
 
             {/* KPI grid */}
-            <View className="flex-row mb-6">
+            <View className="flex-col md:flex-row gap-4 mb-6">
               <StatCard title="Eligible Students" value="326" icon={Users} trend="CSE, IT, AI" color="#3b82f6" />
               <StatCard title="Placement Rate" value="84%" icon={Handshake} trend="+5% vs 2025" color="#10b981" />
             </View>
 
-            <View className="flex-row mb-8">
+            <View className="flex-col md:flex-row gap-4 mb-8">
               <StatCard title="Highest Package" value="45 LPA" icon={Award} trend="Google" color="#8b5cf6" />
               <StatCard title="Offers Secured" value="280" icon={Briefcase} color="#f59e0b" />
             </View>
@@ -110,6 +111,6 @@ export const PlacementHomeTab = ({
             </View>
           </>
         )
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

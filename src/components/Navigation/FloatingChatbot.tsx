@@ -19,13 +19,8 @@ export const FloatingChatbot = () => {
         return ['Show my CGPA', 'Check my attendance', 'Show outstanding fees'];
       case 'Faculty':
         return ['View my workload', 'Syllabus progress', 'Research publications'];
-      case 'Admin':
-        return ['Check system stats', 'View audit logs', 'Check live users'];
-      case 'Finance':
-        return ['Show revenue', 'Operational cost', 'Budget details'];
-      case 'ViceChancellor':
-      case 'Chancellor':
-        return ['Strategic goals', 'Institutional health', 'System KPIs'];
+      case 'Administration':
+        return ['Check system stats', 'View audit logs', 'Check live users', 'Strategic goals', 'Institutional health', 'System KPIs'];
       default:
         return ['Help', 'About University', 'Contact Support'];
     }
@@ -62,16 +57,23 @@ export const FloatingChatbot = () => {
       }
     }
 
-    // Admin Responses
-    if (user.role === 'Admin') {
+    // Administration Responses
+    if (user.role === 'Administration') {
       if (lowerInput.includes('stats') || lowerInput.includes('live')) {
         return `System Status: 142 Staff present, 4850 Students checked in. Platform status is 100% operational.`;
       }
       if (lowerInput.includes('logs')) {
-        return `Latest audit log: "University Admin session started" (severity: Info). System log level: Optimal.`;
+        return `Latest audit log: "University Administration session started" (severity: Info). System log level: Optimal.`;
       }
       if (lowerInput.includes('users')) {
         return `There are currently 13 active roles and over 5,000 registered user accounts in the database.`;
+      }
+      const vcData = user.universityData?.vcData;
+      if (lowerInput.includes('goals') || lowerInput.includes('strategic')) {
+        return `Your active strategic goals: ${vcData?.strategicGoals?.join(', ') || 'Campus Expansion 2026, AI Research Center Launch'}.`;
+      }
+      if (lowerInput.includes('health') || lowerInput.includes('kpi')) {
+        return `Institutional health is rated "Excellent" with research outputs up +24% YoY.`;
       }
     }
 
@@ -85,17 +87,6 @@ export const FloatingChatbot = () => {
       }
       if (lowerInput.includes('budget') || lowerInput.includes('asset')) {
         return `Capital assets are currently valued at $450M. Campus maintenance allocation: $840k remaining.`;
-      }
-    }
-
-    // VC/Chancellor Responses
-    if (user.role === 'ViceChancellor' || user.role === 'Chancellor') {
-      const vcData = user.universityData?.vcData;
-      if (lowerInput.includes('goals') || lowerInput.includes('strategic')) {
-        return `Your active strategic goals: ${vcData?.strategicGoals?.join(', ') || 'Campus Expansion 2026, AI Research Center Launch'}.`;
-      }
-      if (lowerInput.includes('health') || lowerInput.includes('kpi')) {
-        return `Institutional health is rated "Excellent" with research outputs up +24% YoY.`;
       }
     }
 
@@ -206,8 +197,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    top: 0,
-    left: 0,
     zIndex: 9999,
   },
   fab: {

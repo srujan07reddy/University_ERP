@@ -1,9 +1,11 @@
 export type UserRole = 
-  | 'Chancellor' 
-  | 'ViceChancellor' 
+  | 'Admin'
+  | 'Chancellor'
+  | 'ViceChancellor'
   | 'ProVC'
+  | 'Registrar'
+  | 'Administration'
   | 'Dean' 
-  | 'Registrar' 
   | 'Finance' 
   | 'Faculty' 
   | 'Student' 
@@ -12,7 +14,6 @@ export type UserRole =
   | 'CoE'
   | 'HoD'
   | 'Admissions'
-  | 'Admin'
   | 'BusIncharge'
   | 'MessIncharge';
 

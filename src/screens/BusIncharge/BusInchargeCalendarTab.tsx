@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Calendar, ShieldAlert } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const BusInchargeCalendarTab = () => {
   const schedule = [
@@ -10,7 +11,7 @@ export const BusInchargeCalendarTab = () => {
   ];
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-8">
       <View className="bg-white/5 p-8 rounded-[40px] border border-white/10">
         <Text className="text-white text-3xl font-bold">Duty Rota & Maintenance Calendar</Text>
@@ -34,6 +35,6 @@ export const BusInchargeCalendarTab = () => {
         ))}
       </View>
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

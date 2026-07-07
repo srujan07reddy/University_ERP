@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { MapPin, Activity } from 'lucide-react-native';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const BusInchargeHomeTab = () => {
   const routes = [
@@ -10,7 +11,7 @@ export const BusInchargeHomeTab = () => {
   ];
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="space-y-8">
       <View className="flex-row justify-between items-center bg-white/5 p-8 rounded-[40px] border border-white/10">
         <View>
@@ -30,7 +31,7 @@ export const BusInchargeHomeTab = () => {
           <View key={bus.id} className="w-full lg:w-1/2 px-3 mb-6">
             <View className="bg-white/5 p-8 rounded-[32px] border border-white/10">
               <View className="flex-row justify-between items-start mb-6">
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <View className="w-14 h-14 bg-blue-600/20 rounded-2xl items-center justify-center mr-4 border border-blue-500/20">
                     <MapPin color="#3b82f6" size={28} />
                   </View>
@@ -56,7 +57,7 @@ export const BusInchargeHomeTab = () => {
               </View>
 
               <View className="flex-row justify-between items-center">
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <View className="w-8 h-8 bg-white/10 rounded-full items-center justify-center mr-2"><Text className="text-white text-[10px] font-bold">{bus.driver[0]}</Text></View>
                   <View>
                     <Text className="text-white text-xs font-semibold">{bus.driver}</Text>
@@ -72,6 +73,6 @@ export const BusInchargeHomeTab = () => {
         ))}
       </View>
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

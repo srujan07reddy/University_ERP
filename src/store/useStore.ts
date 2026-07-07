@@ -211,7 +211,7 @@ export const useStore = create<AppState>((set) => ({
           if (req.currentApproverRole === 'HoD' && req.category === 'Budget') {
             nextApprover = 'Dean';
           } else if (req.currentApproverRole === 'Dean' && req.category === 'Budget' && (req.amount || 0) > 5000) {
-            nextApprover = 'ProVC';
+            nextApprover = 'Administration';
           }
         }
         
@@ -258,7 +258,7 @@ export const useStore = create<AppState>((set) => ({
   })),
   addCalendarEvent: (event) => set((state) => ({ 
     calendarEvents: [...state.calendarEvents, event],
-    auditLogs: [{ id: Math.random().toString(36).substr(2, 9), timestamp: new Date().toISOString(), actor: 'Admin', action: 'Institutional Calendar Update', details: `New ${event.type}: ${event.title}`, severity: 'Info' as const }, ...state.auditLogs]
+    auditLogs: [{ id: Math.random().toString(36).substr(2, 9), timestamp: new Date().toISOString(), actor: 'Administration', action: 'Institutional Calendar Update', details: `New ${event.type}: ${event.title}`, severity: 'Info' as const }, ...state.auditLogs]
   })),
   addSurvey: (survey) => set((state) => ({ 
     surveys: [survey, ...state.surveys],
@@ -275,10 +275,8 @@ export const useStore = create<AppState>((set) => ({
   })),
   appointUser: (appointingRole: UserRole, newUser: User) => set((state) => {
     const permissions: Record<string, UserRole[]> = {
-      ViceChancellor: ['Registrar', 'Finance', 'Dean', 'HoD', 'Admissions'],
-      Registrar: ['Faculty', 'Admin'],
+      Administration: ['Dean', 'Finance', 'Faculty', 'Student', 'Parent', 'PlacementOfficer', 'CoE', 'HoD', 'Admissions', 'BusIncharge', 'MessIncharge'],
       Admissions: ['Student'],
-      Admin: ['Chancellor', 'ViceChancellor', 'Dean', 'Registrar', 'Finance', 'Faculty', 'Student', 'Parent', 'PlacementOfficer', 'CoE', 'HoD', 'Admissions'],
       CoE: ['Faculty'],
       HoD: ['Faculty']
     };
@@ -317,7 +315,7 @@ export const useStore = create<AppState>((set) => ({
     const log: AuditLog = {
       id: Math.random().toString(36).substr(2, 9),
       timestamp: new Date().toISOString(),
-      actor: 'Admin',
+      actor: 'Administration',
       action: 'Business Rule Updated',
       details: `${targetRule?.name} updated to ${value}`,
       severity: 'Warning'
@@ -340,15 +338,15 @@ export const useStore = create<AppState>((set) => ({
           isEscated = true;
           let nextRole: UserRole = currentApproverRole;
           if (currentApproverRole === 'HoD') nextRole = 'Dean';
-          else if (currentApproverRole === 'Dean') nextRole = 'ProVC';
-          else if (currentApproverRole === 'ProVC') nextRole = 'ViceChancellor';
+          else if (currentApproverRole === 'Dean') nextRole = 'Administration';
+          else if (currentApproverRole === 'Administration') nextRole = 'Administration';
           
           if (nextRole !== currentApproverRole) {
             currentApproverRole = nextRole;
             history.push({
               status: 'Escalated',
               actorName: 'System Escalation Engine',
-              actorRole: 'Admin',
+              actorRole: 'Administration',
               actionDate: new Date().toISOString().split('T')[0],
               comments: `Automatically escalated after exceeding ${timeout} hours threshold.`
             });

@@ -19,7 +19,7 @@ export const TransactionList = () => {
 
   const renderItem = ({ item }: { item: any }) => (
     <View className="bg-white p-4 rounded-2xl mb-3 border border-slate-100 flex-row justify-between items-center shadow-sm">
-      <View className="flex-row items-center">
+      <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
         <View className={`p-2 rounded-xl mr-3 ${item.status === 'Paid' ? 'bg-green-50' : 'bg-orange-50'}`}>
           <DollarSign color={item.status === 'Paid' ? '#10b981' : '#f59e0b'} size={18} />
         </View>

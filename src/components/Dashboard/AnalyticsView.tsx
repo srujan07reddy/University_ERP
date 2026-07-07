@@ -11,7 +11,6 @@ interface AnalyticsViewProps {
 
 export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ role, data }) => {
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
@@ -34,7 +33,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ role, data }) => {
           { label: 'Efficiency', value: '88%', icon: PieChart, color: '#f59e0b' },
           { label: 'Engagement', value: '4.8/5', icon: BarChart3, color: '#8b5cf6' },
         ].map((metric, i) => (
-          <View key={i} className="w-[48%] bg-white/5 p-6 rounded-[32px] border border-white/10 mb-4">
+          <View key={i} className="w-full md:w-[48%] xl:w-[23%] bg-white/5 p-6 rounded-[32px] border border-white/10 mb-4">
             <View style={{ backgroundColor: `${metric.color}20` }} className="w-12 h-12 rounded-2xl items-center justify-center mb-4">
               <metric.icon color={metric.color} size={24} />
             </View>
@@ -82,7 +81,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ role, data }) => {
         </View>
       </View>
       </View>
-    </ScrollView>
     </ScrollView>
   );
 };

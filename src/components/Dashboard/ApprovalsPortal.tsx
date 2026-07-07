@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, Platform } 
 import { useStore } from '../../store/useStore';
 import { CheckCircle2, XCircle, AlertCircle, FileText, ChevronRight, Send, ArrowRight } from 'lucide-react-native';
 import { ApprovalRequest, UserRole } from '../../types';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 
 export const ApprovalsPortal = () => {
   const { user, approvalRequests, submitApprovalRequest, updateApprovalStatus } = useStore();
@@ -80,7 +81,7 @@ export const ApprovalsPortal = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     <View className="flex-1 space-y-6">
       <View className="flex-row justify-between items-center mb-6">
         <View>
@@ -326,6 +327,6 @@ export const ApprovalsPortal = () => {
         </ScrollView>
       )}
     </View>
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Platform, TextInp
 import { useStore } from '../../store/useStore';
 import { StatCard } from '../../components/Dashboard/StatCard';
 import { ApprovalsPortal } from '../../components/Dashboard/ApprovalsPortal';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 import { 
   Users, BookOpen, Clock, Bell, ChevronRight, AlertCircle, LogOut, Menu, X, Home, Settings, User, 
   MessageSquare, BarChart3, ClipboardList, Calendar, Award, FileText, CheckCircle, Upload, Plus, Edit, 
@@ -31,12 +32,12 @@ export const CoEHomeTab = ({
   const facultyData = user?.universityData?.facultyData;
   
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true}>
+    <GlobalScrollView>
     (
           <>
             {/* Header */}
             <View className="flex-row justify-between items-center mb-8">
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 {Platform.OS !== 'web' && (
                   <TouchableOpacity 
                     onPress={() => setMenuVisible?.(true)}
@@ -67,7 +68,7 @@ export const CoEHomeTab = ({
             </View>
 
             {/* Exam Lifecycle Stats */}
-            <View className="flex-row mb-6">
+            <View className="flex-col md:flex-row gap-4 mb-6">
               <StatCard 
                 title="Total Exams" 
                 value={coeData?.totalExams.toString() || '124'} 
@@ -83,7 +84,7 @@ export const CoEHomeTab = ({
               />
             </View>
 
-            <View className="flex-row mb-8">
+            <View className="flex-col md:flex-row gap-4 mb-8">
               <StatCard 
                 title="Integrity Alerts" 
                 value={coeData?.integrityAlerts.length.toString() || '2'} 
@@ -101,7 +102,7 @@ export const CoEHomeTab = ({
             {/* Integrity Alerts Section */}
             <View className="bg-red-500/5 p-6 rounded-[32px] border border-red-500/20 mb-8">
               <View className="flex-row justify-between items-center mb-6">
-                <View className="flex-row items-center">
+                <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                   <ShieldAlert color="#ef4444" size={20} />
                   <Text className="text-white text-lg font-bold ml-2">Integrity Monitoring</Text>
                 </View>
@@ -154,11 +155,11 @@ export const CoEHomeTab = ({
                   <Text className="text-blue-400 font-bold text-xs tracking-widest uppercase">Pre-Exam Phase</Text>
                 </View>
                 <View className="flex-row justify-between">
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <Calendar color="#3b82f6" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Scheduling & Seating</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <Lock color="#3b82f6" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Paper Setting</Text>
                   </TouchableOpacity>
@@ -172,11 +173,11 @@ export const CoEHomeTab = ({
                   <Text className="text-amber-400 font-bold text-xs tracking-widest uppercase">During-Exam Phase</Text>
                 </View>
                 <View className="flex-row justify-between">
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <Printer color="#f59e0b" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Hall Ticket Generation</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <Users color="#f59e0b" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Invigilation Duty</Text>
                   </TouchableOpacity>
@@ -190,11 +191,11 @@ export const CoEHomeTab = ({
                   <Text className="text-emerald-400 font-bold text-xs tracking-widest uppercase">Post-Exam Phase</Text>
                 </View>
                 <View className="flex-row justify-between">
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <ShieldAlert color="#10b981" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Dummy Numbering</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-[48%] items-center">
+                  <TouchableOpacity className="bg-white/5 p-5 rounded-3xl border border-white/10 w-full md:w-[48%] xl:w-[23%] items-center">
                     <BarChart3 color="#10b981" size={24} />
                     <Text className="text-white text-[11px] mt-3 font-bold text-center">Result Declaration</Text>
                   </TouchableOpacity>
@@ -203,6 +204,6 @@ export const CoEHomeTab = ({
             </View>
           </>
         )
-    </ScrollView>
+    </GlobalScrollView>
   );
 };

@@ -8,15 +8,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RootNavigator } from './src/navigation/RootNavigator';
 
 export default function App() {
-  const { height } = useWindowDimensions();
   return (
-    <GestureHandlerRootView
-      style={[
-        { flex: 1 },
-        Platform.OS === 'web' ? { height } : undefined,
-      ]}
-    >
-      <SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1, height: Platform.OS === 'web' ? '100vh' : '100%' } as any}>
+      <SafeAreaProvider style={{ flex: 1 }}>
         <RootNavigator />
         <StatusBar style="light" />
       </SafeAreaProvider>

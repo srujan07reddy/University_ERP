@@ -97,7 +97,7 @@ export const AdmissionsHomeTab = () => {
       <ScrollView showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
         {/* Header */}
         <View className="flex-row justify-between items-center mb-8">
-          <View className="flex-row items-center">
+          <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
             <TouchableOpacity 
               onPress={() => setMenuVisible(true)}
               className="bg-white/5 p-3 rounded-2xl border border-white/10 mr-4"
@@ -123,7 +123,7 @@ export const AdmissionsHomeTab = () => {
         </View>
 
         {/* Admissions KPI Grid */}
-        <View className="flex-row mb-6">
+        <View className="flex-col md:flex-row gap-4 mb-6">
           <StatCard 
             title="Total Applications" 
             value="4,820" 
@@ -140,7 +140,7 @@ export const AdmissionsHomeTab = () => {
           />
         </View>
 
-        <View className="flex-row mb-8">
+        <View className="flex-col md:flex-row gap-4 mb-8">
           <StatCard 
             title="Documents Verified" 
             value="94%" 
@@ -162,7 +162,7 @@ export const AdmissionsHomeTab = () => {
           onPress={() => setEnrollModalVisible(true)}
           className="bg-blue-600 p-5 rounded-3xl mb-8 flex-row justify-between items-center"
         >
-          <View className="flex-row items-center">
+          <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
             <View className="bg-white/20 p-3 rounded-2xl mr-4">
               <UserPlus color="white" size={24} />
             </View>
@@ -243,10 +243,10 @@ export const AdmissionsHomeTab = () => {
         visible={enrollModalVisible}
         onRequestClose={() => setEnrollModalVisible(false)}
       >
-        <View className="flex-1 justify-end bg-black/70">
+        <View className="flex-1 w-full md:w-auto justify-end bg-black/70">
           <View className="bg-[#0F172A] rounded-t-[40px] p-8 max-h-[85%] border-t border-white/10">
             <View className="flex-row justify-between items-center mb-6">
-              <View className="flex-row items-center">
+              <View className="flex-col md:flex-row items-start md:items-center gap-4 md:gap-0">
                 <UserPlus color="#3b82f6" size={28} className="mr-3" />
                 <Text className="text-2xl font-bold text-white">Enroll Student</Text>
               </View>

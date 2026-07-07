@@ -16,6 +16,7 @@ import { CoEAnalyticsTab } from './CoEAnalyticsTab';
 import { CoESurveysTab } from './CoESurveysTab';
 import { CoECalendarTab } from './CoECalendarTab';
 import { CoEApprovalsTab } from './CoEApprovalsTab';
+import { GlobalScrollView } from '../../components/Navigation/GlobalScrollView';
 export const CoEDashboard = () => {
   const { user, setUser } = useStore();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -41,7 +42,7 @@ export const CoEDashboard = () => {
         
         {/* Web permanent sidebar */}
         {Platform.OS === 'web' && (
-          <ScrollView style={{ width: 280, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+          <ScrollView style={{ width: 280, flexShrink: 0, flexGrow: 0, backgroundColor: '#0B0F19', borderRightWidth: 1, borderRightColor: 'rgba(255,255,255,0.08)', height: '100%' }} contentContainerStyle={{ padding: 24, paddingBottom: 60 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="hidden lg:flex flex-col">
             <Text className="text-2xl font-bold text-white mb-6">CoE command</Text>
             <View className="space-y-4">
               <View>
@@ -83,7 +84,7 @@ export const CoEDashboard = () => {
                   <X color="white" size={24} />
                 </TouchableOpacity>
               </View>
-              <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} showsHorizontalScrollIndicator={true} className="">
+              <GlobalScrollView>
                 <View className="space-y-2">
                   {[
                     { id: 'Home', icon: Home, label: 'Dashboard' },
@@ -110,7 +111,7 @@ export const CoEDashboard = () => {
                     <Text className="font-bold ml-4 text-red-400">Logout</Text>
                   </TouchableOpacity>
                 </View>
-              </ScrollView>
+              </GlobalScrollView>
             </View>
             <TouchableOpacity className="flex-1" onPress={() => setMenuVisible(false)} />
           </View>
